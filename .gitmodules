@@ -1,0 +1,6 @@
+[submodule "Frameworks/ASKCore"]
+	path = Frameworks/ASKCore
+	url = git@github.com:skorulis/ASKCore.git
+[submodule "Frameworks/ASSwiftUI"]
+	path = Frameworks/ASSwiftUI
+	url = git@github.com:skorulis/ASSwiftUI.git
