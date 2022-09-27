@@ -10,7 +10,7 @@ struct PersonalBestApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(viewModel: ioc.resolve())
                 .environment(\.factory, ioc)
         }
     }

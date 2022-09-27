@@ -1,26 +1,34 @@
-//
-//  ContentView.swift
-//  PersonalBest
-//
 //  Created by Alexander Skorulis on 26/9/2022.
-//
 
 import SwiftUI
 
 struct ContentView: View {
+    
+    @StateObject var viewModel: ContentViewModel
+    @Environment(\.factory) private var factory
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        mainTabs
+    }
+    
+    var mainTabs: some View {
+        TabView {
+            activityTab
         }
-        .padding()
+    }
+    
+    var activityTab: some View {
+        CoordinatorView(coordinator: MainCoordinator(root: .activity, factory: factory))
+            .tabItem {
+                Text("Activity")
+                Image(systemName: "list.bullet")
+            }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        let ioc = IOC()
+        ContentView(viewModel: ioc.resolve())
     }
 }
