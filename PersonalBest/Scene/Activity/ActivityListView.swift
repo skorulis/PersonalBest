@@ -29,7 +29,9 @@ extension ActivityListView: View {
     private func content() -> some View {
         LazyVStack {
             ForEach(viewModel.activities) { activity in
-                ActivityCell(activity: activity)
+                Button(action: viewModel.show(activity: activity)) {
+                    ActivityCell(activity: activity)
+                }
             }
         }
         .padding(.horizontal, 16)

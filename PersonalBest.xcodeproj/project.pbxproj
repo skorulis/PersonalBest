@@ -31,6 +31,10 @@
 		FAE05D9028E2B96C00F4697E /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE05D8F28E2B96C00F4697E /* ContentViewModel.swift */; };
 		FAE05D9328E2C0CE00F4697E /* PageTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE05D9228E2C0CE00F4697E /* PageTemplate.swift */; };
 		FAE05D9528E2C24200F4697E /* ActivityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE05D9428E2C24200F4697E /* ActivityCell.swift */; };
+		FAE05D9728E2D84F00F4697E /* ActivityDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE05D9628E2D84F00F4697E /* ActivityDetailsView.swift */; };
+		FAE05D9928E2D87400F4697E /* ActivityDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE05D9828E2D87400F4697E /* ActivityDetailsViewModel.swift */; };
+		FAE05D9C28E2DDF800F4697E /* AddEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE05D9B28E2DDF800F4697E /* AddEntryView.swift */; };
+		FAE05D9E28E2DE0900F4697E /* AddEntryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE05D9D28E2DE0900F4697E /* AddEntryViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +72,10 @@
 		FAE05D8F28E2B96C00F4697E /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		FAE05D9228E2C0CE00F4697E /* PageTemplate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageTemplate.swift; sourceTree = "<group>"; };
 		FAE05D9428E2C24200F4697E /* ActivityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCell.swift; sourceTree = "<group>"; };
+		FAE05D9628E2D84F00F4697E /* ActivityDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDetailsView.swift; sourceTree = "<group>"; };
+		FAE05D9828E2D87400F4697E /* ActivityDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityDetailsViewModel.swift; sourceTree = "<group>"; };
+		FAE05D9B28E2DDF800F4697E /* AddEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEntryView.swift; sourceTree = "<group>"; };
+		FAE05D9D28E2DE0900F4697E /* AddEntryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEntryViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +179,7 @@
 			children = (
 				FA6D95C228E2AE4C004D4D98 /* Activity */,
 				FA6D959628E18E39004D4D98 /* App */,
+				FAE05D9A28E2DDED00F4697E /* Entry */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -235,6 +244,8 @@
 				FA6D95C328E2AE52004D4D98 /* ActivityListView.swift */,
 				FA6D95C528E2AE5D004D4D98 /* ActivityListViewModel.swift */,
 				FAE05D9428E2C24200F4697E /* ActivityCell.swift */,
+				FAE05D9628E2D84F00F4697E /* ActivityDetailsView.swift */,
+				FAE05D9828E2D87400F4697E /* ActivityDetailsViewModel.swift */,
 			);
 			path = Activity;
 			sourceTree = "<group>";
@@ -256,6 +267,15 @@
 			name = Theme;
 			path = PersonalBest/Theme;
 			sourceTree = SOURCE_ROOT;
+		};
+		FAE05D9A28E2DDED00F4697E /* Entry */ = {
+			isa = PBXGroup;
+			children = (
+				FAE05D9B28E2DDF800F4697E /* AddEntryView.swift */,
+				FAE05D9D28E2DE0900F4697E /* AddEntryViewModel.swift */,
+			);
+			path = Entry;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -365,7 +385,9 @@
 			files = (
 				FA6D95C128E2A6A2004D4D98 /* RecordsStore.swift in Sources */,
 				FAE05D8C28E2B8B200F4697E /* MainCoordinator.swift in Sources */,
+				FAE05D9728E2D84F00F4697E /* ActivityDetailsView.swift in Sources */,
 				FAE05D9328E2C0CE00F4697E /* PageTemplate.swift in Sources */,
+				FAE05D9928E2D87400F4697E /* ActivityDetailsViewModel.swift in Sources */,
 				FA6D95C428E2AE52004D4D98 /* ActivityListView.swift in Sources */,
 				FA6D95BD28E2602E004D4D98 /* MeasurementType.swift in Sources */,
 				FA6D95BF28E270F5004D4D98 /* ActivityService.swift in Sources */,
@@ -374,6 +396,8 @@
 				FA6D95BB28E25DC8004D4D98 /* UnitService.swift in Sources */,
 				FA6D95A628E1A19F004D4D98 /* ActivityEntry.swift in Sources */,
 				FAE05D9528E2C24200F4697E /* ActivityCell.swift in Sources */,
+				FAE05D9E28E2DE0900F4697E /* AddEntryViewModel.swift in Sources */,
+				FAE05D9C28E2DDF800F4697E /* AddEntryView.swift in Sources */,
 				FA6D959E28E18E6F004D4D98 /* IOC.swift in Sources */,
 				FAE05D9028E2B96C00F4697E /* ContentViewModel.swift in Sources */,
 				FA6D95A428E197E9004D4D98 /* Activity.swift in Sources */,

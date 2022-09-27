@@ -28,5 +28,8 @@ public final class IOC: IOCService {
     private func setupViewModels() {
         container.autoregister(ContentViewModel.self, initializer: ContentViewModel.init)
         container.autoregister(ActivityListViewModel.self, initializer: ActivityListViewModel.init)
+        container.autoregister(ActivityDetailsViewModel.self, argument: Activity.self, initializer: ActivityDetailsViewModel.init)
+        container.autoregister(AddEntryViewModel.self, argument: Activity.self, initializer: AddEntryViewModel.init)
+        
     }
 }

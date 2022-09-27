@@ -34,4 +34,10 @@ extension ActivityListViewModel {
         
     }
     
+    func show(activity: Activity) -> () -> Void {
+        return { [unowned self] in
+            coordinator.push(.activityDetails(activity))
+        }
+    }
+    
 }
