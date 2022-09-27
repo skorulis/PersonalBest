@@ -21,6 +21,7 @@ extension ActivityDetailsViewModel {
     
     func addEntry() {
         let path = RootPath.addEntry(activity)
+        coordinator.present(path, style: .sheet)
     }
     
 }

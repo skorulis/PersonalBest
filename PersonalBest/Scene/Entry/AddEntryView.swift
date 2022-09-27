@@ -15,7 +15,19 @@ struct AddEntryView {
 extension AddEntryView: View {
     
     var body: some View {
-        EmptyView()
+        PageTemplate(nav: nav, content: content)
+    }
+    
+    private func nav() -> some View {
+        NavBar(left: EmptyView(),
+               mid: BarButtonItem.title("Add record"),
+               right:BarButtonItem.close(viewModel.dismiss) )
+    }
+    
+    private func content() -> some View {
+        VStack {
+            Text("test")
+        }
     }
 }
 

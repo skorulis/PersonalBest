@@ -22,6 +22,10 @@ class CoordinatedViewModel: PCoordinatedViewModel {
         coordinator.pop()
     }
     
+    func dismiss() {
+        coordinator.shouldDismiss = true
+    }
+    
     func onCoordinatorSet() { /* Overridden in children */ }
     
 }
@@ -30,6 +34,8 @@ final class MainCoordinator: PCoordinator, ObservableObject {
     typealias PathType = RootPath
     
     @Published var navPath = NavigationPath()
+    @Published var presented: PresentedCoordinator<MainCoordinator>?
+    @Published var shouldDismiss: Bool = false
     let root: PathType
     let factory: PFactory
     
@@ -38,13 +44,10 @@ final class MainCoordinator: PCoordinator, ObservableObject {
         self.factory = factory
     }
     
-    func push(_ p: PathType) {
-        navPath.append(p)
+    func child(path: RootPath) -> MainCoordinator {
+        return MainCoordinator(root: path, factory: factory)
     }
     
-    func pop() {
-        navPath.removeLast()
-    }
 }
 
 extension MainCoordinator: PFactory {
@@ -68,22 +71,3 @@ extension MainCoordinator: PFactory {
     }
     
 }
-
-struct CoordinatorView: View {
-    
-    @StateObject var coordinator: MainCoordinator
-    
-    init(coordinator: MainCoordinator) {
-        _coordinator = StateObject(wrappedValue: coordinator)
-    }
-    
-    var body: some View {
-        NavigationStack(path: $coordinator.navPath) {
-            coordinator.root.render(coordinator: coordinator)
-                .navigationDestination(for: RootPath.self) { path in
-                    path.render(coordinator: coordinator)
-                }
-        }
-    }
-}
-
