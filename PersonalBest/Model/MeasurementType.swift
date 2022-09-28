@@ -2,9 +2,11 @@
 
 import Foundation
 
-enum MeasurementType: String, Codable {
+enum MeasurementType: String, Codable, Identifiable {
     case reps
     case weight
     case distance
-    case time 
+    case time
+    
+    var id: String { rawValue }
 }

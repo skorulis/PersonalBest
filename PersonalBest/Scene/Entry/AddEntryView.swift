@@ -26,7 +26,30 @@ extension AddEntryView: View {
     
     private func content() -> some View {
         VStack {
-            Text("test")
+            ForEach(viewModel.fields) { type in
+                field(type: type)
+            }
+            
+            DatePicker(selection: $viewModel.date, displayedComponents: [.date]) {
+                Text("Select date")
+            }
+            
+            Button(action: viewModel.save) {
+                Text("Save")
+            }
+        }
+        .padding(.horizontal, 16)
+    }
+    
+    @ViewBuilder
+    private func field(type: MeasurementType) -> some View {
+        switch type {
+        case .reps:
+            RepsField(value: viewModel.binding(.reps))
+        case .weight, .distance:
+            DecimalField(type: type, value: viewModel.binding(type))
+        case .time:
+            Text("Not implemented")
         }
     }
 }

@@ -3,6 +3,7 @@
 import ASSwiftUI
 import Foundation
 import SwiftUI
+import Charts
 
 // MARK: - Memory footprint
 
@@ -30,10 +31,39 @@ extension ActivityDetailsView: View {
         VStack {
             newEntry
             
-            // TODO: Graph
+            historyList
             
-            // TODO: List entry
+            chart
+            
         }
+    }
+    
+    private var chart: some View {
+        Chart {
+            ForEach(viewModel.recordBreakdown) { line in
+                lineContent(entries: line)
+            }
+        }
+        .frame(height: 400)
+    }
+    
+    private func lineContent(entries: RecordEntries) -> some ChartContent {
+        ForEach(entries.entries) { entry in
+            LineMark(x: .value("Date", entry.date) ,
+                     y: .value(entries.name, entry.value)
+            )
+            .foregroundStyle(.blue)
+            .lineStyle(StrokeStyle(lineWidth: 3))
+        }
+    }
+    
+    private var historyList: some View {
+        LazyVStack {
+            ForEach(viewModel.records) { entry in
+                ActivityEntryCell(activity: viewModel.activity, entry: entry)
+            }
+        }
+        .padding(.horizontal, 16)
     }
     
     private var newEntry: some View {
