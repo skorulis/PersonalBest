@@ -36,6 +36,7 @@ extension ActivityDetailsView: View {
             chart
             
         }
+        .padding(.horizontal, 16)
     }
     
     private var chart: some View {
@@ -43,6 +44,7 @@ extension ActivityDetailsView: View {
             ForEach(viewModel.recordBreakdown) { line in
                 lineContent(entries: line)
             }
+            
         }
         .frame(height: 400)
     }
@@ -52,9 +54,10 @@ extension ActivityDetailsView: View {
             LineMark(x: .value("Date", entry.date) ,
                      y: .value(entries.name, entry.value)
             )
-            .foregroundStyle(.blue)
-            .lineStyle(StrokeStyle(lineWidth: 3))
         }
+        .foregroundStyle(by: .value("Name", entries.name))
+        .foregroundStyle(entries.color)
+        .lineStyle(StrokeStyle(lineWidth: 3))
     }
     
     private var historyList: some View {
@@ -63,7 +66,7 @@ extension ActivityDetailsView: View {
                 ActivityEntryCell(activity: viewModel.activity, entry: entry)
             }
         }
-        .padding(.horizontal, 16)
+        
     }
     
     private var newEntry: some View {

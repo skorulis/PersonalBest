@@ -33,9 +33,18 @@ extension ActivityEntryCell: View {
     @ViewBuilder
     private func valueItem(type: MeasurementType) -> some View {
         if let value = entry.values[type] {
-            Text(String(describing: value))
+            HStack {
+                Text(String(describing: value))
+                Text(unitString(type: type))
+            }
+            
         }
         
+    }
+    
+    func unitString(type: MeasurementType) -> String {
+        let match = activity.measurements.first(where: {$0.type == type})
+        return match?.defaultUnit.unit.symbol ?? ""
     }
 }
 

@@ -17,12 +17,12 @@ final class ActivityDetailsViewModel: CoordinatedViewModel, ObservableObject {
         self.activity = activity
         self.recordsStore = recordsStore
         super.init()
-        self.recordBreakdown = [RecordEntries.reps(records: self.records)]
+        self.recordBreakdown = self.breakdown()
         
         recordsStore.objectWillChange
             .delayedChange()
             .sink { [unowned self] _ in
-                self.recordBreakdown = [RecordEntries.reps(records: self.records)]
+                self.recordBreakdown = self.breakdown()
             }
             .store(in: &subscribers)
     }
@@ -65,7 +65,11 @@ extension ActivityDetailsViewModel {
 
 extension ActivityDetailsViewModel {
     
-    
+    func breakdown() -> [RecordEntries] {
+        let type = activity.breakdownType
+        let entries = RecordEntries.breakdown(type: type, records: self.records)
+        return RecordEntries.finalise(entries: entries)
+    }
     
     func addEntry() {
         let path = RootPath.addEntry(activity)

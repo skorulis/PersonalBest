@@ -9,4 +9,35 @@ enum MeasurementType: String, Codable, Identifiable {
     case time
     
     var id: String { rawValue }
+    
+    var unitOptions: [UnitType] {
+        switch self {
+        case .reps:
+            return [.reps]
+        case .distance:
+            return [
+                .meters,
+                .kilometers
+            ]
+        case .weight:
+            return [
+                .kilograms
+            ]
+        case .time:
+            return [.seconds]
+        }
+    }
+    
+    var defaultUnit: UnitType {
+        switch self {
+        case .reps:
+            return .reps
+        case .distance:
+            return .kilometers
+        case .weight:
+            return .kilograms
+        case .time:
+            return .seconds
+        }
+    }
 }
