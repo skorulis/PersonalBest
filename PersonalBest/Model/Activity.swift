@@ -17,19 +17,19 @@ struct Activity: Codable, Identifiable {
     
     init(name: String, measureTypes: [MeasurementType]) {
         self.name = name
-        self.measurements = measureTypes.map { .init(type: $0, defaultUnit: $0.defaultUnit) }
+        self.measurements = measureTypes.map { .init(type: $0, isRecord: true, defaultUnit: $0.defaultUnit) }
         self.id = UUID().uuidString
     }
     
-    init(systemName: String, measureTypes: [MeasurementType]) {
+    init(systemName: String, singleMeasure: MeasurementType) {
         self.name = systemName
-        self.measurements = measureTypes.map { .init(type: $0, defaultUnit: $0.defaultUnit) }
+        self.measurements = [.init(type: singleMeasure, isRecord: true, defaultUnit: singleMeasure.defaultUnit) ]
         self.id = Self.hash(name: systemName)
     }
     
-    init(systemName: String, measurements: [MeasurementEntry]) {
+    init(systemName: String, tracking: ActivityTrackingType) {
         self.name = systemName
-        self.measurements = measurements
+        self.measurements = tracking.measurements
         self.id = Self.hash(name: systemName)
     }
     
@@ -58,15 +58,25 @@ struct Activity: Codable, Identifiable {
         return measurements.first(where: {$0.type == type})?.defaultUnit ?? type.defaultUnit
     }
     
+    var primaryMeasure: MeasurementType {
+        return measurements.first(where: {$0.isRecord})!.type
+    }
+    
 }
 
 struct MeasurementEntry: Codable {
     let type: MeasurementType
     let lowerIsBetter: Bool
     let defaultUnit: UnitType
+    let isRecord: Bool // Whether this field should be considered a record
     
-    init(type: MeasurementType, lowerIsBetter: Bool = false, defaultUnit: UnitType) {
+    init(type: MeasurementType,
+         isRecord: Bool,
+         lowerIsBetter: Bool = false,
+         defaultUnit: UnitType
+    ) {
         self.type = type
+        self.isRecord = isRecord
         self.lowerIsBetter = lowerIsBetter
         self.defaultUnit = defaultUnit
     }

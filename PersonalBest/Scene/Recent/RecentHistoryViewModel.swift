@@ -34,14 +34,20 @@ extension RecentHistoryViewModel {
     
     func rebuildList() -> [RecentEntry] {
         let activityIds = Array(recordsStore.records.keys)
-        return activityIds.compactMap { id in
+        return activityIds.compactMap { id -> RecentEntry? in
             guard let activity = self.activityService.activity(id: id) else {
                 return nil
             }
-            guard let top = self.recordsStore.topValue(activity: activity, type: .weight) else {
+            guard let top = self.recordsStore.topValue(activity: activity, type: activity.primaryMeasure) else {
                 return nil
             }
             return RecentEntry(activity: activity, value: top)
+        }
+    }
+    
+    func show(activity: Activity) -> () -> Void {
+        return { [unowned self] in
+            self.coordinator.push(RootPath.activityDetails(activity))
         }
     }
     

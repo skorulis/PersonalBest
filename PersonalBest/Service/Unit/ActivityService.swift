@@ -14,19 +14,19 @@ extension ActivityService {
     
     var defaultActivities: [Activity] {
         return [
-            .init(systemName: "Bench press", measureTypes: [.weight, .reps]),
-            .init(systemName: "Push ups", measureTypes: [.reps]),
-            .init(systemName: "Wide grip push ups", measureTypes: [.reps]),
-            .init(systemName: "Fingertip push ups", measureTypes: [.reps]),
-            .init(systemName: "Wall handstand push ups", measureTypes: [.reps]),
-            .init(systemName: "Dips", measureTypes: [.reps]),
-            .init(systemName: "Weighted dips", measureTypes: [.weight, .reps]),
-            .init(systemName: "Plank", measureTypes: [.time]),
-            .init(systemName: "High plank", measureTypes: [.time]),
-            .init(systemName: "Wall sit", measureTypes: [.time]),
-            .init(systemName: "Star plank", measureTypes: [.time]),
-            .init(systemName: "Static squat", measureTypes: [.time]),
-            .init(systemName: "Running", measureTypes: [.distance, .time]),
+            .init(systemName: "Bench press", tracking: .weightlifting),
+            .init(systemName: "Push ups", singleMeasure: .reps),
+            .init(systemName: "Wide grip push ups", singleMeasure: .reps),
+            .init(systemName: "Fingertip push ups", singleMeasure: .reps),
+            .init(systemName: "Wall handstand push ups", singleMeasure: .reps),
+            .init(systemName: "Dips", singleMeasure: .reps),
+            .init(systemName: "Weighted dips", tracking: .weightlifting),
+            .init(systemName: "Plank", singleMeasure: .time),
+            .init(systemName: "High plank", singleMeasure: .time),
+            .init(systemName: "Wall sit", singleMeasure: .time),
+            .init(systemName: "Star plank", singleMeasure: .time),
+            .init(systemName: "Static squat", singleMeasure: .time),
+            .init(systemName: "Running", tracking: .cardio),
         ]
     }
     

@@ -43,5 +43,7 @@ public final class IOC: IOCService {
         
         container.autoregister(RecentHistoryViewModel.self, initializer: RecentHistoryViewModel.init)
         
+        container.autoregister(SettingsViewModel.self, initializer: SettingsViewModel.init)
+        
     }
 }

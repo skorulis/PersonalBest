@@ -16,6 +16,7 @@ struct ContentView: View {
         TabView {
             recentTab
             activityTab
+            settingsTab
         }
     }
     
@@ -23,7 +24,7 @@ struct ContentView: View {
         CoordinatorView(coordinator: MainCoordinator(root: .recent, factory: factory))
             .tabItem {
                 Text("Recent")
-                Image(systemName: "archivebox")
+                Image(systemName: "clock.fill")
             }
     }
     
@@ -32,6 +33,14 @@ struct ContentView: View {
             .tabItem {
                 Text("Activity")
                 Image(systemName: "list.bullet")
+            }
+    }
+    
+    var settingsTab: some View {
+        CoordinatorView(coordinator: MainCoordinator(root: .settings, factory: factory))
+            .tabItem {
+                Text("Settings")
+                Image(systemName: "gearshape.fill")
             }
     }
 }

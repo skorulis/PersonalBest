@@ -26,13 +26,26 @@ extension RecentHistoryView: View {
     private func content() -> some View {
         VStack {
             ForEach(viewModel.records) { item in
-                row(item)
+                Button(action: viewModel.show(activity: item.activity)) {
+                    row(item)
+                }
             }
         }
     }
     
     private func row(_ data: RecentEntry) -> some View {
-        Text(data.activity.name)
+        HStack {
+            VStack(alignment: .leading) {
+                Text(data.activity.name)
+                Text(DateFormatter.mediumDate.string(from: data.value.date))
+            }
+            Spacer()
+            VStack(alignment: .leading) {
+                RecordValueDisplay(value: data.value.value, unit: data.value.unit)
+            }
+            
+        }
+        
     }
 }
 
