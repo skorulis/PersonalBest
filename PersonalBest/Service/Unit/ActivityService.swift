@@ -30,4 +30,8 @@ extension ActivityService {
         ]
     }
     
+    func activity(id: String) -> Activity? {
+        return defaultActivities.first(where: {$0.id == id})
+    }
+    
 }

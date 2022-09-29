@@ -8,21 +8,28 @@ final class ActivityDetailsViewModel: CoordinatedViewModel, ObservableObject {
     
     let activity: Activity
     private let recordsStore: RecordsStore
+    private let graphGenerator: GraphDataGenerator
     
-    @Published var recordBreakdown: [RecordEntries] = []
+    @Published var recordBreakdown: ActivityBreakdown
+    @Published var displayType: DisplayType = .chart
     
     init(activity: Activity,
-         recordsStore: RecordsStore
+         recordsStore: RecordsStore,
+         graphGenerator: GraphDataGenerator
     ) {
         self.activity = activity
         self.recordsStore = recordsStore
+        self.graphGenerator = graphGenerator
+        self.recordBreakdown = self.graphGenerator.breakdown(activity: self.activity)
         super.init()
-        self.recordBreakdown = self.breakdown()
+        if !self.recordBreakdown.canGraph {
+            self.displayType = .list
+        }
         
         recordsStore.objectWillChange
             .delayedChange()
             .sink { [unowned self] _ in
-                self.recordBreakdown = self.breakdown()
+                self.recordBreakdown = self.graphGenerator.breakdown(activity: self.activity)
             }
             .store(in: &subscribers)
     }
@@ -65,15 +72,28 @@ extension ActivityDetailsViewModel {
 
 extension ActivityDetailsViewModel {
     
-    func breakdown() -> [RecordEntries] {
-        let type = activity.breakdownType
-        let entries = RecordEntries.breakdown(type: type, records: self.records)
-        return RecordEntries.finalise(entries: entries)
-    }
-    
     func addEntry() {
         let path = RootPath.addEntry(activity)
         coordinator.present(path, style: .sheet)
+    }
+    
+    func delete(indexSet: IndexSet) {
+        indexSet.forEach { index in
+            let entry = self.records[index]
+            self.recordsStore.delete(entry: entry, activity: self.activity)
+        }
+        
+    }
+    
+}
+
+// MARK: - Inner types
+
+extension ActivityDetailsViewModel {
+    
+    enum DisplayType {
+        case list
+        case chart
     }
     
 }

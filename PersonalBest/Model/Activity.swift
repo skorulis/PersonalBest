@@ -54,6 +54,10 @@ struct Activity: Codable, Identifiable {
         fatalError("No breakdown for this activity")
     }
     
+    func unit(type: MeasurementType) -> UnitType {
+        return measurements.first(where: {$0.type == type})?.defaultUnit ?? type.defaultUnit
+    }
+    
 }
 
 struct MeasurementEntry: Codable {

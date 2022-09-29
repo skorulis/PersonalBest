@@ -14,8 +14,17 @@ struct ContentView: View {
     
     var mainTabs: some View {
         TabView {
+            recentTab
             activityTab
         }
+    }
+    
+    var recentTab: some View {
+        CoordinatorView(coordinator: MainCoordinator(root: .recent, factory: factory))
+            .tabItem {
+                Text("Recent")
+                Image(systemName: "archivebox")
+            }
     }
     
     var activityTab: some View {

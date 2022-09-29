@@ -20,7 +20,7 @@ extension ActivityListView: View {
     }
     
     private func nav() -> some View {
-        return NavBar(left: BarButtonItem.back(viewModel.back),
+        return NavBar(left: EmptyView(),
                       mid: BarButtonItem.title("Activities"),
                       right: BarButtonItem.iconButton(Image(systemName: "plus"), viewModel.add)
         )

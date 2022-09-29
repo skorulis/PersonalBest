@@ -23,6 +23,10 @@ enum UnitType: String, Codable {
         }
     }
     
+    var symbolString: String {
+        return unit.symbol
+    }
+    
 }
 
 class UnitReps: Dimension {

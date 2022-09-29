@@ -15,10 +15,7 @@ struct ActivityEntry: Codable, Identifiable {
     }
     
     var dateString: String {
-        let formatter = DateFormatter()
-        formatter.timeStyle = .none
-        formatter.dateStyle = .medium
-        return formatter.string(from: date)
+        return DateFormatter.mediumDate.string(from: date)
     }
     
 }

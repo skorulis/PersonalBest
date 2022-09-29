@@ -18,6 +18,7 @@ public final class IOC: IOCService {
         container.autoregister(UnitService.self, initializer: UnitService.init)
             .inObjectScope(.container)
         container.autoregister(ActivityService.self, initializer: ActivityService.init)
+        container.autoregister(GraphDataGenerator.self, initializer: GraphDataGenerator.init)
     }
     
     private func registerStores() {
@@ -39,6 +40,8 @@ public final class IOC: IOCService {
         container.autoregister(ActivityListViewModel.self, initializer: ActivityListViewModel.init)
         container.autoregister(ActivityDetailsViewModel.self, argument: Activity.self, initializer: ActivityDetailsViewModel.init)
         container.autoregister(AddEntryViewModel.self, argument: Activity.self, initializer: AddEntryViewModel.init)
+        
+        container.autoregister(RecentHistoryViewModel.self, initializer: RecentHistoryViewModel.init)
         
     }
 }

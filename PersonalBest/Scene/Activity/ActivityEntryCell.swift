@@ -15,15 +15,21 @@ struct ActivityEntryCell {
 extension ActivityEntryCell: View {
     
     var body: some View {
+        content
+    }
+    
+    private var content: some View {
         HStack {
             Text(entry.dateString)
+                .font(.title)
             Spacer()
             valueList
         }
+        .padding(.horizontal, 16)
     }
     
     private var valueList: some View {
-        VStack(alignment: .trailing) {
+        VStack(alignment: .leading) {
             ForEach(activity.measurementTypes) { type in
                 valueItem(type: type)
             }
@@ -33,18 +39,13 @@ extension ActivityEntryCell: View {
     @ViewBuilder
     private func valueItem(type: MeasurementType) -> some View {
         if let value = entry.values[type] {
-            HStack {
-                Text(String(describing: value))
-                Text(unitString(type: type))
-            }
-            
+            RecordValueDisplay(value: value, unit: getUnit(type: type))
         }
-        
     }
     
-    func unitString(type: MeasurementType) -> String {
+    private func getUnit(type: MeasurementType) -> UnitType {
         let match = activity.measurements.first(where: {$0.type == type})
-        return match?.defaultUnit.unit.symbol ?? ""
+        return match?.defaultUnit ?? type.defaultUnit
     }
 }
 

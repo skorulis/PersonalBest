@@ -10,6 +10,7 @@ import Charts
 struct ActivityDetailsView {
     
     @StateObject var viewModel: ActivityDetailsViewModel
+    @State private var iconAnimating = false
     
 }
 
@@ -18,7 +19,11 @@ struct ActivityDetailsView {
 extension ActivityDetailsView: View {
     
     var body: some View {
-        PageTemplate(nav: nav, content: content)
+        VStack(spacing: 0) {
+            nav()
+            content()
+        }
+        .navigationBarHidden(true)
     }
     
     private func nav() -> some View {
@@ -28,20 +33,80 @@ extension ActivityDetailsView: View {
     }
     
     private func content() -> some View {
-        VStack {
-            newEntry
+        List {
+            header
+                .listRowSeparator(.hidden)
             
-            historyList
-            
-            chart
+            if viewModel.recordBreakdown.hasData {
+                bottomSection
+            }
             
         }
-        .padding(.horizontal, 16)
+        .listStyle(.plain)
     }
     
-    private var chart: some View {
+    @ViewBuilder
+    private var header: some View {
+        VStack {
+            if let top = viewModel.recordBreakdown.highestValue {
+                topRecord(top)
+            } else {
+                Text("No records logged")
+            }
+            newEntry
+        }
+        .frame(maxWidth: .infinity)
+    }
+    
+    private func topRecord(_ value: TopRecord) -> some View {
+        VStack {
+            Image("first-icon")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(height: 60)
+                .padding(.vertical, 30)
+                .scaleEffect(iconAnimating ? 1.2 : 1)
+                .animation(iconAnimation, value: iconAnimating)
+                .onAppear {
+                    iconAnimating = true
+                }
+            RecordValueDisplay(value: value.value, unit: value.unit)
+            
+            Text(DateFormatter.mediumDate.string(from: value.date))
+        }
+    }
+    
+    @ViewBuilder
+    private var bottomSection: some View {
+        maybePicker
+            .listRowSeparator(.hidden)
+        chartOrList
+    }
+    
+    @ViewBuilder
+    private var maybePicker: some View {
+        if viewModel.recordBreakdown.canGraph {
+            Picker("Selection", selection: $viewModel.displayType) {
+                Text("Chart").tag(ActivityDetailsViewModel.DisplayType.chart)
+                Text("List").tag(ActivityDetailsViewModel.DisplayType.list)
+            }
+            .pickerStyle(.segmented)
+        }
+    }
+    
+    @ViewBuilder
+    private var chartOrList: some View {
+        switch viewModel.displayType {
+        case .chart:
+            chartView
+        case .list:
+            historyList
+        }
+    }
+    
+    private var chartView: some View {
         Chart {
-            ForEach(viewModel.recordBreakdown) { line in
+            ForEach(viewModel.recordBreakdown.lines) { line in
                 lineContent(entries: line)
             }
             
@@ -49,7 +114,7 @@ extension ActivityDetailsView: View {
         .frame(height: 400)
     }
     
-    private func lineContent(entries: RecordEntries) -> some ChartContent {
+    private func lineContent(entries: GraphLine) -> some ChartContent {
         ForEach(entries.entries) { entry in
             LineMark(x: .value("Date", entry.date) ,
                      y: .value(entries.name, entry.value)
@@ -61,18 +126,28 @@ extension ActivityDetailsView: View {
     }
     
     private var historyList: some View {
-        LazyVStack {
-            ForEach(viewModel.records) { entry in
-                ActivityEntryCell(activity: viewModel.activity, entry: entry)
-            }
+        ForEach(viewModel.records.reversed()) { entry in
+            ActivityEntryCell(activity: viewModel.activity,
+                              entry: entry)
+            
         }
+        .onDelete(perform: viewModel.delete(indexSet:))
+        
         
     }
     
     private var newEntry: some View {
         Button(action: viewModel.addEntry) {
-            Text("Add Entry")
+            Text("New personal best")
         }
+        .buttonStyle(
+            WobbleButtonStyle(backgroundColor: .blue.opacity(0.5))
+        )
+        .padding(.vertical, 20)
+    }
+    
+    private var iconAnimation: Animation {
+        Animation.easeInOut(duration: 0.6).repeatForever(autoreverses: true)
     }
 }
 
@@ -83,6 +158,10 @@ struct ActivityDetailsView_Previews: PreviewProvider {
     static var previews: some View {
         let ioc = IOC()
         let example = Activity(name: "Pull up", measureTypes: [.reps])
+        let store = ioc.resolve(RecordsStore.self)
+        store.add(entry: .init(date: Date(), values: [.reps: 20]), activity: example)
+        
+        store.add(entry: .init(date: Date().advanced(by: 2200000), values: [.reps: 22]), activity: example)
         return ActivityDetailsView(viewModel: ioc.resolve(ActivityDetailsViewModel.self, argument: example))
     }
 }
