@@ -31,20 +31,22 @@ extension RecentHistoryView: View {
                 }
             }
         }
+        .padding(.horizontal, 16)
     }
     
     private func row(_ data: RecentEntry) -> some View {
         HStack {
             VStack(alignment: .leading) {
                 Text(data.activity.name)
+                    .font(.title)
                 Text(DateFormatter.mediumDate.string(from: data.value.date))
             }
             Spacer()
             VStack(alignment: .leading) {
                 RecordValueDisplay(value: data.value.value, unit: data.value.unit)
             }
-            
         }
+        .foregroundColor(.primary)
         
     }
 }
@@ -55,7 +57,11 @@ struct RecentHistoryView_Previews: PreviewProvider {
     
     static var previews: some View {
         let ioc = IOC()
-        RecentHistoryView(viewModel: ioc.resolve())
+        let recordsStore = ioc.resolve(RecordsStore.self)
+        let activity = Activity(systemName: "Bench press", tracking: .weightlifting)
+        recordsStore.add(entry: .init(date: Date(), values: [.weight: 10, .reps: 10]), activity: activity)
+        
+        return RecentHistoryView(viewModel: ioc.resolve())
     }
 }
 

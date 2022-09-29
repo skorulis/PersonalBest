@@ -12,7 +12,7 @@ final class GraphDataGeneratorTests: XCTestCase {
     
     func test_repsAndWeight() {
         let day: TimeInterval = 86400
-        let activity = Activity(systemName: "Bench press", measureTypes: [.weight, .reps])
+        let activity = Activity(systemName: "Bench press", tracking: .weightlifting)
         recordsStore.add(entry: .init(date: Date().advanced(by: -6 * day), values: [.reps: 1, .weight: 10]), activity: activity)
         recordsStore.add(entry: .init(date: Date().advanced(by: -4 * day), values: [.reps: 1, .weight: 15]), activity: activity)
         recordsStore.add(entry: .init(date: Date().advanced(by: -2 * day), values: [.reps: 1, .weight: 15]), activity: activity)

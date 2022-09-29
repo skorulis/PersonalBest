@@ -48,6 +48,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let ioc = IOC()
-        ContentView(viewModel: ioc.resolve())
+        return ContentView(viewModel: ioc.resolve())
     }
 }
