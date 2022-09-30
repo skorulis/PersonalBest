@@ -13,25 +13,44 @@ final class ActivityService {
 extension ActivityService {
     
     var defaultActivities: [Activity] {
+        return [bodyweightActivities, weightliftingActivities, runningActivities].flatMap { $0 }
+    }
+    
+    var bodyweightActivities: [Activity] {
         return [
-            .init(systemName: "Bench press", tracking: .weightlifting),
-            .init(systemName: "Push ups", singleMeasure: .reps),
-            .init(systemName: "Wide grip push ups", singleMeasure: .reps),
-            .init(systemName: "Fingertip push ups", singleMeasure: .reps),
-            .init(systemName: "Wall handstand push ups", singleMeasure: .reps),
-            .init(systemName: "Dips", singleMeasure: .reps),
-            .init(systemName: "Weighted dips", tracking: .weightlifting),
-            .init(systemName: "Plank", singleMeasure: .time),
-            .init(systemName: "High plank", singleMeasure: .time),
-            .init(systemName: "Wall sit", singleMeasure: .time),
-            .init(systemName: "Star plank", singleMeasure: .time),
-            .init(systemName: "Static squat", singleMeasure: .time),
-            .init(systemName: "Running", tracking: .cardio),
+            .init(systemName: "Push ups", category: .bodyWeight, singleMeasure: .reps),
+            .init(systemName: "Wide grip push ups", category: .bodyWeight, singleMeasure: .reps),
+            .init(systemName: "Fingertip push ups", category: .bodyWeight, singleMeasure: .reps),
+            .init(systemName: "Fingertip push ups", category: .bodyWeight, singleMeasure: .reps),
+            .init(systemName: "Wall handstand push ups", category: .bodyWeight, singleMeasure: .reps),
+            .init(systemName: "Dips", category: .bodyWeight, singleMeasure: .reps),
+            .init(systemName: "Plank", category: .bodyWeight, singleMeasure: .time),
+            .init(systemName: "High plank", category: .bodyWeight, singleMeasure: .time),
+            .init(systemName: "Wall sit", category: .bodyWeight, singleMeasure: .time),
+            .init(systemName: "Star plank", category: .bodyWeight, singleMeasure: .time),
+            .init(systemName: "Static squat", category: .bodyWeight, singleMeasure: .time)
         ]
+    }
+    
+    var weightliftingActivities: [Activity] {
+        return [
+            .init(systemName: "Bench press", category: .weights, tracking: .weightlifting),
+            .init(systemName: "Weighted dips", category: .weights, tracking: .weightlifting)
+            ]
+    }
+    
+    var runningActivities: [Activity] {
+        return [
+            .init(systemName: "Running", category: .running, tracking: .cardio)
+            ]
     }
     
     func activity(id: String) -> Activity? {
         return defaultActivities.first(where: {$0.id == id})
+    }
+    
+    var categories: [String] {
+        return SystemCategory.allCases.map { $0.rawValue }
     }
     
 }

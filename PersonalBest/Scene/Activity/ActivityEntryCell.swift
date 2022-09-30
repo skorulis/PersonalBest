@@ -54,7 +54,7 @@ extension ActivityEntryCell: View {
 struct ActivityEntryCell_Previews: PreviewProvider {
     
     static var previews: some View {
-        let activity = Activity(name: "Test", measureTypes: [.weight, .reps])
+        let activity = Activity(systemName: "Test", tracking: .weightlifting)
         let entry = ActivityEntry(date: Date(), values: [.weight: 10, .reps: 5])
         return ActivityEntryCell(activity: activity, entry: entry)
     }

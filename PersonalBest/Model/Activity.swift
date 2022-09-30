@@ -6,10 +6,11 @@ import Foundation
 /// Describes an activity that can be performed
 struct Activity: Codable, Identifiable {
     let id: String
+    let category: String
     let name: String
     let measurements: [MeasurementEntry]
     
-    init(name: String, measurements: [MeasurementEntry]) {
+    /*init(name: String, measurements: [MeasurementEntry]) {
         self.name = name
         self.measurements = measurements
         self.id = UUID().uuidString
@@ -19,18 +20,26 @@ struct Activity: Codable, Identifiable {
         self.name = name
         self.measurements = measureTypes.map { .init(type: $0, isRecord: true, defaultUnit: $0.defaultUnit) }
         self.id = UUID().uuidString
-    }
+    }*/
     
-    init(systemName: String, singleMeasure: MeasurementType) {
+    init(systemName: String,
+         category: SystemCategory = .other,
+         singleMeasure: MeasurementType
+    ) {
         self.name = systemName
         self.measurements = [.init(type: singleMeasure, isRecord: true, defaultUnit: singleMeasure.defaultUnit) ]
+        self.category = category.rawValue
         self.id = Self.hash(name: systemName)
     }
     
-    init(systemName: String, tracking: ActivityTrackingType) {
+    init(systemName: String,
+         category: SystemCategory = .other,
+         tracking: ActivityTrackingType
+    ) {
         self.name = systemName
         self.measurements = tracking.measurements
         self.id = Self.hash(name: systemName)
+        self.category = category.rawValue
     }
     
     var measurementTypes: [MeasurementType] {

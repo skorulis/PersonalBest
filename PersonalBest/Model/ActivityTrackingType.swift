@@ -21,4 +21,5 @@ enum ActivityTrackingType {
             ]
         }
     }
+    
 }

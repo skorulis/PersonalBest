@@ -22,6 +22,7 @@
 		FA2D796828E5A71D0032BEC0 /* ActivityTrackingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2D796728E5A71D0032BEC0 /* ActivityTrackingType.swift */; };
 		FA2D796B28E5B7D90032BEC0 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2D796A28E5B7D90032BEC0 /* SettingsView.swift */; };
 		FA2D796D28E5B7E50032BEC0 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2D796C28E5B7E50032BEC0 /* SettingsViewModel.swift */; };
+		FA2D796F28E64AED0032BEC0 /* SystemCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2D796E28E64AED0032BEC0 /* SystemCategory.swift */; };
 		FA6D958528E187C9004D4D98 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA6D958428E187C9004D4D98 /* Preview Assets.xcassets */; };
 		FA6D958E28E18DCA004D4D98 /* ASKCore in Resources */ = {isa = PBXBuildFile; fileRef = FA6D958C28E18DCA004D4D98 /* ASKCore */; };
 		FA6D958F28E18DCA004D4D98 /* ASSwiftUI in Resources */ = {isa = PBXBuildFile; fileRef = FA6D958D28E18DCA004D4D98 /* ASSwiftUI */; };
@@ -80,6 +81,7 @@
 		FA2D796728E5A71D0032BEC0 /* ActivityTrackingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTrackingType.swift; sourceTree = "<group>"; };
 		FA2D796A28E5B7D90032BEC0 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		FA2D796C28E5B7E50032BEC0 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		FA2D796E28E64AED0032BEC0 /* SystemCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemCategory.swift; sourceTree = "<group>"; };
 		FA6D957A28E187C8004D4D98 /* PersonalBest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PersonalBest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA6D958428E187C9004D4D98 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		FA6D958C28E18DCA004D4D98 /* ASKCore */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ASKCore; sourceTree = "<group>"; };
@@ -292,6 +294,7 @@
 				FA2D793C28E42D3C0032BEC0 /* UnitType.swift */,
 				FA2D795128E537020032BEC0 /* ActivityBreakdown.swift */,
 				FA2D796728E5A71D0032BEC0 /* ActivityTrackingType.swift */,
+				FA2D796E28E64AED0032BEC0 /* SystemCategory.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -528,6 +531,7 @@
 				FAE05D9C28E2DDF800F4697E /* AddEntryView.swift in Sources */,
 				FA6D959E28E18E6F004D4D98 /* IOC.swift in Sources */,
 				FAE05D9028E2B96C00F4697E /* ContentViewModel.swift in Sources */,
+				FA2D796F28E64AED0032BEC0 /* SystemCategory.swift in Sources */,
 				FA2D795B28E55BC90032BEC0 /* AnimatableVector.swift in Sources */,
 				FA6D95A428E197E9004D4D98 /* Activity.swift in Sources */,
 				FAE05DA128E3A85300F4697E /* RepsField.swift in Sources */,

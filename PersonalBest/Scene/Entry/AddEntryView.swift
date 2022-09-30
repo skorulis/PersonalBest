@@ -60,7 +60,7 @@ struct AddEntryView_Previews: PreviewProvider {
     
     static var previews: some View {
         let ioc = IOC()
-        let example = Activity(name: "Pull up", measureTypes: [.reps])
+        let example = Activity(systemName: "Pull up", singleMeasure: .reps)
         AddEntryView(viewModel: ioc.resolve(AddEntryViewModel.self, argument: example))
     }
 }

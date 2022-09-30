@@ -157,7 +157,7 @@ struct ActivityDetailsView_Previews: PreviewProvider {
     
     static var previews: some View {
         let ioc = IOC()
-        let example = Activity(name: "Pull up", measureTypes: [.reps])
+        let example = Activity(systemName: "Pull up", singleMeasure: .reps)
         let store = ioc.resolve(RecordsStore.self)
         store.add(entry: .init(date: Date(), values: [.reps: 20]), activity: example)
         

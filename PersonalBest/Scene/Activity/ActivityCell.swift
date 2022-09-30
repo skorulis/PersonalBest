@@ -33,7 +33,7 @@ extension ActivityCell: View {
 struct ActivityCell_Previews: PreviewProvider {
     
     static var previews: some View {
-        let example = Activity(name: "Pullup", measureTypes: [.reps])
+        let example = Activity(systemName: "Pullup", singleMeasure: .reps)
         return VStack {
             ActivityCell(activity: example)
         }

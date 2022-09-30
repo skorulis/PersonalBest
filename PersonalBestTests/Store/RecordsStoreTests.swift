@@ -10,7 +10,7 @@ final class RecordsStoreTests: XCTestCase {
     private lazy var sut = ioc.resolve(RecordsStore.self)
     
     func test_ordering() throws {
-        let activity = Activity(name: "Test", measureTypes: [.reps])
+        let activity = Activity(systemName: "Test", singleMeasure: .reps)
         
         let d1 = Date(timeIntervalSince1970: 100000)
         let d2 = Date(timeIntervalSince1970: 1000000)
