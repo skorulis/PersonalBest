@@ -33,6 +33,8 @@ public final class IOC: IOCService {
         
         container.autoregister(RecordsStore.self, initializer: RecordsStore.init)
             .inObjectScope(.container)
+        container.autoregister(WorkoutStore.self, initializer: WorkoutStore.init)
+            .inObjectScope(.container)
     }
     
     private func setupViewModels() {
@@ -49,6 +51,11 @@ public final class IOC: IOCService {
         container.autoregister(RecentHistoryViewModel.self, initializer: RecentHistoryViewModel.init)
         
         container.autoregister(SettingsViewModel.self, initializer: SettingsViewModel.init)
+        
+        container.autoregister(WorkoutListViewModel.self, initializer: WorkoutListViewModel.init)
+        container.autoregister(WorkoutDetailsViewModel.self,
+                               argument: Workout.self,
+                               initializer: WorkoutDetailsViewModel.init)
         
     }
 }

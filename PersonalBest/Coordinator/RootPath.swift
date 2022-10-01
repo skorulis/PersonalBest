@@ -14,6 +14,8 @@ enum RootPath: CoordinatorPath, Hashable, Identifiable {
     case settings
     case categories
     case categoryActivities(_ category: String)
+    case workoutList
+    case workout(_ workout: Workout)
     
     @ViewBuilder
     func render(coordinator: MainCoordinator) -> some View {
@@ -32,6 +34,10 @@ enum RootPath: CoordinatorPath, Hashable, Identifiable {
             CategoryListView(viewModel: coordinator.resolve())
         case .categoryActivities(let category):
             CategoryActivitiesView(viewModel: coordinator.resolve(CategoryActivitiesViewModel.self, argument: category))
+        case .workoutList:
+            WorkoutListView(viewModel: coordinator.resolve())
+        case .workout(let workout):
+            WorkoutDetailsView(viewModel: coordinator.resolve(WorkoutDetailsViewModel.self, argument: workout))
             
         }
     }
@@ -41,6 +47,7 @@ enum RootPath: CoordinatorPath, Hashable, Identifiable {
         case .activityDetails(let activity): return "activity-details-\(activity.id)"
         case .addEntry(let activity): return "addEntry-\(activity.id)"
         case .categoryActivities(let category): return "category-\(category)"
+        case .workout(let workout): return "workout-\(workout)"
         default: return String(describing: self)
         }
     }

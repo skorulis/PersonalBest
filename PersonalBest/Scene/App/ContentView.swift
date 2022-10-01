@@ -12,15 +12,16 @@ struct ContentView: View {
         mainTabs
     }
     
-    var mainTabs: some View {
+    private var mainTabs: some View {
         TabView {
             recentTab
+            workoutTab
             activityTab
             settingsTab
         }
     }
     
-    var recentTab: some View {
+    private var recentTab: some View {
         CoordinatorView(coordinator: MainCoordinator(root: .recent, factory: factory))
             .tabItem {
                 Text("Recent")
@@ -28,7 +29,7 @@ struct ContentView: View {
             }
     }
     
-    var activityTab: some View {
+    private var activityTab: some View {
         CoordinatorView(coordinator: MainCoordinator(root: .categories, factory: factory))
             .tabItem {
                 Text("Activity")
@@ -36,7 +37,15 @@ struct ContentView: View {
             }
     }
     
-    var settingsTab: some View {
+    private var workoutTab: some View {
+        CoordinatorView(coordinator: MainCoordinator(root: .workoutList, factory: factory))
+            .tabItem {
+                Text("Workouts")
+                Image("dumbbell")
+            }
+    }
+    
+    private var settingsTab: some View {
         CoordinatorView(coordinator: MainCoordinator(root: .settings, factory: factory))
             .tabItem {
                 Text("Settings")
