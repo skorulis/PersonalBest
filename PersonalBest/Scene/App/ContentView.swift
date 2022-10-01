@@ -29,7 +29,7 @@ struct ContentView: View {
     }
     
     var activityTab: some View {
-        CoordinatorView(coordinator: MainCoordinator(root: .activity, factory: factory))
+        CoordinatorView(coordinator: MainCoordinator(root: .categories, factory: factory))
             .tabItem {
                 Text("Activity")
                 Image(systemName: "list.bullet")

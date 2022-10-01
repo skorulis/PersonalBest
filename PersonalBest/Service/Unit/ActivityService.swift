@@ -21,7 +21,6 @@ extension ActivityService {
             .init(systemName: "Push ups", category: .bodyWeight, singleMeasure: .reps),
             .init(systemName: "Wide grip push ups", category: .bodyWeight, singleMeasure: .reps),
             .init(systemName: "Fingertip push ups", category: .bodyWeight, singleMeasure: .reps),
-            .init(systemName: "Fingertip push ups", category: .bodyWeight, singleMeasure: .reps),
             .init(systemName: "Wall handstand push ups", category: .bodyWeight, singleMeasure: .reps),
             .init(systemName: "Dips", category: .bodyWeight, singleMeasure: .reps),
             .init(systemName: "Plank", category: .bodyWeight, singleMeasure: .time),

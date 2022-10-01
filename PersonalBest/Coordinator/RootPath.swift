@@ -12,6 +12,8 @@ enum RootPath: CoordinatorPath, Hashable, Identifiable {
     case addEntry(_ activity: Activity)
     case recent
     case settings
+    case categories
+    case categoryActivities(_ category: String)
     
     @ViewBuilder
     func render(coordinator: MainCoordinator) -> some View {
@@ -26,17 +28,20 @@ enum RootPath: CoordinatorPath, Hashable, Identifiable {
             RecentHistoryView(viewModel: coordinator.resolve())
         case .settings:
             SettingsView(viewModel: coordinator.resolve())
+        case .categories:
+            CategoryListView(viewModel: coordinator.resolve())
+        case .categoryActivities(let category):
+            CategoryActivitiesView(viewModel: coordinator.resolve(CategoryActivitiesViewModel.self, argument: category))
             
         }
     }
     
     var id: String {
         switch self {
-        case .activity: return "activity"
         case .activityDetails(let activity): return "activity-details-\(activity.id)"
         case .addEntry(let activity): return "addEntry-\(activity.id)"
-        case .recent: return "recent"
-        case .settings: return "settings"
+        case .categoryActivities(let category): return "category-\(category)"
+        default: return String(describing: self)
         }
     }
     

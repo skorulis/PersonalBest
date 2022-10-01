@@ -41,6 +41,11 @@ public final class IOC: IOCService {
         container.autoregister(ActivityDetailsViewModel.self, argument: Activity.self, initializer: ActivityDetailsViewModel.init)
         container.autoregister(AddEntryViewModel.self, argument: Activity.self, initializer: AddEntryViewModel.init)
         
+        container.autoregister(CategoryListViewModel.self, initializer: CategoryListViewModel.init)
+        container.autoregister(CategoryActivitiesViewModel.self,
+                               argument: String.self,
+                               initializer: CategoryActivitiesViewModel.init)
+        
         container.autoregister(RecentHistoryViewModel.self, initializer: RecentHistoryViewModel.init)
         
         container.autoregister(SettingsViewModel.self, initializer: SettingsViewModel.init)
