@@ -2,7 +2,7 @@
 
 import Foundation
 
-enum ActivityTrackingType {
+enum ActivityTrackingType: String {
     
     case weightlifting
     case cardio

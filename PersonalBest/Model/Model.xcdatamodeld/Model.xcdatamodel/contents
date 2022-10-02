@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21509" systemVersion="21G72" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="PBActivity" representedClassName="PBActivity" syncable="YES">
+        <attribute name="name" attributeType="String"/>
+        <attribute name="trackingTypeString" attributeType="String"/>
+        <relationship name="category" maxCount="1" deletionRule="Nullify" destinationEntity="PBActivityCategory" inverseName="activities" inverseEntity="PBActivityCategory"/>
+        <relationship name="records" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PBRecordEntry" inverseName="activity" inverseEntity="PBRecordEntry"/>
+    </entity>
+    <entity name="PBActivityCategory" representedClassName="PBActivityCategory" syncable="YES">
+        <attribute name="name" attributeType="String"/>
+        <relationship name="activities" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PBActivity" inverseName="category" inverseEntity="PBActivity"/>
+    </entity>
+    <entity name="PBRecordEntry" representedClassName="PBRecordEntry" syncable="YES">
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="entryValuesData" attributeType="Binary"/>
+        <relationship name="activity" maxCount="1" deletionRule="Nullify" destinationEntity="PBActivity" inverseName="records" inverseEntity="PBActivity"/>
+    </entity>
+</model>
