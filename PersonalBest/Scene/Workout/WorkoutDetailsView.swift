@@ -39,7 +39,6 @@ extension WorkoutDetailsView: View {
                 Text("Add exercise")
             }
         }
-        .padding(.horizontal, 16)
     }
     
     private var exerciseList: some View {
@@ -52,8 +51,11 @@ extension WorkoutDetailsView: View {
     @ViewBuilder
     private func exerciseCell(_ exercise: Exercise) -> some View {
         Text(viewModel.activity(id: exercise.activityID).name)
+            .bold()
         ForEach(exercise.entries) { entry in
-            Text("Entry")
+            WorkoutEntryCell(activity: viewModel.activity(id: exercise.activityID),
+                             exercise: exercise,
+                             entry: viewModel.binding(exercise, entry))
         }
         .onDelete(perform: viewModel.deleteEntry(exercise: exercise))
         Button(action: {viewModel.addSet(exercise: exercise)}) {

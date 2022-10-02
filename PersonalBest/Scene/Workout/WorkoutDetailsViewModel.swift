@@ -1,6 +1,7 @@
 //Created by Alexander Skorulis on 1/10/2022.
 
 import Foundation
+import SwiftUI
 
 // MARK: - Memory footprint
 
@@ -46,20 +47,22 @@ extension WorkoutDetailsViewModel {
     }
     
     func delete(_ indexSet: IndexSet) {
-        print("Delete \(indexSet)")
-        indexSet.forEach { value in
-            print("Index \(value)")
+        indexSet.reversed().forEach { value in
+            self.workout.exercises.remove(at: value)
         }
     }
     
     func deleteEntry(exercise: Exercise) -> (IndexSet) -> Void {
-        return { indexSet in
+        return { [unowned self] indexSet in
             var mutableExercise = exercise
             indexSet.forEach { index in
-                print("Remove entry \(index)")
                 mutableExercise.entries.remove(at: index)
             }
-            self.workout.replace(exercise: mutableExercise)
+            if mutableExercise.entries.isEmpty {
+                self.workout.remove(exercise: exercise)
+            } else {
+                self.workout.replace(exercise: mutableExercise)
+            }
         }
     }
     
@@ -76,6 +79,23 @@ extension WorkoutDetailsViewModel {
             self.workout.exercises.append(exercise)
         }
         coordinator.present(path, style: .sheet)
+    }
+    
+    func binding(_ exercise: Exercise) -> Binding<Exercise> {
+        return Binding<Exercise> { [unowned self] in
+            return self.workout.exercise(id: exercise.id)
+        } set: { [unowned self] newValue in
+            self.workout.replace(exercise: newValue)
+        }
+    }
+    
+    func binding(_ exercise: Exercise, _ entry: ExerciseEntry) -> Binding<ExerciseEntry> {
+        let bindingExercise = binding(exercise)
+        return Binding<ExerciseEntry> {
+            return bindingExercise.wrappedValue.entry(id: entry.id)
+        } set: { newValue in
+            bindingExercise.wrappedValue.replace(entry: newValue)
+        }
     }
     
 }

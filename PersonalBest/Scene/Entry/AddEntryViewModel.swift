@@ -40,7 +40,7 @@ extension AddEntryViewModel {
     func binding(_ type: MeasurementType) -> Binding<Decimal?> {
         return Binding<Decimal?> { [unowned self] in
             return self.values[type]
-        } set: { newValue in
+        } set: { [unowned self] newValue in
             self.values[type] = newValue
         }
     }
