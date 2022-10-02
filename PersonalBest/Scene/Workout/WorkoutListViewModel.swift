@@ -29,6 +29,8 @@ extension WorkoutListViewModel {
     
 }
 
+// MARK: - Logic
+
 extension WorkoutListViewModel {
     
     func add() {
@@ -47,6 +49,33 @@ extension WorkoutListViewModel {
         let ids = indexes.map { self.workouts[$0].id }
         
         store.workouts = store.workouts.filter { ids.contains($0.id) }
-        
+    }
+    
+    static func group(workouts: [Workout]) -> [MonthWorkouts] {
+        var dict: [Date: [Workout]] = [:]
+        for workout in workouts {
+            let month = workout.startDate.startOfMonth
+            if dict[month] == nil {
+                dict[month] = [workout]
+            } else {
+                dict[month]?.append(workout)
+            }
+        }
+        let array = dict.map { (key, value) in
+            return MonthWorkouts(month: key, workouts: value)
+        }
+        return array.sorted { m1, m2 in
+            return m1.month < m2.month
+        }
+    }
+    
+}
+
+// MARK: - Inner types
+
+extension WorkoutListViewModel {
+    struct MonthWorkouts {
+        let month: Date
+        let workouts: [Workout]
     }
 }

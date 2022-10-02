@@ -8,6 +8,7 @@ import SwiftUI
 struct WorkoutCell {
     
     let workout: Workout
+    @Environment(\.factory) private var factory
     
 }
 
@@ -16,9 +17,33 @@ struct WorkoutCell {
 extension WorkoutCell: View {
     
     var body: some View {
-        VStack {
-            Text(DateFormatter.mediumDate.string(from: workout.startDate))
+        HStack(alignment: .top, spacing: 8) {
+            dateView
+            VStack(alignment: .leading) {
+                ForEach(workout.exercises) { exercise in
+                    exerciseCounts(exercise)
+                }
+            }
         }
+    }
+    
+    private var dateView: some View {
+        VStack {
+            Text(DateFormatter.shortDayName.string(from: workout.startDate))
+            Text(DateFormatter.dayOfMonth.string(from: workout.startDate))
+                .bold()
+        }
+    }
+    
+    private func exerciseCounts(_ exercise: Exercise) -> some View {
+        let act = activity(id: exercise.activityID)
+        return VStack(alignment: .leading, spacing: 0) {
+            Text("\(exercise.entries.count)x \(act.name)")
+        }
+    }
+    
+    func activity(id: String) -> Activity {
+        return factory.resolve(ActivityService.self).activity(id: id)!
     }
 }
 

@@ -18,23 +18,29 @@ extension ActivityService {
     
     var bodyweightActivities: [Activity] {
         return [
-            .init(systemName: "Push ups", category: .bodyWeight, singleMeasure: .reps),
-            .init(systemName: "Wide grip push ups", category: .bodyWeight, singleMeasure: .reps),
-            .init(systemName: "Fingertip push ups", category: .bodyWeight, singleMeasure: .reps),
-            .init(systemName: "Wall handstand push ups", category: .bodyWeight, singleMeasure: .reps),
+            .init(systemName: "Bodyweight squat", category: .bodyWeight, singleMeasure: .reps),
+            .init(systemName: "Bosu ball squat", category: .bodyWeight, singleMeasure: .reps),
             .init(systemName: "Dips", category: .bodyWeight, singleMeasure: .reps),
-            .init(systemName: "Plank", category: .bodyWeight, singleMeasure: .time),
+            .init(systemName: "Fingertip push ups", category: .bodyWeight, singleMeasure: .reps),
             .init(systemName: "High plank", category: .bodyWeight, singleMeasure: .time),
-            .init(systemName: "Wall sit", category: .bodyWeight, singleMeasure: .time),
+            .init(systemName: "Plank", category: .bodyWeight, singleMeasure: .time),
+            .init(systemName: "Pull up", category: .bodyWeight, singleMeasure: .time),
+            .init(systemName: "Push ups", category: .bodyWeight, singleMeasure: .reps),
             .init(systemName: "Star plank", category: .bodyWeight, singleMeasure: .time),
-            .init(systemName: "Static squat", category: .bodyWeight, singleMeasure: .time)
+            .init(systemName: "Static squat", category: .bodyWeight, singleMeasure: .time),
+            .init(systemName: "Wide grip push ups", category: .bodyWeight, singleMeasure: .reps),
+            .init(systemName: "Wall handstand push ups", category: .bodyWeight, singleMeasure: .reps),
+            .init(systemName: "Wall sit", category: .bodyWeight, singleMeasure: .time),
         ]
     }
     
     var weightliftingActivities: [Activity] {
         return [
             .init(systemName: "Bench press", category: .weights, tracking: .weightlifting),
-            .init(systemName: "Weighted dips", category: .weights, tracking: .weightlifting)
+            .init(systemName: "Weighted dips", category: .weights, tracking: .weightlifting),
+            .init(systemName: "Shoulder press machine", category: .weights, tracking: .weightlifting),
+            .init(systemName: "Oblique cable twist", category: .weights, tracking: .weightlifting),
+            .init(systemName: "Tricep pushdown", category: .weights, tracking: .weightlifting)
             ]
     }
     
