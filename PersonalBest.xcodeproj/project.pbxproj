@@ -34,6 +34,9 @@
 		FA2D798428E828B80032BEC0 /* WorkoutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2D798328E828B80032BEC0 /* WorkoutCell.swift */; };
 		FA2D798628E82B650032BEC0 /* WorkoutDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2D798528E82B650032BEC0 /* WorkoutDetailsView.swift */; };
 		FA2D798828E82B6E0032BEC0 /* WorkoutDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2D798728E82B6E0032BEC0 /* WorkoutDetailsViewModel.swift */; };
+		FA2D798A28E900A00032BEC0 /* WorkoutActivityPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2D798928E900A00032BEC0 /* WorkoutActivityPickerView.swift */; };
+		FA2D798C28E900E30032BEC0 /* WorkoutActivityPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2D798B28E900E30032BEC0 /* WorkoutActivityPickerViewModel.swift */; };
+		FA2D798E28E915E20032BEC0 /* ListTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2D798D28E915E20032BEC0 /* ListTemplate.swift */; };
 		FA6D958528E187C9004D4D98 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA6D958428E187C9004D4D98 /* Preview Assets.xcassets */; };
 		FA6D958E28E18DCA004D4D98 /* ASKCore in Resources */ = {isa = PBXBuildFile; fileRef = FA6D958C28E18DCA004D4D98 /* ASKCore */; };
 		FA6D958F28E18DCA004D4D98 /* ASSwiftUI in Resources */ = {isa = PBXBuildFile; fileRef = FA6D958D28E18DCA004D4D98 /* ASSwiftUI */; };
@@ -104,6 +107,9 @@
 		FA2D798328E828B80032BEC0 /* WorkoutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCell.swift; sourceTree = "<group>"; };
 		FA2D798528E82B650032BEC0 /* WorkoutDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDetailsView.swift; sourceTree = "<group>"; };
 		FA2D798728E82B6E0032BEC0 /* WorkoutDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDetailsViewModel.swift; sourceTree = "<group>"; };
+		FA2D798928E900A00032BEC0 /* WorkoutActivityPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutActivityPickerView.swift; sourceTree = "<group>"; };
+		FA2D798B28E900E30032BEC0 /* WorkoutActivityPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutActivityPickerViewModel.swift; sourceTree = "<group>"; };
+		FA2D798D28E915E20032BEC0 /* ListTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTemplate.swift; sourceTree = "<group>"; };
 		FA6D957A28E187C8004D4D98 /* PersonalBest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PersonalBest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA6D958428E187C9004D4D98 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		FA6D958C28E18DCA004D4D98 /* ASKCore */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ASKCore; sourceTree = "<group>"; };
@@ -233,6 +239,8 @@
 				FA2D798328E828B80032BEC0 /* WorkoutCell.swift */,
 				FA2D798528E82B650032BEC0 /* WorkoutDetailsView.swift */,
 				FA2D798728E82B6E0032BEC0 /* WorkoutDetailsViewModel.swift */,
+				FA2D798928E900A00032BEC0 /* WorkoutActivityPickerView.swift */,
+				FA2D798B28E900E30032BEC0 /* WorkoutActivityPickerViewModel.swift */,
 			);
 			path = Workout;
 			sourceTree = "<group>";
@@ -420,6 +428,7 @@
 				FA2D795828E55B790032BEC0 /* Path+Extensions.swift */,
 				FA2D795A28E55BC90032BEC0 /* AnimatableVector.swift */,
 				FA2D795C28E55C2E0032BEC0 /* MorphableShape.swift */,
+				FA2D798D28E915E20032BEC0 /* ListTemplate.swift */,
 			);
 			name = Theme;
 			path = PersonalBest/Theme;
@@ -562,6 +571,7 @@
 			files = (
 				FA2D796828E5A71D0032BEC0 /* ActivityTrackingType.swift in Sources */,
 				FA2D796028E56E1F0032BEC0 /* RecentHistoryView.swift in Sources */,
+				FA2D798A28E900A00032BEC0 /* WorkoutActivityPickerView.swift in Sources */,
 				FA2D795728E55ADA0032BEC0 /* WobbleButtonStyle.swift in Sources */,
 				FA6D95C128E2A6A2004D4D98 /* RecordsStore.swift in Sources */,
 				FA2D798428E828B80032BEC0 /* WorkoutCell.swift in Sources */,
@@ -577,6 +587,7 @@
 				FA6D95BD28E2602E004D4D98 /* MeasurementType.swift in Sources */,
 				FA2D798628E82B650032BEC0 /* WorkoutDetailsView.swift in Sources */,
 				FA2D795928E55B790032BEC0 /* Path+Extensions.swift in Sources */,
+				FA2D798C28E900E30032BEC0 /* WorkoutActivityPickerViewModel.swift in Sources */,
 				FA6D95BF28E270F5004D4D98 /* ActivityService.swift in Sources */,
 				FA2D796D28E5B7E50032BEC0 /* SettingsViewModel.swift in Sources */,
 				FA2D794A28E521C00032BEC0 /* GraphDataGenerator.swift in Sources */,
@@ -603,6 +614,7 @@
 				FAE05DA128E3A85300F4697E /* RepsField.swift in Sources */,
 				FA2D798228E81DC90032BEC0 /* WorkoutListViewModel.swift in Sources */,
 				FA2D795528E54B090032BEC0 /* DateFormatter+Common.swift in Sources */,
+				FA2D798E28E915E20032BEC0 /* ListTemplate.swift in Sources */,
 				FA2D793D28E42D3C0032BEC0 /* UnitType.swift in Sources */,
 				FA2D797D28E81A570032BEC0 /* Workout.swift in Sources */,
 				FA6D959928E18E39004D4D98 /* PersonalBestApp.swift in Sources */,

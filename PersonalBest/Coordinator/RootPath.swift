@@ -16,6 +16,7 @@ enum RootPath: CoordinatorPath, Hashable, Identifiable {
     case categoryActivities(_ category: String)
     case workoutList
     case workout(_ workout: Workout)
+    case selectWorkoutActivity(_ onSelect: (Activity) -> Void)
     
     @ViewBuilder
     func render(coordinator: MainCoordinator) -> some View {
@@ -38,7 +39,9 @@ enum RootPath: CoordinatorPath, Hashable, Identifiable {
             WorkoutListView(viewModel: coordinator.resolve())
         case .workout(let workout):
             WorkoutDetailsView(viewModel: coordinator.resolve(WorkoutDetailsViewModel.self, argument: workout))
-            
+        case .selectWorkoutActivity(let onSelect):
+            let arg = WorkoutActivityPickerViewModel.Argument(onSelect: onSelect)
+            WorkoutActivityPickerView(viewModel: coordinator.resolve(WorkoutActivityPickerViewModel.self, argument: arg))
         }
     }
     
@@ -48,6 +51,7 @@ enum RootPath: CoordinatorPath, Hashable, Identifiable {
         case .addEntry(let activity): return "addEntry-\(activity.id)"
         case .categoryActivities(let category): return "category-\(category)"
         case .workout(let workout): return "workout-\(workout)"
+        case .selectWorkoutActivity(_): return "select-workout-activity"
         default: return String(describing: self)
         }
     }

@@ -15,7 +15,7 @@ struct WorkoutDetailsView {
 extension WorkoutDetailsView: View {
     
     var body: some View {
-        PageTemplate(nav: nav, content: content)
+        ListTemplate(nav: nav, content: content)
     }
     
     private func nav() -> some View {
@@ -24,7 +24,7 @@ extension WorkoutDetailsView: View {
     }
     
     private func content() -> some View {
-        VStack {
+        Group {
             DatePicker(selection: $viewModel.workout.startDate, displayedComponents: [.date, .hourAndMinute]) {
                 Text("Start date")
             }
@@ -32,8 +32,35 @@ extension WorkoutDetailsView: View {
             DatePicker(selection: $viewModel.endDate, displayedComponents: [.date, .hourAndMinute]) {
                 Text("End date")
             }
+            
+            exerciseList
+            
+            Button(action: viewModel.addExercise) {
+                Text("Add exercise")
+            }
         }
         .padding(.horizontal, 16)
+    }
+    
+    private var exerciseList: some View {
+        ForEach(viewModel.workout.exercises) { exercise in
+            exerciseCell(exercise)
+        }
+        .onDelete(perform: viewModel.delete)
+    }
+    
+    @ViewBuilder
+    private func exerciseCell(_ exercise: Exercise) -> some View {
+        Text(viewModel.activity(id: exercise.activityID).name)
+        ForEach(exercise.entries) { entry in
+            Text("Entry")
+        }
+        .onDelete(perform: viewModel.deleteEntry(exercise: exercise))
+        Button(action: {viewModel.addSet(exercise: exercise)}) {
+            Text("Add set")
+        }
+        .deleteDisabled(true)
+        
     }
 }
 
