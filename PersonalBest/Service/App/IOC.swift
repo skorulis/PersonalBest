@@ -12,6 +12,7 @@ public final class IOC: IOCService {
         setupServices()
         setupViewModels()
         registerStores()
+        registerAccess()
         
         self.resolve(ActivityService.self).setupSystemData()
     }
@@ -44,19 +45,20 @@ public final class IOC: IOCService {
         
         container.autoregister(RecordsStore.self, initializer: RecordsStore.init)
             .inObjectScope(.container)
-        container.autoregister(WorkoutStore.self, initializer: WorkoutStore.init)
-            .inObjectScope(.container)
+    }
+    
+    private func registerAccess() {
+        container.autoregister(RecordEntryAccess.self, initializer: RecordEntryAccess.init)
     }
     
     private func setupViewModels() {
         container.autoregister(ContentViewModel.self, initializer: ContentViewModel.init)
-        container.autoregister(ActivityListViewModel.self, initializer: ActivityListViewModel.init)
-        container.autoregister(ActivityDetailsViewModel.self, argument: Activity.self, initializer: ActivityDetailsViewModel.init)
-        container.autoregister(AddEntryViewModel.self, argument: Activity.self, initializer: AddEntryViewModel.init)
+        container.autoregister(ActivityDetailsViewModel.self, argument: PBActivity.self, initializer: ActivityDetailsViewModel.init)
+        container.autoregister(AddEntryViewModel.self, argument: PBActivity.self, initializer: AddEntryViewModel.init)
         
         container.autoregister(CategoryListViewModel.self, initializer: CategoryListViewModel.init)
         container.autoregister(CategoryActivitiesViewModel.self,
-                               argument: String.self,
+                               argument: PBCategory.self,
                                initializer: CategoryActivitiesViewModel.init)
         
         container.autoregister(RecentHistoryViewModel.self, initializer: RecentHistoryViewModel.init)
@@ -65,7 +67,7 @@ public final class IOC: IOCService {
         
         container.autoregister(WorkoutListViewModel.self, initializer: WorkoutListViewModel.init)
         container.autoregister(WorkoutDetailsViewModel.self,
-                               argument: Workout.self,
+                               argument: PBWorkout.self,
                                initializer: WorkoutDetailsViewModel.init)
         
         container.autoregister(WorkoutActivityPickerViewModel.self,

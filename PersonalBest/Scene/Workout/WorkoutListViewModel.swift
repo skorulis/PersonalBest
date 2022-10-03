@@ -5,16 +5,12 @@ import Foundation
 
 final class WorkoutListViewModel: CoordinatedViewModel, ObservableObject {
     
-    private let store: WorkoutStore
+    private let coreDataStore: CoreDataStore
     
-    init(store: WorkoutStore) {
-        self.store = store
+    init(coreDataStore: CoreDataStore) {
+        self.coreDataStore = coreDataStore
         super.init()
         
-        store.objectWillChange.sink { [unowned self] _ in
-            self.objectWillChange.send()
-        }
-        .store(in: &subscribers)
     }
     
 }
@@ -23,8 +19,8 @@ final class WorkoutListViewModel: CoordinatedViewModel, ObservableObject {
 
 extension WorkoutListViewModel {
     
-    var workouts: [Workout] {
-        return store.workouts.reversed()
+    var workouts: [PBWorkout] {
+        return [] //TODO
     }
     
 }
@@ -34,25 +30,24 @@ extension WorkoutListViewModel {
 extension WorkoutListViewModel {
     
     func add() {
-        let workout = Workout.new()
-        store.workouts.append(workout)
+        let workout = PBWorkout(context: coreDataStore.mainContext)
+        workout.startDate = Date()
+        try! workout.managedObjectContext?.save()
         coordinator.push(.workout(workout))
     }
     
-    func select(workout: Workout) -> () -> Void {
+    func select(workout: PBWorkout) -> () -> Void {
         return { [unowned self] in
             self.coordinator.push(.workout(workout))
         }
     }
     
     func delete(indexes: IndexSet) {
-        let ids = indexes.map { self.workouts[$0].id }
-        
-        store.workouts = store.workouts.filter { ids.contains($0.id) }
+        // TODO
     }
     
-    static func group(workouts: [Workout]) -> [MonthWorkouts] {
-        var dict: [Date: [Workout]] = [:]
+    static func group(workouts: [PBWorkout]) -> [MonthWorkouts] {
+        var dict: [Date: [PBWorkout]] = [:]
         for workout in workouts {
             let month = workout.startDate.startOfMonth
             if dict[month] == nil {
@@ -76,6 +71,6 @@ extension WorkoutListViewModel {
 extension WorkoutListViewModel {
     struct MonthWorkouts {
         let month: Date
-        let workouts: [Workout]
+        let workouts: [PBWorkout]
     }
 }

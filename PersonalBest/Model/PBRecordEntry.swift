@@ -12,6 +12,15 @@ public class PBRecordEntry: NSManagedObject, Identifiable {
     
     @NSManaged public var date: Date
     @NSManaged public var entryValuesData: Data
+    @NSManaged public var activity: PBActivity
+    
+    static func new(activity: PBActivity, date: Date = Date(), values: [MeasurementType: Decimal]) -> PBRecordEntry {
+        let record = PBRecordEntry(context: activity.managedObjectContext!)
+        record.activity = activity
+        record.date = date
+        record.entryValues = values
+        return record
+    }
     
     var entryValues: [MeasurementType: Decimal] {
         get {
@@ -28,8 +37,13 @@ public class PBRecordEntry: NSManagedObject, Identifiable {
         entryValues = dict
     }
     
-    func value(type: MeasurementType) -> Decimal {
-        return entryValues[type] ?? 0
+    func value(type: MeasurementType) -> Decimal? {
+        return entryValues[type]
     }
+    
+    var dateString: String {
+        return DateFormatter.mediumDate.string(from: date)
+    }
+    
     
 }

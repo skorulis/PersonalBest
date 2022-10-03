@@ -7,27 +7,17 @@ import Foundation
 
 final class RecordsStore: ObservableObject {
     
-    private static let storageKey = "RecordsStore.records"
-    private let keyValueStore: PKeyValueStore
-    
-    @Published var records: [String: [ActivityEntry]] {
-        didSet {
-            try! keyValueStore.set(codable: records, forKey: Self.storageKey)
-        }
-    }
-    
-    init(keyValueStore: PKeyValueStore) {
-        self.keyValueStore = keyValueStore
-        records = Self.readFromDisk(store: keyValueStore)
-    }
+    init() {}
     
 }
+
+/*
 
 // MARK: - Logic
 
 extension RecordsStore {
     
-    func add(entry: ActivityEntry, activity: Activity) {
+    func add(entry: ActivityEntry, activity: PBActivity) {
         guard var existing = records[activity.id] else {
             records[activity.id] = [entry]
             return
@@ -44,7 +34,7 @@ extension RecordsStore {
         records[activity.id] = existing
     }
     
-    func delete(entry: ActivityEntry, activity: Activity) {
+    func delete(entry: ActivityEntry, activity: PBActivity) {
         guard var existing = records[activity.id] else {
             return
         }
@@ -91,3 +81,4 @@ private extension RecordsStore {
         return [:]
     }
 }
+*/

@@ -42,19 +42,18 @@ extension WorkoutDetailsView: View {
     }
     
     private var exerciseList: some View {
-        ForEach(viewModel.workout.exercises) { exercise in
+        ForEach(Array(viewModel.workout.exercises)) { exercise in
             exerciseCell(exercise)
         }
         .onDelete(perform: viewModel.delete)
     }
     
     @ViewBuilder
-    private func exerciseCell(_ exercise: Exercise) -> some View {
-        Text(viewModel.activity(id: exercise.activityID).name)
+    private func exerciseCell(_ exercise: PBExercise) -> some View {
+        Text(exercise.activity.name)
             .bold()
-        ForEach(exercise.entries) { entry in
-            WorkoutEntryCell(activity: viewModel.activity(id: exercise.activityID),
-                             exercise: exercise,
+        ForEach(exercise.sets) { entry in
+            WorkoutEntryCell(exercise: exercise,
                              entry: viewModel.binding(exercise, entry))
         }
         .onDelete(perform: viewModel.deleteEntry(exercise: exercise))
@@ -71,9 +70,10 @@ extension WorkoutDetailsView: View {
 struct WorkoutDetailsView_Previews: PreviewProvider {
     
     static var previews: some View {
-        let workout = Workout.new()
+        let workout = PBWorkout()
+        workout.startDate = Date()
         let ioc = IOC()
-        WorkoutDetailsView(viewModel: ioc.resolve(WorkoutDetailsViewModel.self, argument: workout))
+        return WorkoutDetailsView(viewModel: ioc.resolve(WorkoutDetailsViewModel.self, argument: workout))
     }
 }
 

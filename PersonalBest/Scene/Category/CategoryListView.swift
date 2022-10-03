@@ -9,6 +9,7 @@ import SwiftUI
 struct CategoryListView {
     
     @StateObject var viewModel: CategoryListViewModel
+    @FetchRequest(sortDescriptors: []) var categories: FetchedResults<PBCategory>
 }
 
 // MARK: - Rendering
@@ -25,34 +26,25 @@ extension CategoryListView: View {
     
     private func content() -> some View {
         VStack {
-            grid
+            grid2
         }
         .padding(.horizontal, 16)
     }
     
     private var grid2: some View {
         Grid {
-            ForEach(viewModel.categoryRows, id: \.0) { row in
+            ForEach(categoryRows, id: \.0) { row in
                 GridRow {
-                    categoryCell(label: row.0)
-                    categoryCell(label: row.1)
+                    categoryCell(category: row.0)
+                    categoryCell(category: row.1)
                 }
             }
         }
     }
     
-    private var grid: some View {
-        let columns = [GridItem(.flexible()), GridItem(.flexible())]
-        return LazyVGrid(columns: columns) {
-            ForEach(viewModel.categories, id:\.self) { label in
-                categoryCell(label: label)
-            }
-        }
-    }
-    
-    private func categoryCell(label: String) -> some View {
-        Button(action: {viewModel.selected(category: label)}) {
-            Text(label)
+    private func categoryCell(category: PBCategory) -> some View {
+        Button(action: {viewModel.selected(category: category)}) {
+            Text(category.name)
                 .foregroundColor(.white)
                 .frame(maxWidth: .infinity)
                 .padding(20)
@@ -62,6 +54,23 @@ extension CategoryListView: View {
                 )
         }
     }
+}
+
+// MARK: - Logic
+
+extension CategoryListView {
+    
+    var categoryRows: [(PBCategory, PBCategory)] {
+        let cats = categories
+        var result = [(PBCategory, PBCategory)]()
+        for i in stride(from: 0, to: cats.count - 1, by: 2) {
+            let row = (cats[i], cats[i + 1])
+            result.append(row)
+        }
+        
+        return result
+    }
+    
 }
 
 // MARK: - Previews

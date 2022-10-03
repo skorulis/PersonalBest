@@ -7,22 +7,19 @@ import SwiftUI
 
 enum RootPath: CoordinatorPath, Hashable, Identifiable {
     
-    case activity
-    case activityDetails(_ activity: Activity)
-    case addEntry(_ activity: Activity)
+    case activityDetails(_ activity: PBActivity)
+    case addEntry(_ activity: PBActivity)
     case recent
     case settings
     case categories
-    case categoryActivities(_ category: String)
+    case categoryActivities(_ category: PBCategory)
     case workoutList
-    case workout(_ workout: Workout)
-    case selectWorkoutActivity(_ onSelect: (Activity) -> Void)
+    case workout(_ workout: PBWorkout)
+    case selectWorkoutActivity(_ onSelect: (PBActivity) -> Void)
     
     @ViewBuilder
     func render(coordinator: MainCoordinator) -> some View {
         switch self {
-        case .activity:
-            ActivityListView(viewModel: coordinator.resolve())
         case .activityDetails(let activity):
             ActivityDetailsView(viewModel: coordinator.resolve(ActivityDetailsViewModel.self, argument: activity))
         case .addEntry(let activity):

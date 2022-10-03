@@ -18,28 +18,13 @@ final class CategoryListViewModel: CoordinatedViewModel, ObservableObject {
 
 extension CategoryListViewModel {
     
-    var categories: [String] {
-        return activityService.categories
-    }
-    
-    var categoryRows: [(String, String)] {
-        let cats = categories
-        var result = [(String, String)]()
-        for i in stride(from: 0, to: cats.count - 1, by: 2) {
-            let row = (cats[i], cats[i + 1])
-            result.append(row)
-        }
-        
-        return result
-    }
-    
 }
 
 // MARK: - Logic
 
 extension CategoryListViewModel {
 
-    func selected(category: String) {
+    func selected(category: PBCategory) {
         coordinator.push(RootPath.categoryActivities(category))
     }
     

@@ -12,6 +12,7 @@ struct PersonalBestApp: App {
         WindowGroup {
             ContentView(viewModel: ioc.resolve())
                 .environment(\.factory, ioc)
+                .environment(\.managedObjectContext, ioc.resolve(CoreDataStore.self).mainContext)
         }
     }
 }

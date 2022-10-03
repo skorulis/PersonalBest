@@ -17,26 +17,29 @@ struct GraphDataGenerator {
 
 extension GraphDataGenerator {
     
-    func breakdown(activity: Activity) -> ActivityBreakdown {
-        let records = recordsStore.records[activity.id] ?? []
+    func breakdown(activity: PBActivity) -> ActivityBreakdown {
+        let records = Array(activity.records)
         
         var lines = Self.getLines(activity: activity, records: records)
         lines = Self.finalise(lines: lines)
         return ActivityBreakdown(lines: lines)
     }
     
-    private static func getLines(activity: Activity, records: [ActivityEntry]) -> [GraphLine] {
-        switch activity.breakdownType {
-        case .reps: return [reps(records: records)]
-        case .repsWeight: return repWeightBreakdown(records: records, unit: activity.unit(type: .weight))
+    private static func getLines(activity: PBActivity, records: [PBRecordEntry]) -> [GraphLine] {
+        switch activity.trackingType {
+        case .weightlifting:
+            return repWeightBreakdown(records: records, unit: .kilograms)
+        default:
+            return [reps(records: records)]
         }
     }
     
-    static func reps(records: [ActivityEntry]) -> GraphLine {
+    static func reps(records: [PBRecordEntry]) -> GraphLine {
         var topValue: Decimal = -1
         var result: [EntryValue] = []
         records.forEach { entry in
-            if let value = entry.values[.reps], value > topValue {
+            let values = entry.entryValues
+            if let value = values[.reps], value > topValue {
                 topValue = value
                 let entryValue = EntryValue(date: entry.date, value: value)
                 result.append(entryValue)
@@ -46,12 +49,13 @@ extension GraphDataGenerator {
         return GraphLine(name: "Reps", unit: .reps, entries: result, color: .blue)
     }
     
-    static func repWeightBreakdown(records: [ActivityEntry], unit: UnitType) -> [GraphLine] {
+    static func repWeightBreakdown(records: [PBRecordEntry], unit: UnitType) -> [GraphLine] {
         let maxReps = 5
         var repResults = [Int: [EntryValue]]()
         
         records.forEach { entry in
-            if let reps = entry.values[.reps], let weight = entry.values[.weight] {
+            let values = entry.entryValues
+            if let reps = values[.reps], let weight = values[.weight] {
                 let repInt = (reps as NSDecimalNumber).intValue
                 var array = repResults[repInt] ?? []
                 let top = array.last?.value ?? -1

@@ -21,5 +21,27 @@ public class PBExercise: NSManagedObject, Identifiable {
         }
     }
     
+    @NSManaged public var activity: PBActivity
+    @NSManaged public var workout: PBWorkout
+    
+    func entry(id: String) -> ExerciseEntry {
+        guard let index = sets.firstIndex(where: {$0.id == id}) else {
+            fatalError("Exercise not in workout \(id)")
+        }
+        return sets[index]
+    }
+    
+    func indexOf(entry: ExerciseEntry) -> Int {
+        guard let index = sets.firstIndex(where: {$0.id == entry.id}) else {
+            fatalError("Exercise not in workout \(entry)")
+        }
+        return index
+    }
+    
+    func replace(entry: ExerciseEntry) {
+        let index = indexOf(entry: entry)
+        sets[index] = entry
+    }
+    
     
 }

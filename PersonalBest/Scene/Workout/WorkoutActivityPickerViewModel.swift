@@ -4,7 +4,7 @@ import Foundation
 
 final class WorkoutActivityPickerViewModel: CoordinatedViewModel, ObservableObject {
     
-    private let onSelect: (Activity) -> Void
+    private let onSelect: (PBActivity) -> Void
     private let activityService: ActivityService
     
     init(argument: Argument, activityService: ActivityService) {
@@ -20,7 +20,7 @@ final class WorkoutActivityPickerViewModel: CoordinatedViewModel, ObservableObje
 extension WorkoutActivityPickerViewModel {
     
     struct Argument {
-        let onSelect: (Activity) -> Void
+        let onSelect: (PBActivity) -> Void
     }
     
 }
@@ -29,8 +29,9 @@ extension WorkoutActivityPickerViewModel {
 
 extension WorkoutActivityPickerViewModel {
     
-    var activities: [Activity] {
-        return activityService.defaultActivities
+    var activities: [PBActivity] {
+        return []
+        //return activityService.defaultActivities
     }
     
 }
@@ -39,7 +40,7 @@ extension WorkoutActivityPickerViewModel {
 
 extension WorkoutActivityPickerViewModel {
     
-    func select(_ activity: Activity) -> () -> Void {
+    func select(_ activity: PBActivity) -> () -> Void {
         return { [unowned self] in
             self.onSelect(activity)
             self.dismiss()

@@ -2,7 +2,7 @@
 
 import Foundation
 import SwiftUI
-
+/*
 struct Workout: Codable, Identifiable {
     
     let id: String
@@ -45,3 +45,4 @@ struct Workout: Codable, Identifiable {
     }
     
 }
+*/

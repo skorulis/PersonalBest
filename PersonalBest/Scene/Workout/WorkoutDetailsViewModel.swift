@@ -7,12 +7,11 @@ import SwiftUI
 
 final class WorkoutDetailsViewModel: CoordinatedViewModel, ObservableObject {
     
-    private let workoutStore: WorkoutStore
     private let activityService: ActivityService
     
-    @Published var workout: Workout {
+    @Published var workout: PBWorkout {
         didSet {
-            workoutStore.update(workout: workout)
+            try! self.workout.managedObjectContext?.save()
         }
     }
     
@@ -24,12 +23,10 @@ final class WorkoutDetailsViewModel: CoordinatedViewModel, ObservableObject {
     }
     @Published var hasFinished: Bool
     
-    init(workout: Workout,
-         workoutStore: WorkoutStore,
+    init(workout: PBWorkout,
          activityService: ActivityService
     ) {
         self.workout = workout
-        self.workoutStore = workoutStore
         self.activityService = activityService
         self.endDate = workout.endDate ?? Date()
         self.hasFinished = workout.endDate != nil
@@ -42,60 +39,53 @@ final class WorkoutDetailsViewModel: CoordinatedViewModel, ObservableObject {
 
 extension WorkoutDetailsViewModel {
     
-    func activity(id: String) -> Activity {
-        return activityService.activity(id: id)!
-    }
-    
     func delete(_ indexSet: IndexSet) {
         indexSet.reversed().forEach { value in
-            self.workout.exercises.remove(at: value)
+            
+            // TODO
+            //self.workout.exercises.remove(at: value)
         }
     }
     
-    func deleteEntry(exercise: Exercise) -> (IndexSet) -> Void {
+    func deleteEntry(exercise: PBExercise) -> (IndexSet) -> Void {
         return { [unowned self] indexSet in
-            var mutableExercise = exercise
+            var mutableSets = exercise.sets
             indexSet.forEach { index in
-                mutableExercise.entries.remove(at: index)
+                mutableSets.remove(at: index)
             }
-            if mutableExercise.entries.isEmpty {
-                self.workout.remove(exercise: exercise)
+            if mutableSets.isEmpty {
+                self.workout.exercises.remove(exercise)
             } else {
-                self.workout.replace(exercise: mutableExercise)
+                exercise.sets = mutableSets
             }
+            try! exercise.managedObjectContext?.save()
         }
     }
     
-    func addSet(exercise: Exercise) {
+    func addSet(exercise: PBExercise) {
         let set = ExerciseEntry()
-        var mutableExercise = exercise
-        mutableExercise.entries.append(set)
-        self.workout.replace(exercise: mutableExercise)
+        var sets = exercise.sets
+        sets.append(set)
+        exercise.sets = sets
+        try! exercise.managedObjectContext?.save()
     }
     
     func addExercise() {
         let path = RootPath.selectWorkoutActivity { [unowned self] activity in
-            let exercise = Exercise(activity: activity)
-            self.workout.exercises.append(exercise)
+            let exercise = PBExercise(context: workout.managedObjectContext!)
+            exercise.sets = [.init()]
+            self.workout.exercises.insert(exercise)
         }
         coordinator.present(path, style: .sheet)
     }
     
-    func binding(_ exercise: Exercise) -> Binding<Exercise> {
-        return Binding<Exercise> { [unowned self] in
-            return self.workout.exercise(id: exercise.id)
-        } set: { [unowned self] newValue in
-            self.workout.replace(exercise: newValue)
-        }
-    }
-    
-    func binding(_ exercise: Exercise, _ entry: ExerciseEntry) -> Binding<ExerciseEntry> {
-        let bindingExercise = binding(exercise)
+    func binding(_ exercise: PBExercise, _ entry: ExerciseEntry) -> Binding<ExerciseEntry> {
         return Binding<ExerciseEntry> {
-            return bindingExercise.wrappedValue.entry(id: entry.id)
+            return exercise.entry(id: entry.id)
         } set: { newValue in
-            bindingExercise.wrappedValue.replace(entry: newValue)
+            exercise.replace(entry: newValue)
         }
     }
+
     
 }

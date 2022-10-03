@@ -60,8 +60,10 @@ struct AddEntryView_Previews: PreviewProvider {
     
     static var previews: some View {
         let ioc = IOC()
-        let example = Activity(systemName: "Pull up", singleMeasure: .reps)
-        AddEntryView(viewModel: ioc.resolve(AddEntryViewModel.self, argument: example))
+        let example = PBActivity()
+        example.name = "Pull up"
+        example.trackingType = .reps
+        return AddEntryView(viewModel: ioc.resolve(AddEntryViewModel.self, argument: example))
     }
 }
 

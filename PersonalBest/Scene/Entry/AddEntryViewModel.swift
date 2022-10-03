@@ -7,18 +7,18 @@ import SwiftUI
 
 final class AddEntryViewModel: CoordinatedViewModel, ObservableObject {
     
-    private let activity: Activity
-    private let records: RecordsStore
+    private let activity: PBActivity
+    private let recordAccess: RecordEntryAccess
     
     @Published var date: Date = Date()
     
     private var values: [MeasurementType: Decimal] = [:]
     
-    init(activity: Activity,
-         records: RecordsStore
+    init(activity: PBActivity,
+         recordAccess: RecordEntryAccess
     ) {
         self.activity = activity
-        self.records = records
+        self.recordAccess = recordAccess
     }
     
 }
@@ -57,8 +57,11 @@ extension AddEntryViewModel {
             }
             measures[field] = value
         }
-        let entry = ActivityEntry(date: date, values: measures)
-        records.add(entry: entry, activity: activity)
+        let entry = PBRecordEntry(context: activity.managedObjectContext!)
+        entry.entryValues = measures
+        entry.date = date
+        entry.activity = activity
+        try! entry.managedObjectContext?.save()
         
         dismiss()
     }

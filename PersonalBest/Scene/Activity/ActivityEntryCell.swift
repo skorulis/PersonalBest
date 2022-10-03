@@ -6,8 +6,7 @@ import SwiftUI
 // MARK: - Memory footprint
 
 struct ActivityEntryCell {
-    let activity: Activity
-    let entry: ActivityEntry
+    let entry: PBRecordEntry
 }
 
 // MARK: - Rendering
@@ -38,7 +37,7 @@ extension ActivityEntryCell: View {
     
     @ViewBuilder
     private func valueItem(type: MeasurementType) -> some View {
-        if let value = entry.values[type] {
+        if let value = entry.value(type: type) {
             RecordValueDisplay(value: value, unit: getUnit(type: type))
         }
     }
@@ -47,6 +46,10 @@ extension ActivityEntryCell: View {
         let match = activity.measurements.first(where: {$0.type == type})
         return match?.defaultUnit ?? type.defaultUnit
     }
+    
+    var activity: PBActivity {
+        return entry.activity
+    }
 }
 
 // MARK: - Previews
@@ -54,9 +57,15 @@ extension ActivityEntryCell: View {
 struct ActivityEntryCell_Previews: PreviewProvider {
     
     static var previews: some View {
-        let activity = Activity(systemName: "Test", tracking: .weightlifting)
-        let entry = ActivityEntry(date: Date(), values: [.weight: 10, .reps: 5])
-        return ActivityEntryCell(activity: activity, entry: entry)
+        let ioc = IOC()
+        let context = ioc.resolve(CoreDataStore.self).mainContext
+        let example = PBActivity(context: context)
+        example.name = "Test"
+        example.trackingType = .weightlifting
+        
+        let entry = PBRecordEntry.new(activity: example, values: [.weight: 10, .reps: 5])
+        
+        return ActivityEntryCell(entry: entry)
     }
 }
 

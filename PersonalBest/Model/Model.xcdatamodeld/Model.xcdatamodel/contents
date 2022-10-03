@@ -3,11 +3,11 @@
     <entity name="PBActivity" representedClassName="PBActivity" syncable="YES">
         <attribute name="name" attributeType="String"/>
         <attribute name="trackingTypeString" attributeType="String"/>
-        <relationship name="category" maxCount="1" deletionRule="Nullify" destinationEntity="PBActivityCategory" inverseName="activities" inverseEntity="PBActivityCategory"/>
+        <relationship name="category" maxCount="1" deletionRule="Nullify" destinationEntity="PBCategory" inverseName="activities" inverseEntity="PBCategory"/>
         <relationship name="exercises" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PBExercise" inverseName="activity" inverseEntity="PBExercise"/>
         <relationship name="records" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PBRecordEntry" inverseName="activity" inverseEntity="PBRecordEntry"/>
     </entity>
-    <entity name="PBActivityCategory" representedClassName="PBActivityCategory" syncable="YES">
+    <entity name="PBCategory" representedClassName="PBCategory" syncable="YES">
         <attribute name="name" attributeType="String"/>
         <relationship name="activities" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PBActivity" inverseName="category" inverseEntity="PBActivity"/>
     </entity>
@@ -25,6 +25,6 @@
         <attribute name="endDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="notes" optional="YES" attributeType="String"/>
         <attribute name="startDate" attributeType="Date" usesScalarValueType="NO"/>
-        <relationship name="exercises" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="PBExercise" inverseName="workout" inverseEntity="PBExercise"/>
+        <relationship name="exercises" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PBExercise" inverseName="workout" inverseEntity="PBExercise"/>
     </entity>
 </model>

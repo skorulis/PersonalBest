@@ -2,13 +2,14 @@
 
 import Foundation
 
+/*
 struct Exercise: Codable, Identifiable {
     
     let id: String
     let activityID: String
     var entries: [ExerciseEntry]
     
-    init(activity: Activity) {
+    init(activity: PBActivity) {
         self.id = UUID().uuidString
         self.activityID = activity.id
         self.entries = [.init()]
@@ -34,7 +35,7 @@ struct Exercise: Codable, Identifiable {
     }
     
 }
-
+*/
 struct ExerciseEntry: Codable, Identifiable {
     let id: String
     var values: [MeasurementType: Decimal]

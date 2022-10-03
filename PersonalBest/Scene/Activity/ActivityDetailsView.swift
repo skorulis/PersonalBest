@@ -12,6 +12,13 @@ struct ActivityDetailsView {
     @StateObject var viewModel: ActivityDetailsViewModel
     @State private var iconAnimating = false
     
+    @FetchRequest var records: FetchedResults<PBRecordEntry>
+    
+    init(viewModel: ActivityDetailsViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+        _records = FetchRequest<PBRecordEntry>(sortDescriptors: [.init(key: "date", ascending: false)], predicate: NSPredicate(format: "activity == %@", viewModel.activity))
+    }
+    
 }
 
 // MARK: - Rendering
@@ -126,12 +133,11 @@ extension ActivityDetailsView: View {
     }
     
     private var historyList: some View {
-        ForEach(viewModel.records.reversed()) { entry in
-            ActivityEntryCell(activity: viewModel.activity,
-                              entry: entry)
+        ForEach(records) { entry in
+            ActivityEntryCell(entry: entry)
             
         }
-        .onDelete(perform: viewModel.delete(indexSet:))
+        .onDelete(perform: delete(indexSet:))
         
         
     }
@@ -151,17 +157,31 @@ extension ActivityDetailsView: View {
     }
 }
 
+// MARK: - Logic
+
+extension ActivityDetailsView {
+    
+    func delete(indexSet: IndexSet) {
+        indexSet.forEach { index in
+            let entry = self.records[index]
+            entry.managedObjectContext?.delete(entry)
+        }
+    }
+}
+
 // MARK: - Previews
 
 struct ActivityDetailsView_Previews: PreviewProvider {
     
     static var previews: some View {
         let ioc = IOC()
-        let example = Activity(systemName: "Pull up", singleMeasure: .reps)
-        let store = ioc.resolve(RecordsStore.self)
-        store.add(entry: .init(date: Date(), values: [.reps: 20]), activity: example)
-        
-        store.add(entry: .init(date: Date().advanced(by: 2200000), values: [.reps: 22]), activity: example)
+        let context = ioc.resolve(CoreDataStore.self).mainContext
+        let example = PBActivity(context: context)
+        example.name = "Pull up"
+        example.trackingType = .reps
+        _ = PBRecordEntry.new(activity: example, date: Date(), values: [.reps: 20])
+        _ = PBRecordEntry.new(activity: example, date: Date().advanced(by: 2200000), values: [.reps: 22])
+
         return ActivityDetailsView(viewModel: ioc.resolve(ActivityDetailsViewModel.self, argument: example))
     }
 }

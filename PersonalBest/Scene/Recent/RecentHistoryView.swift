@@ -9,6 +9,13 @@ import SwiftUI
 struct RecentHistoryView {
     
     @StateObject var viewModel: RecentHistoryViewModel
+    
+    @FetchRequest var recentActivities: FetchedResults<PBActivity>
+    
+    init(viewModel: RecentHistoryViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+        _recentActivities = FetchRequest<PBActivity>(sortDescriptors: [], predicate: NSPredicate(format: "records.@count > 0"))
+    }
 }
 
 // MARK: - Rendering
@@ -25,25 +32,27 @@ extension RecentHistoryView: View {
     
     private func content() -> some View {
         VStack {
-            ForEach(viewModel.records) { item in
-                Button(action: viewModel.show(activity: item.activity)) {
-                    row(item)
+            ForEach(recentActivities) { activity in
+                Button(action: viewModel.show(activity: activity)) {
+                    row(activity)
                 }
             }
         }
         .padding(.horizontal, 16)
     }
     
-    private func row(_ data: RecentEntry) -> some View {
-        HStack {
+    private func row(_ activity: PBActivity) -> some View {
+        let recent = viewModel.entry(activity: activity)
+        return HStack {
             VStack(alignment: .leading) {
-                Text(data.activity.name)
+                Text(activity.name)
+                    .multilineTextAlignment(.leading)
                     .font(.title)
-                Text(DateFormatter.mediumDate.string(from: data.value.date))
+                Text(DateFormatter.mediumDate.string(from: recent.value.date))
             }
             Spacer()
             VStack(alignment: .leading) {
-                RecordValueDisplay(value: data.value.value, unit: data.value.unit)
+                RecordValueDisplay(value: recent.value.value, unit: recent.value.unit)
             }
         }
         .foregroundColor(.primary)
@@ -57,9 +66,10 @@ struct RecentHistoryView_Previews: PreviewProvider {
     
     static var previews: some View {
         let ioc = IOC()
-        let recordsStore = ioc.resolve(RecordsStore.self)
-        let activity = Activity(systemName: "Bench press", tracking: .weightlifting)
-        recordsStore.add(entry: .init(date: Date(), values: [.weight: 10, .reps: 10]), activity: activity)
+        let example = PBActivity()
+        example.name = "Bench press"
+        example.trackingType = .weightlifting
+        //recordsStore.add(entry: .init(date: Date(), values: [.weight: 10, .reps: 10]), activity: activity)
         
         return RecentHistoryView(viewModel: ioc.resolve())
     }

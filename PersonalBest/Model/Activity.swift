@@ -4,7 +4,7 @@ import CryptoKit
 import Foundation
 
 /// Describes an activity that can be performed
-struct Activity: Codable, Identifiable {
+struct LegacyActivity: Codable, Identifiable {
     let id: String
     let category: String
     let name: String

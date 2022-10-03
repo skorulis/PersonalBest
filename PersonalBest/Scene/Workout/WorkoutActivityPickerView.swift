@@ -31,7 +31,8 @@ extension WorkoutActivityPickerView: View {
         VStack {
             ForEach(viewModel.activities) { activity in
                 Button(action: viewModel.select(activity)) {
-                    ActivityCell(activity: activity)
+                    //ActivityCell(activity: activity)
+                    Text("TEST")
                 }
             }
         }

@@ -8,8 +8,7 @@ import SwiftUI
 
 struct WorkoutEntryCell {
     
-    let activity: Activity
-    let exercise: Exercise
+    let exercise: PBExercise
     @Binding var entry: ExerciseEntry
     
 }
@@ -46,6 +45,9 @@ extension WorkoutEntryCell: View {
         }
     }
     
+    var activity: PBActivity {
+        return exercise.activity
+    }
 }
 
 // MARK: - Logic
@@ -67,11 +69,21 @@ extension WorkoutEntryCell {
 struct WorkoutEntryCell_Previews: PreviewProvider {
     
     static var previews: some View {
-        let activity = Activity(systemName: "test", tracking: .weightlifting)
-        let exercise = Exercise(activity: activity)
+        let ioc = IOC()
+        let context = ioc.resolve(CoreDataStore.self).mainContext
+        let activity = PBActivity()
+        activity.name = "TEST"
+        activity.trackingType = .weightlifting
         
-        StatefulPreviewWrapper(exercise.entries[0]) { entry in
-            WorkoutEntryCell(activity: activity, exercise: exercise, entry: entry)
+        let workout = PBWorkout(context: context)
+        workout.startDate = Date()
+        
+        let exercise = PBExercise(context: context)
+        exercise.activity = activity
+        exercise.workout = workout
+        
+        return StatefulPreviewWrapper(ExerciseEntry()) { entry in
+            WorkoutEntryCell(exercise: exercise, entry: entry)
         }
     }
 }

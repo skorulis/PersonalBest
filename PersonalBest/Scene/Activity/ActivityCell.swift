@@ -6,7 +6,7 @@ import SwiftUI
 // MARK: - Memory footprint
 
 struct ActivityCell {
-    let activity: Activity
+    let activity: PBActivity
 }
 
 // MARK: - Rendering
@@ -33,7 +33,9 @@ extension ActivityCell: View {
 struct ActivityCell_Previews: PreviewProvider {
     
     static var previews: some View {
-        let example = Activity(systemName: "Pullup", singleMeasure: .reps)
+        let example = PBActivity()
+        example.name = "Pullup"
+        example.trackingType = .reps
         return VStack {
             ActivityCell(activity: example)
         }

@@ -6,27 +6,15 @@ import Foundation
 
 final class CategoryActivitiesViewModel: CoordinatedViewModel, ObservableObject {
 
-    let category: String
+    let category: PBCategory
     private let activityService: ActivityService
     
-    init(category: String,
+    init(category: PBCategory,
          activityService: ActivityService
     ) {
         self.category = category
         self.activityService = activityService
     }
-    
-    
-}
-
-// MARK: - Computed values
-
-extension CategoryActivitiesViewModel {
-    
-    var activities: [Activity] {
-        return activityService.defaultActivities.filter { $0.category == category }
-    }
-    
 }
 
 extension CategoryActivitiesViewModel {
@@ -35,7 +23,7 @@ extension CategoryActivitiesViewModel {
         
     }
     
-    func show(activity: Activity) -> () -> Void {
+    func show(activity: PBActivity) -> () -> Void {
         return { [unowned self] in
             coordinator.push(.activityDetails(activity))
         }

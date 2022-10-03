@@ -10,6 +10,14 @@ struct CategoryActivitiesView {
     
     @StateObject var viewModel: CategoryActivitiesViewModel
     
+    @FetchRequest var activities: FetchedResults<PBActivity>
+    
+    init(viewModel: CategoryActivitiesViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+        _activities = FetchRequest<PBActivity>(sortDescriptors: [], predicate: NSPredicate(format: "category == %@", viewModel.category))
+        
+    }
+    
 }
 
 // MARK: - Rendering
@@ -22,14 +30,14 @@ extension CategoryActivitiesView: View {
     
     private func nav() -> some View {
         return NavBar(left: BarButtonItem.back(viewModel.back),
-                      mid: BarButtonItem.title(viewModel.category),
+                      mid: BarButtonItem.title(viewModel.category.name),
                       right: BarButtonItem.iconButton(Image(systemName: "plus"), viewModel.addActivity)
         )
     }
     
     private func content() -> some View {
         LazyVStack {
-            ForEach(viewModel.activities) { activity in
+            ForEach(activities) { activity in
                 Button(action: viewModel.show(activity: activity)) {
                     ActivityCell(activity: activity)
                 }

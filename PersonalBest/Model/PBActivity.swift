@@ -23,6 +23,20 @@ public class PBActivity: NSManagedObject, Identifiable {
     @NSManaged public var trackingTypeString: String
     
     @NSManaged public var records: Set<PBRecordEntry>
-    @NSManaged public var category: PBActivityCategory
+    @NSManaged public var category: PBCategory
+    
+}
+
+// MARK: - Computed values
+
+extension PBActivity {
+    
+    var measurements: [MeasurementEntry] {
+        return trackingType.measurements
+    }
+    
+    var measurementTypes: [MeasurementType] {
+        trackingType.measurements.map { $0.type }
+    }
     
 }

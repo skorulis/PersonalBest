@@ -1,6 +1,7 @@
 //Created by Alexander Skorulis on 29/9/2022.
 
 import Foundation
+import CoreData
 
 // MARK: - Memory footprint
 
@@ -8,14 +9,17 @@ final class RecentHistoryViewModel: CoordinatedViewModel, ObservableObject {
  
     private let recordsStore: RecordsStore
     private let activityService: ActivityService
+    private let recordAccess: RecordEntryAccess
     
     @Published var records: [RecentEntry] = []
     
     init(recordsStore: RecordsStore,
-         activityService: ActivityService
+         activityService: ActivityService,
+         recordAccess: RecordEntryAccess
     ) {
         self.recordsStore = recordsStore
         self.activityService = activityService
+        self.recordAccess = recordAccess
         super.init()
         self.records = rebuildList()
         self.recordsStore.objectWillChange
@@ -32,22 +36,14 @@ final class RecentHistoryViewModel: CoordinatedViewModel, ObservableObject {
 
 extension RecentHistoryViewModel {
     
-    func rebuildList() -> [RecentEntry] {
-        let activityIds = Array(recordsStore.records.keys)
-        return activityIds.compactMap { id -> RecentEntry? in
-            guard let activity = self.activityService.activity(id: id) else {
-                return nil
-            }
-            guard let top = self.recordsStore.topValue(activity: activity, type: activity.primaryMeasure) else {
-                return nil
-            }
-            return RecentEntry(activity: activity, value: top)
-        }
+    func entry(activity: PBActivity) -> RecentEntry {
+        let top = recordAccess.topValues(activity: activity)
+        return RecentEntry(activity: activity, value: top.values.first!)
     }
     
-    func show(activity: Activity) -> () -> Void {
+    func show(activity: PBActivity) -> () -> Void {
         return { [unowned self] in
-            self.coordinator.push(RootPath.activityDetails(activity))
+             self.coordinator.push(RootPath.activityDetails(activity))
         }
     }
     
@@ -57,9 +53,9 @@ extension RecentHistoryViewModel {
 
 struct RecentEntry: Identifiable {
     
-    let activity: Activity
+    let activity: PBActivity
     let value: TopRecord
     
-    var id: String { activity.id }
+    var id: NSManagedObjectID { activity.objectID }
     
 }
