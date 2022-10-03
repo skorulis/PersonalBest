@@ -6,6 +6,8 @@ enum ActivityTrackingType: String {
     
     case weightlifting
     case cardio
+    case reps
+    case time
     
     var measurements: [MeasurementEntry] {
         switch self {
@@ -17,6 +19,14 @@ enum ActivityTrackingType: String {
         case .cardio:
             return [
                 .init(type: .distance, isRecord: true, defaultUnit: .kilometers),
+                .init(type: .time, isRecord: true, defaultUnit: .seconds)
+            ]
+        case .reps:
+            return [
+                .init(type: .reps, isRecord: true, defaultUnit: .reps)
+            ]
+        case .time:
+            return [
                 .init(type: .time, isRecord: true, defaultUnit: .seconds)
             ]
         }

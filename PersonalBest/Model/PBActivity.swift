@@ -17,12 +17,12 @@ public class PBActivity: NSManagedObject, Identifiable {
         set {
             trackingTypeString = newValue.rawValue
         }
-        
     }
     
     @NSManaged public var name: String
     @NSManaged public var trackingTypeString: String
     
     @NSManaged public var records: Set<PBRecordEntry>
+    @NSManaged public var category: PBActivityCategory
     
 }

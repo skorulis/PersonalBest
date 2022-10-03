@@ -20,7 +20,6 @@ public class PBRecordEntry: NSManagedObject, Identifiable {
         set {
             entryValuesData = try! JSONEncoder().encode(newValue)
         }
-        
     }
     
     func set(type: MeasurementType, value: Decimal) {

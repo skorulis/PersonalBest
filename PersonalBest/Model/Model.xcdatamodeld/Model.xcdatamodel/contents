@@ -4,15 +4,27 @@
         <attribute name="name" attributeType="String"/>
         <attribute name="trackingTypeString" attributeType="String"/>
         <relationship name="category" maxCount="1" deletionRule="Nullify" destinationEntity="PBActivityCategory" inverseName="activities" inverseEntity="PBActivityCategory"/>
+        <relationship name="exercises" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PBExercise" inverseName="activity" inverseEntity="PBExercise"/>
         <relationship name="records" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PBRecordEntry" inverseName="activity" inverseEntity="PBRecordEntry"/>
     </entity>
     <entity name="PBActivityCategory" representedClassName="PBActivityCategory" syncable="YES">
         <attribute name="name" attributeType="String"/>
         <relationship name="activities" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PBActivity" inverseName="category" inverseEntity="PBActivity"/>
     </entity>
+    <entity name="PBExercise" representedClassName="PBExercise" syncable="YES">
+        <attribute name="setsData" attributeType="Binary"/>
+        <relationship name="activity" maxCount="1" deletionRule="Nullify" destinationEntity="PBActivity" inverseName="exercises" inverseEntity="PBActivity"/>
+        <relationship name="workout" maxCount="1" deletionRule="Nullify" destinationEntity="PBWorkout" inverseName="exercises" inverseEntity="PBWorkout"/>
+    </entity>
     <entity name="PBRecordEntry" representedClassName="PBRecordEntry" syncable="YES">
         <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="entryValuesData" attributeType="Binary"/>
         <relationship name="activity" maxCount="1" deletionRule="Nullify" destinationEntity="PBActivity" inverseName="records" inverseEntity="PBActivity"/>
+    </entity>
+    <entity name="PBWorkout" representedClassName="PBWorkout" syncable="YES">
+        <attribute name="endDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <attribute name="startDate" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="exercises" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="PBExercise" inverseName="workout" inverseEntity="PBExercise"/>
     </entity>
 </model>

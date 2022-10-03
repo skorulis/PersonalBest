@@ -12,6 +12,8 @@ public final class IOC: IOCService {
         setupServices()
         setupViewModels()
         registerStores()
+        
+        self.resolve(ActivityService.self).setupSystemData()
     }
     
     private func setupServices() {
@@ -28,6 +30,15 @@ public final class IOC: IOCService {
                 .inObjectScope(.container)
         case .normal:
             container.autoregister(PKeyValueStore.self, initializer: UserDefaults.init)
+                .inObjectScope(.container)
+        }
+        
+        switch purpose {
+        case .testing:
+            container.autoregister(CoreDataStore.self, initializer: CoreDataStore.previews)
+                .inObjectScope(.container)
+        case .normal:
+            container.autoregister(CoreDataStore.self, initializer: CoreDataStore.database)
                 .inObjectScope(.container)
         }
         
