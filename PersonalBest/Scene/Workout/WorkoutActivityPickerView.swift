@@ -32,7 +32,7 @@ extension WorkoutActivityPickerView: View {
             ForEach(viewModel.activities) { activity in
                 Button(action: viewModel.select(activity)) {
                     //ActivityCell(activity: activity)
-                    Text("TEST")
+                    Text("TODO")
                 }
             }
         }

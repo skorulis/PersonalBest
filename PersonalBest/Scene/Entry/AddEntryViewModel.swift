@@ -57,10 +57,7 @@ extension AddEntryViewModel {
             }
             measures[field] = value
         }
-        let entry = PBRecordEntry(context: activity.managedObjectContext!)
-        entry.entryValues = measures
-        entry.date = date
-        entry.activity = activity
+        let entry = PBRecordEntry.new(activity: activity, date: date, values: measures)
         try! entry.managedObjectContext?.save()
         
         dismiss()

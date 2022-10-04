@@ -49,7 +49,7 @@ extension AddEntryView: View {
         case .weight, .distance:
             DecimalField(type: type, value: viewModel.binding(type))
         case .time:
-            Text("Not implemented")
+            TimeField(value: viewModel.binding(.time))
         }
     }
 }

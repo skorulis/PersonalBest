@@ -39,4 +39,11 @@ extension PBActivity {
         trackingType.measurements.map { $0.type }
     }
     
+    var orderedRecords: [PBRecordEntry] {
+        let query = PBRecordEntry.fetch()
+        query.sortDescriptors = [.init(key: "date", ascending: true)]
+        query.predicate = NSPredicate(format: "activity == %@", self)
+        return try! self.managedObjectContext!.fetch(query)
+    }
+    
 }

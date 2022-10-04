@@ -40,4 +40,8 @@ enum MeasurementType: String, Codable, Identifiable {
             return .seconds
         }
     }
+    
+    var name: String {
+        return self.rawValue.capitalized
+    }
 }

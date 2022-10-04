@@ -18,7 +18,7 @@ struct GraphDataGenerator {
 extension GraphDataGenerator {
     
     func breakdown(activity: PBActivity) -> ActivityBreakdown {
-        let records = Array(activity.records)
+        let records = activity.orderedRecords
         
         var lines = Self.getLines(activity: activity, records: records)
         lines = Self.finalise(lines: lines)
@@ -29,24 +29,26 @@ extension GraphDataGenerator {
         switch activity.trackingType {
         case .weightlifting:
             return repWeightBreakdown(records: records, unit: .kilograms)
+        case .time:
+            return [singleFieldBreakdown(type: .time, records: records)]
         default:
-            return [reps(records: records)]
+            return [singleFieldBreakdown(type: .reps, records: records)]
         }
     }
     
-    static func reps(records: [PBRecordEntry]) -> GraphLine {
+    static func singleFieldBreakdown(type: MeasurementType, records: [PBRecordEntry]) -> GraphLine {
         var topValue: Decimal = -1
         var result: [EntryValue] = []
         records.forEach { entry in
             let values = entry.entryValues
-            if let value = values[.reps], value > topValue {
+            if let value = values[type], value > topValue {
                 topValue = value
                 let entryValue = EntryValue(date: entry.date, value: value)
                 result.append(entryValue)
             }
         }
         
-        return GraphLine(name: "Reps", unit: .reps, entries: result, color: .blue)
+        return GraphLine(name: type.name, unit: .reps, entries: result, color: .blue)
     }
     
     static func repWeightBreakdown(records: [PBRecordEntry], unit: UnitType) -> [GraphLine] {
