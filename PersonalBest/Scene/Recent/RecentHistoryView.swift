@@ -23,22 +23,31 @@ struct RecentHistoryView {
 extension RecentHistoryView: View {
     
     var body: some View {
-        PageTemplate(nav: nav, content: content)
+        ListTemplate(nav: nav, content: content)
     }
     
     private func nav() ->some View {
         NavBar(mid: BarButtonItem.title("Records"))
+            .alert("Delete all \(viewModel.toDelete?.name ?? "") records?",
+                   isPresented: viewModel.alertShowingBinding,
+                   presenting: viewModel.toDelete) { activity in
+                Button("Delete", role: .destructive) { viewModel.confirmDelete(activity: activity) }
+                Button("Cancel", role: .cancel) { }
+            }
     }
     
     private func content() -> some View {
-        VStack {
-            ForEach(recentActivities) { activity in
-                Button(action: viewModel.show(activity: activity)) {
-                    row(activity)
+        ForEach(recentActivities) { activity in
+            Button(action: viewModel.show(activity: activity)) {
+                row(activity)
+            }
+            .swipeActions(allowsFullSwipe: false) {
+                Button(action: viewModel.deleteAction(activity: activity)) {
+                    Text("Delete")
                 }
+                .tint(.red)
             }
         }
-        .padding(.horizontal, 16)
     }
     
     private func row(_ activity: PBActivity) -> some View {

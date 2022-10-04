@@ -2,6 +2,7 @@
 
 import Foundation
 import CoreData
+import SwiftUI
 
 // MARK: - Memory footprint
 
@@ -11,7 +12,7 @@ final class RecentHistoryViewModel: CoordinatedViewModel, ObservableObject {
     private let activityService: ActivityService
     private let recordAccess: RecordEntryAccess
     
-    @Published var records: [RecentEntry] = []
+    @Published var toDelete: PBActivity?
     
     init(recordsStore: RecordsStore,
          activityService: ActivityService,
@@ -21,15 +22,23 @@ final class RecentHistoryViewModel: CoordinatedViewModel, ObservableObject {
         self.activityService = activityService
         self.recordAccess = recordAccess
         super.init()
-        self.records = rebuildList()
-        self.recordsStore.objectWillChange
-            .delayedChange()
-            .sink { [unowned self] _ in
-                self.records = self.rebuildList()
-            }
-            .store(in: &subscribers)
     }
     
+}
+
+// MARK: - Computed values
+
+extension RecentHistoryViewModel {
+    
+    var alertShowingBinding: Binding<Bool> {
+        return Binding<Bool> { [unowned self] in
+            return self.toDelete != nil
+        } set: { [unowned self] newValue in
+            if !newValue && self.toDelete != nil {
+                self.toDelete = nil
+            }
+        }
+    }
 }
 
 // MARK: - Logic
@@ -45,6 +54,19 @@ extension RecentHistoryViewModel {
         return { [unowned self] in
              self.coordinator.push(RootPath.activityDetails(activity))
         }
+    }
+    
+    func deleteAction(activity: PBActivity) -> () -> Void {
+        return { [unowned self] in
+            self.toDelete = activity
+        }
+    }
+    
+    func confirmDelete(activity: PBActivity) {
+        self.toDelete = nil
+        let context = activity.managedObjectContext!
+        activity.records.forEach { context.delete($0) }
+        try! context.save()
     }
     
 }
