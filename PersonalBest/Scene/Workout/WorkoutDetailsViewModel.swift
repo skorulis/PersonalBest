@@ -30,6 +30,12 @@ final class WorkoutDetailsViewModel: CoordinatedViewModel, ObservableObject {
         self.activityService = activityService
         self.endDate = workout.endDate ?? Date()
         self.hasFinished = workout.endDate != nil
+        super.init()
+        self.workout.objectWillChange
+            .sink { [unowned self] in
+                self.objectWillChange.send()
+            }
+            .store(in: &subscribers)
     }
     
 }
@@ -72,9 +78,8 @@ extension WorkoutDetailsViewModel {
     
     func addExercise() {
         let path = RootPath.selectWorkoutActivity { [unowned self] activity in
-            let exercise = PBExercise(context: workout.managedObjectContext!)
-            exercise.sets = [.init()]
-            self.workout.exercises.insert(exercise)
+            _ = PBExercise.new(workout: workout, activity: activity)
+            try! workout.managedObjectContext?.save()
         }
         coordinator.present(path, style: .sheet)
     }

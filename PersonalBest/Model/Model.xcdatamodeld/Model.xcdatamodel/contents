@@ -12,6 +12,7 @@
         <relationship name="activities" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PBActivity" inverseName="category" inverseEntity="PBActivity"/>
     </entity>
     <entity name="PBExercise" representedClassName="PBExercise" syncable="YES">
+        <attribute name="number" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="setsData" attributeType="Binary"/>
         <relationship name="activity" maxCount="1" deletionRule="Nullify" destinationEntity="PBActivity" inverseName="exercises" inverseEntity="PBActivity"/>
         <relationship name="workout" maxCount="1" deletionRule="Nullify" destinationEntity="PBWorkout" inverseName="exercises" inverseEntity="PBWorkout"/>

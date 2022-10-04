@@ -36,6 +36,7 @@ struct Exercise: Codable, Identifiable {
     
 }
 */
+
 struct ExerciseEntry: Codable, Identifiable {
     let id: String
     var values: [MeasurementType: Decimal]

@@ -12,7 +12,6 @@ final class WorkoutActivityPickerViewModel: CoordinatedViewModel, ObservableObje
         self.activityService = activityService
     }
     
-    
 }
 
 // MARK: - Inner types
@@ -21,17 +20,6 @@ extension WorkoutActivityPickerViewModel {
     
     struct Argument {
         let onSelect: (PBActivity) -> Void
-    }
-    
-}
-
-// MARK: - Computed values
-
-extension WorkoutActivityPickerViewModel {
-    
-    var activities: [PBActivity] {
-        return []
-        //return activityService.defaultActivities
     }
     
 }

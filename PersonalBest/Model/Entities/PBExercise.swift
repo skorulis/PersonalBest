@@ -11,6 +11,7 @@ public class PBExercise: NSManagedObject, Identifiable {
     }
     
     @NSManaged public var setsData: Data
+    @NSManaged public var number: Int16
     
     var sets: [ExerciseEntry] {
         get {
@@ -23,6 +24,16 @@ public class PBExercise: NSManagedObject, Identifiable {
     
     @NSManaged public var activity: PBActivity
     @NSManaged public var workout: PBWorkout
+    
+    static func new(workout: PBWorkout, activity: PBActivity) -> PBExercise {
+        let exercise = PBExercise(context: workout.managedObjectContext!)
+        exercise.number = Int16(workout.exercises.count) + 1
+        exercise.workout = workout
+        exercise.activity = activity
+        exercise.sets = []
+        
+        return exercise
+    }
     
     func entry(id: String) -> ExerciseEntry {
         guard let index = sets.firstIndex(where: {$0.id == id}) else {

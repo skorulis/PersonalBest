@@ -16,4 +16,11 @@ public class PBWorkout: NSManagedObject, Identifiable {
     
     @NSManaged public var exercises: Set<PBExercise>
     
+    var sortedExercises: [PBExercise] {
+        let query = PBExercise.fetch()
+        query.sortDescriptors = [.init(key: "number", ascending: true)]
+        query.predicate = NSPredicate(format: "workout == %@", self)
+        return try! self.managedObjectContext!.fetch(query)
+    }
+    
 }

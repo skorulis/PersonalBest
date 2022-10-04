@@ -10,6 +10,8 @@ struct WorkoutListView {
     
     @StateObject var viewModel: WorkoutListViewModel
     
+    @FetchRequest(sortDescriptors: [.init(key: "startDate", ascending: true)]) var workouts: FetchedResults<PBWorkout>
+    
 }
 
 // MARK: - Rendering
@@ -28,13 +30,25 @@ extension WorkoutListView: View {
     }
     
     private func content() -> some View {
-        ForEach(viewModel.workouts) { workout in
+        ForEach(workouts) { workout in
             Button(action: viewModel.select(workout: workout)) {
                 WorkoutCell(workout: workout)
             }
         }
-        .onDelete(perform: viewModel.delete)
+        .onDelete(perform: delete)
     }
+}
+
+// MARK: - Logic
+
+extension WorkoutListView {
+    
+    func delete(indexes: IndexSet) {
+        indexes.forEach { index in
+            viewModel.delete(workout: workouts[index])
+        }
+    }
+    
 }
 
 // MARK: - Previews

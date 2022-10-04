@@ -15,16 +15,6 @@ final class WorkoutListViewModel: CoordinatedViewModel, ObservableObject {
     
 }
 
-// MARK: - Computed values
-
-extension WorkoutListViewModel {
-    
-    var workouts: [PBWorkout] {
-        return [] //TODO
-    }
-    
-}
-
 // MARK: - Logic
 
 extension WorkoutListViewModel {
@@ -42,8 +32,8 @@ extension WorkoutListViewModel {
         }
     }
     
-    func delete(indexes: IndexSet) {
-        // TODO
+    func delete(workout: PBWorkout) {
+        coreDataStore.mainContext.delete(workout)
     }
     
     static func group(workouts: [PBWorkout]) -> [MonthWorkouts] {

@@ -20,6 +20,7 @@ extension WorkoutCell: View {
         HStack(alignment: .top, spacing: 8) {
             dateView
             VStack(alignment: .leading) {
+                maybeEmptyLabel
                 ForEach(Array(workout.exercises)) { exercise in
                     exerciseCounts(exercise)
                 }
@@ -32,6 +33,13 @@ extension WorkoutCell: View {
             Text(DateFormatter.shortDayName.string(from: workout.startDate))
             Text(DateFormatter.dayOfMonth.string(from: workout.startDate))
                 .bold()
+        }
+    }
+    
+    @ViewBuilder
+    private var maybeEmptyLabel: some View {
+        if workout.exercises.isEmpty {
+            Text("No exercises")
         }
     }
     

@@ -9,6 +9,7 @@ import SwiftUI
 struct WorkoutActivityPickerView {
     
     @StateObject var viewModel: WorkoutActivityPickerViewModel
+    @FetchRequest(sortDescriptors: []) var activities: FetchedResults<PBActivity>
     
 }
 
@@ -29,10 +30,9 @@ extension WorkoutActivityPickerView: View {
     
     private func content() -> some View {
         VStack {
-            ForEach(viewModel.activities) { activity in
+            ForEach(activities) { activity in
                 Button(action: viewModel.select(activity)) {
-                    //ActivityCell(activity: activity)
-                    Text("TODO")
+                    ActivityCell(activity: activity)
                 }
             }
         }

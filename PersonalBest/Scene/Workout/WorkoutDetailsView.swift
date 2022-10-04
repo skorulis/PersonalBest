@@ -42,7 +42,7 @@ extension WorkoutDetailsView: View {
     }
     
     private var exerciseList: some View {
-        ForEach(Array(viewModel.workout.exercises)) { exercise in
+        ForEach(viewModel.workout.sortedExercises) { exercise in
             exerciseCell(exercise)
         }
         .onDelete(perform: viewModel.delete)
