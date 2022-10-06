@@ -38,9 +38,9 @@ extension RecentHistoryView: View {
     
     private func content() -> some View {
         ForEach(recentActivities) { activity in
-            Button(action: viewModel.show(activity: activity)) {
-                row(activity)
-            }
+            row(activity)
+            .listRowSeparator(.hidden)
+            .listRowBackground(EmptyView())
             .swipeActions(allowsFullSwipe: false) {
                 Button(action: viewModel.deleteAction(activity: activity)) {
                     Text("Delete")
@@ -52,20 +52,7 @@ extension RecentHistoryView: View {
     
     private func row(_ activity: PBActivity) -> some View {
         let recent = viewModel.entry(activity: activity)
-        return HStack {
-            VStack(alignment: .leading) {
-                Text(activity.name)
-                    .multilineTextAlignment(.leading)
-                    .font(.title)
-                Text(DateFormatter.mediumDate.string(from: recent.value.date))
-            }
-            Spacer()
-            VStack(alignment: .leading) {
-                RecordValueDisplay(value: recent.value.value, unit: recent.value.unit)
-            }
-        }
-        .foregroundColor(.primary)
-        
+        return RecentActivityCell(recent: recent, onPress: viewModel.show)
     }
 }
 
@@ -75,10 +62,21 @@ struct RecentHistoryView_Previews: PreviewProvider {
     
     static var previews: some View {
         let ioc = IOC()
-        let example = PBActivity()
+        let context = ioc.resolve(CoreDataStore.self).mainContext
+        let category = PBCategory(context: context)
+        category.name = "TEST"
+        
+        let example = PBActivity(context: context)
         example.name = "Bench press"
         example.trackingType = .weightlifting
-        //recordsStore.add(entry: .init(date: Date(), values: [.weight: 10, .reps: 10]), activity: activity)
+        example.category = category
+        
+        let entry = PBRecordEntry.new(activity: example, values: [.reps: 10, .weight: 20])
+        
+        example.records.insert(entry)
+        
+        try! context.save()
+        
         
         return RecentHistoryView(viewModel: ioc.resolve())
     }

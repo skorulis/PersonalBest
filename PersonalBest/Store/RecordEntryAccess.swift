@@ -47,4 +47,9 @@ extension RecordEntryAccess {
         return best
     }
     
+    func topPrimaryValue(activity: PBActivity) -> TopRecord? {
+        let values = topValues(activity: activity)
+        return values[activity.trackingType.primaryMeasure]
+    }
+    
 }

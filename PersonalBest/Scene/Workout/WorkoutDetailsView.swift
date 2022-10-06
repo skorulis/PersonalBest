@@ -16,11 +16,28 @@ extension WorkoutDetailsView: View {
     
     var body: some View {
         ListTemplate(nav: nav, content: content)
+            .confirmationDialog("Are you sure you want to delete this workout", isPresented: $viewModel.showingDeletePrompt, titleVisibility: .visible) {
+                Button("Delete", role: .destructive, action: viewModel.confirmDelete)
+            }
     }
     
     private func nav() -> some View {
         NavBar(left: BarButtonItem.back(viewModel.back),
-               mid: BarButtonItem.title("Workout"))
+               mid: BarButtonItem.title("Workout"),
+               right: rightButton
+        )
+    }
+    
+    private var rightButton: some View {
+        Menu {
+            Button("Delete", role: .destructive, action: viewModel.delete)
+        } label: {
+            Image(systemName: "ellipsis.circle")
+                .resizable()
+                .padding(6)
+                .frame(width: 40, height: 40)
+                .foregroundColor(.black)
+        }
     }
     
     private func content() -> some View {
@@ -29,9 +46,7 @@ extension WorkoutDetailsView: View {
                 Text("Start date")
             }
             
-            DatePicker(selection: $viewModel.endDate, displayedComponents: [.date, .hourAndMinute]) {
-                Text("End date")
-            }
+            finishSection
             
             exerciseList
             
@@ -41,9 +56,24 @@ extension WorkoutDetailsView: View {
         }
     }
     
+    @ViewBuilder
+    private var finishSection: some View {
+        if viewModel.hasFinished {
+            DatePicker(selection: $viewModel.endDate, displayedComponents: [.date, .hourAndMinute]) {
+                Text("End date")
+            }
+        } else {
+            Button(action: viewModel.finish) {
+                Text("Finish workout")
+            }
+        }
+    }
+    
     private var exerciseList: some View {
         ForEach(viewModel.workout.sortedExercises) { exercise in
-            exerciseCell(exercise)
+            Section {
+                exerciseCell(exercise)
+            }
         }
         .onDelete(perform: viewModel.delete)
     }
@@ -70,9 +100,18 @@ extension WorkoutDetailsView: View {
 struct WorkoutDetailsView_Previews: PreviewProvider {
     
     static var previews: some View {
-        let workout = PBWorkout()
-        workout.startDate = Date()
         let ioc = IOC()
+        let context = ioc.resolve(CoreDataStore.self).mainContext
+        let cat = PBCategory(context: context)
+        cat.name = "Cat"
+        let activity = PBActivity(context: context)
+        activity.name = "Test activity"
+        activity.category = cat
+        activity.trackingType = .reps
+        let workout = PBWorkout.new(context: context)
+        
+        _ = PBExercise.new(workout: workout, activity: activity)
+        
         return WorkoutDetailsView(viewModel: ioc.resolve(WorkoutDetailsViewModel.self, argument: workout))
     }
 }

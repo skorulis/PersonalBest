@@ -32,4 +32,13 @@ enum ActivityTrackingType: String {
         }
     }
     
+    var primaryMeasure: MeasurementType {
+        switch self {
+        case .weightlifting: return .weight
+        case .cardio: return .distance
+        case .reps: return .reps
+        case .time: return .time
+        }
+    }
+    
 }

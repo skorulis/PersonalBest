@@ -19,6 +19,13 @@ public class PBActivity: NSManagedObject, Identifiable {
         }
     }
     
+    static func new(context: NSManagedObjectContext, name: String, tracking: ActivityTrackingType) -> PBActivity {
+        let activity = PBActivity(context: context)
+        activity.name = name
+        activity.trackingType = tracking
+        return activity
+    }
+    
     @NSManaged public var name: String
     @NSManaged public var trackingTypeString: String
     

@@ -28,6 +28,7 @@ extension WorkoutEntryCell: View {
     
     private var setIndex: some View {
         Text("\(exercise.indexOf(entry: entry))")
+            .font(.caption)
             .frame(minWidth: 30, minHeight: 30)
             .background(
                 Circle()
@@ -41,7 +42,12 @@ extension WorkoutEntryCell: View {
         case .time:
             Text("TODO")
         default:
-            DecimalField(type: type, value: binding(type: type))
+            VStack(alignment: .leading, spacing: 0) {
+                Text(type.name)
+                    .font(.caption)
+                DecimalField(type: type, value: binding(type: type))
+            }
+            
         }
     }
     
@@ -71,18 +77,13 @@ struct WorkoutEntryCell_Previews: PreviewProvider {
     static var previews: some View {
         let ioc = IOC()
         let context = ioc.resolve(CoreDataStore.self).mainContext
-        let activity = PBActivity()
-        activity.name = "TEST"
-        activity.trackingType = .weightlifting
+        let activity = PBActivity.new(context: context, name: "TEST", tracking: .weightlifting)
         
-        let workout = PBWorkout(context: context)
-        workout.startDate = Date()
+        let workout = PBWorkout.new(context: context)
         
-        let exercise = PBExercise(context: context)
-        exercise.activity = activity
-        exercise.workout = workout
+        let exercise = PBExercise.new(workout: workout, activity: activity)
         
-        return StatefulPreviewWrapper(ExerciseEntry()) { entry in
+        return StatefulPreviewWrapper(exercise.sets.first!) { entry in
             WorkoutEntryCell(exercise: exercise, entry: entry)
         }
     }

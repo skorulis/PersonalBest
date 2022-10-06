@@ -30,5 +30,5 @@ enum UnitType: String, Codable {
 }
 
 class UnitReps: Dimension {
-    static let reps = UnitReps(symbol: "Reps")
+    static let reps = UnitReps(symbol: "reps")
 }

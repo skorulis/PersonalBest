@@ -37,10 +37,12 @@ extension AddEntryView: View {
             Button(action: viewModel.selectVariation) {
                 Text("Variation: \(viewModel.variantName)")
             }
+            .buttonStyle(ShadowButtonStyle())
             
             Button(action: viewModel.save) {
                 Text("Save")
             }
+            .buttonStyle(ShadowButtonStyle())
         }
         .padding(.horizontal, 16)
     }

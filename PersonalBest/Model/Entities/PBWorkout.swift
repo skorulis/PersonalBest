@@ -17,6 +17,13 @@ public class PBWorkout: NSManagedObject, Identifiable {
     
     @NSManaged public var exercises: Set<PBExercise>
     
+    static func new(context: NSManagedObjectContext) -> PBWorkout {
+        let workout = PBWorkout(context: context)
+        workout.startDate = Date()
+        workout.versionID = UUID().uuidString
+        return workout
+    }
+    
     var sortedExercises: [PBExercise] {
         let query = PBExercise.fetch()
         query.sortDescriptors = [.init(key: "number", ascending: true)]

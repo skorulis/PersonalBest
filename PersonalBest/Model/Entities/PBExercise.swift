@@ -15,7 +15,8 @@ public class PBExercise: NSManagedObject, Identifiable {
     
     var sets: [ExerciseEntry] {
         get {
-            try! JSONDecoder().decode([ExerciseEntry].self, from: setsData)
+            let decoded = try? JSONDecoder().decode([ExerciseEntry].self, from: setsData)
+            return decoded ?? []
         }
         set {
             setsData = try! JSONEncoder().encode(newValue)

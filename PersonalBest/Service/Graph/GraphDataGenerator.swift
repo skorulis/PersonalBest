@@ -17,15 +17,13 @@ struct GraphDataGenerator {
 
 extension GraphDataGenerator {
     
-    func breakdown(activity: PBActivity) -> ActivityBreakdown {
-        let records = activity.orderedRecords
-        
+    func breakdown(activity: PBActivity, records: [PRecordEntry]) -> ActivityBreakdown {
         var lines = Self.getLines(activity: activity, records: records)
         lines = Self.finalise(lines: lines)
         return ActivityBreakdown(lines: lines)
     }
     
-    private static func getLines(activity: PBActivity, records: [PBRecordEntry]) -> [GraphLine] {
+    private static func getLines(activity: PBActivity, records: [PRecordEntry]) -> [GraphLine] {
         switch activity.trackingType {
         case .weightlifting:
             return repWeightBreakdown(records: records, unit: .kilograms)
@@ -36,7 +34,7 @@ extension GraphDataGenerator {
         }
     }
     
-    static func singleFieldBreakdown(type: MeasurementType, records: [PBRecordEntry]) -> GraphLine {
+    static func singleFieldBreakdown(type: MeasurementType, records: [PRecordEntry]) -> GraphLine {
         var topValue: Decimal = -1
         var result: [EntryValue] = []
         records.forEach { entry in
@@ -51,7 +49,7 @@ extension GraphDataGenerator {
         return GraphLine(name: type.name, unit: .reps, entries: result, color: .blue)
     }
     
-    static func repWeightBreakdown(records: [PBRecordEntry], unit: UnitType) -> [GraphLine] {
+    static func repWeightBreakdown(records: [PRecordEntry], unit: UnitType) -> [GraphLine] {
         let maxReps = 5
         var repResults = [Int: [EntryValue]]()
         

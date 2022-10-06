@@ -46,14 +46,12 @@ extension RecentHistoryViewModel {
 extension RecentHistoryViewModel {
     
     func entry(activity: PBActivity) -> RecentEntry {
-        let top = recordAccess.topValues(activity: activity)
-        return RecentEntry(activity: activity, value: top.values.first!)
+        let top = recordAccess.topPrimaryValue(activity: activity)!
+        return RecentEntry(activity: activity, value: top)
     }
     
-    func show(activity: PBActivity) -> () -> Void {
-        return { [unowned self] in
-             self.coordinator.push(RootPath.activityDetails(activity))
-        }
+    func show(activity: PBActivity) {
+        coordinator.push(RootPath.activityDetails(activity))
     }
     
     func deleteAction(activity: PBActivity) -> () -> Void {

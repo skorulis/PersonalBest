@@ -17,10 +17,12 @@ struct RecordValueDisplay {
 extension RecordValueDisplay: View {
     
     var body: some View {
-        HStack(alignment: .top) {
+        HStack(alignment: .firstTextBaseline) {
             Text(String(describing: value))
-                .font(.largeTitle)
+                .typography(.subtitle)
             Text(unit.symbolString)
+                .typography(.smallBody)
+                .baselineOffset(6)
         }
     }
 }

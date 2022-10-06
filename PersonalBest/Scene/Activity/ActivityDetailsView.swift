@@ -133,7 +133,8 @@ extension ActivityDetailsView: View {
     }
     
     private var historyList: some View {
-        ForEach(records) { entry in
+        ForEach(Array(records.indices), id: \.self) { index in
+            let entry = records[index]
             ActivityEntryCell(entry: entry)
         }
         .onDelete(perform: delete(indexSet:))
@@ -143,9 +144,7 @@ extension ActivityDetailsView: View {
         Button(action: viewModel.addEntry) {
             Text("New personal best")
         }
-        .buttonStyle(
-            WobbleButtonStyle(backgroundColor: .blue.opacity(0.5))
-        )
+        .buttonStyle(ShadowButtonStyle())
         .padding(.vertical, 20)
     }
     

@@ -4,7 +4,7 @@ import Foundation
 import CoreData
 
 @objc(PBRecordEntry)
-public class PBRecordEntry: NSManagedObject, Identifiable {
+public class PBRecordEntry: NSManagedObject, Identifiable, PRecordEntry {
  
     @nonobjc class func fetch() -> NSFetchRequest<PBRecordEntry> {
         return NSFetchRequest<PBRecordEntry>(entityName: "PBRecordEntry")
@@ -30,6 +30,10 @@ public class PBRecordEntry: NSManagedObject, Identifiable {
         set {
             entryValuesData = try! JSONEncoder().encode(newValue)
         }
+    }
+    
+    var variantName: String? {
+        return variant?.name
     }
     
     func set(type: MeasurementType, value: Decimal) {

@@ -10,6 +10,7 @@ final class WorkoutDetailsViewModel: CoordinatedViewModel, ObservableObject {
     private let activityService: ActivityService
     
     @Published var workout: PBWorkout
+    @Published var showingDeletePrompt: Bool = false
     
     @Published var endDate: Date {
         didSet {
@@ -103,6 +104,25 @@ extension WorkoutDetailsViewModel {
     func save() {
         workout.versionID = UUID().uuidString
         try! workout.managedObjectContext?.save()
+    }
+    
+    func finish() {
+        self.endDate = Date()
+        
+        // TODO: Create new records
+        
+        
+        save()
+    }
+    
+    func delete() {
+        showingDeletePrompt = true
+    }
+    
+    func confirmDelete() {
+        workout.managedObjectContext?.delete(workout)
+        try! workout.managedObjectContext?.save()
+        self.back()
     }
 
     

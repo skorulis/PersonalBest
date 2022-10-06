@@ -23,7 +23,7 @@ final class ActivityDetailsViewModel: CoordinatedViewModel, ObservableObject {
         self.recordsStore = recordsStore
         self.graphGenerator = graphGenerator
         self.coreDataStore = coreDataStore
-        self.recordBreakdown = self.graphGenerator.breakdown(activity: self.activity)
+        self.recordBreakdown = self.graphGenerator.breakdown(activity: self.activity, records: activity.orderedRecords)
         super.init()
         if !self.recordBreakdown.canGraph {
             self.displayType = .list
@@ -32,7 +32,7 @@ final class ActivityDetailsViewModel: CoordinatedViewModel, ObservableObject {
         activity.objectWillChange
             .delayedChange()
             .sink { [unowned self] _ in
-                self.recordBreakdown = self.graphGenerator.breakdown(activity: self.activity)
+                self.recordBreakdown = self.graphGenerator.breakdown(activity: self.activity, records: activity.orderedRecords)
             }
             .store(in: &subscribers)
     }
