@@ -135,11 +135,8 @@ extension ActivityDetailsView: View {
     private var historyList: some View {
         ForEach(records) { entry in
             ActivityEntryCell(entry: entry)
-            
         }
         .onDelete(perform: delete(indexSet:))
-        
-        
     }
     
     private var newEntry: some View {

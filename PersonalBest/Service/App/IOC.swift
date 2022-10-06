@@ -74,5 +74,11 @@ public final class IOC: IOCService {
                                argument: WorkoutActivityPickerViewModel.Argument.self,
                                initializer: WorkoutActivityPickerViewModel.init)
         
+        container.autoregister(VariationListViewModel.self,
+                               argument: VariationListViewModel.Argument.self,
+                               initializer: VariationListViewModel.init)
+        
+        
+        
     }
 }

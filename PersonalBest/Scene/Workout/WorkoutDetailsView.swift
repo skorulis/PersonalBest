@@ -25,7 +25,7 @@ extension WorkoutDetailsView: View {
     
     private func content() -> some View {
         Group {
-            DatePicker(selection: $viewModel.workout.startDate, displayedComponents: [.date, .hourAndMinute]) {
+            DatePicker(selection: $viewModel.startDate, displayedComponents: [.date, .hourAndMinute]) {
                 Text("Start date")
             }
             

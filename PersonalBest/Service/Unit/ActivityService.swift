@@ -54,16 +54,27 @@ extension ActivityService {
         var didCreate: Bool = false
         SystemActivity.allCases.forEach { act in
             if actMap[act.name] == nil {
-                let newAct = PBActivity(context: coreData.mainContext)
-                newAct.name = act.name
-                newAct.trackingTypeString = act.tracking.rawValue
-                newAct.category = catMap[act.category.rawValue]!
+                _ = create(act: act, catMap: catMap)
                 didCreate = true
             }
         }
         if didCreate {
             try! coreData.mainContext.save()
         }
+    }
+    
+    private func create(act: SystemActivity, catMap: [String: PBCategory]) -> PBActivity {
+        let newAct = PBActivity(context: coreData.mainContext)
+        newAct.name = act.name
+        newAct.trackingTypeString = act.tracking.rawValue
+        newAct.category = catMap[act.category.rawValue]!
+        for name in act.variations {
+            let newVar = PBVariant(context: coreData.mainContext)
+            newVar.activity = newAct
+            newVar.name = name
+        }
+        
+        return newAct
     }
     
 }

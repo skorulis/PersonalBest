@@ -30,7 +30,7 @@ public class PBExercise: NSManagedObject, Identifiable {
         exercise.number = Int16(workout.exercises.count) + 1
         exercise.workout = workout
         exercise.activity = activity
-        exercise.sets = []
+        exercise.sets = [.init()]
         
         return exercise
     }

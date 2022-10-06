@@ -19,8 +19,14 @@ extension ActivityEntryCell: View {
     
     private var content: some View {
         HStack {
-            Text(entry.dateString)
-                .font(.title)
+            VStack(alignment: .leading) {
+                Text(entry.dateString)
+                    .font(.title)
+                if let variant = entry.variant {
+                    Text(variant.name)
+                }
+            }
+            
             Spacer()
             valueList
         }

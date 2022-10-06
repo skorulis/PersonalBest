@@ -34,6 +34,7 @@ extension WorkoutListView: View {
             Button(action: viewModel.select(workout: workout)) {
                 WorkoutCell(workout: workout)
             }
+            .id(workout.versionID)
         }
         .onDelete(perform: delete)
     }

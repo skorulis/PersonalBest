@@ -23,6 +23,7 @@ public class PBActivity: NSManagedObject, Identifiable {
     @NSManaged public var trackingTypeString: String
     
     @NSManaged public var records: Set<PBRecordEntry>
+    @NSManaged public var variants: Set<PBVariant>
     @NSManaged public var category: PBCategory
     
 }
@@ -37,6 +38,12 @@ extension PBActivity {
     
     var measurementTypes: [MeasurementType] {
         trackingType.measurements.map { $0.type }
+    }
+    
+    var orderedVariations: [PBVariant] {
+        return variants.sorted { v1, v2 in
+            return v1.name < v2.name
+        }
     }
     
     var orderedRecords: [PBRecordEntry] {

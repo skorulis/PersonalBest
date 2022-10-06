@@ -34,6 +34,10 @@ extension AddEntryView: View {
                 Text("Select date")
             }
             
+            Button(action: viewModel.selectVariation) {
+                Text("Variation: \(viewModel.variantName)")
+            }
+            
             Button(action: viewModel.save) {
                 Text("Save")
             }
@@ -60,7 +64,8 @@ struct AddEntryView_Previews: PreviewProvider {
     
     static var previews: some View {
         let ioc = IOC()
-        let example = PBActivity()
+        let coreData = ioc.resolve(CoreDataStore.self)
+        let example = PBActivity(context: coreData.mainContext)
         example.name = "Pull up"
         example.trackingType = .reps
         return AddEntryView(viewModel: ioc.resolve(AddEntryViewModel.self, argument: example))

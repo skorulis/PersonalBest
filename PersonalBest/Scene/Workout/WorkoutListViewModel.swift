@@ -10,9 +10,7 @@ final class WorkoutListViewModel: CoordinatedViewModel, ObservableObject {
     init(coreDataStore: CoreDataStore) {
         self.coreDataStore = coreDataStore
         super.init()
-        
     }
-    
 }
 
 // MARK: - Logic
@@ -22,6 +20,7 @@ extension WorkoutListViewModel {
     func add() {
         let workout = PBWorkout(context: coreDataStore.mainContext)
         workout.startDate = Date()
+        workout.versionID = UUID().uuidString
         try! workout.managedObjectContext?.save()
         coordinator.push(.workout(workout))
     }

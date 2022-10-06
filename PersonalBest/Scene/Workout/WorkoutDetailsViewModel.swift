@@ -9,18 +9,23 @@ final class WorkoutDetailsViewModel: CoordinatedViewModel, ObservableObject {
     
     private let activityService: ActivityService
     
-    @Published var workout: PBWorkout {
-        didSet {
-            try! self.workout.managedObjectContext?.save()
-        }
-    }
+    @Published var workout: PBWorkout
     
     @Published var endDate: Date {
         didSet {
             hasFinished = true
             workout.endDate = endDate
+            self.save()
         }
     }
+    
+    @Published var startDate: Date {
+        didSet {
+            workout.startDate = startDate
+            self.save()
+        }
+    }
+    
     @Published var hasFinished: Bool
     
     init(workout: PBWorkout,
@@ -29,6 +34,7 @@ final class WorkoutDetailsViewModel: CoordinatedViewModel, ObservableObject {
         self.workout = workout
         self.activityService = activityService
         self.endDate = workout.endDate ?? Date()
+        self.startDate = workout.startDate
         self.hasFinished = workout.endDate != nil
         super.init()
         self.workout.objectWillChange
@@ -47,9 +53,10 @@ extension WorkoutDetailsViewModel {
     
     func delete(_ indexSet: IndexSet) {
         indexSet.reversed().forEach { value in
-            
-            // TODO
-            //self.workout.exercises.remove(at: value)
+            let exercise = workout.sortedExercises[value]
+            workout.exercises.remove(exercise)
+            workout.managedObjectContext?.delete(exercise)
+            self.save()
         }
     }
     
@@ -60,11 +67,12 @@ extension WorkoutDetailsViewModel {
                 mutableSets.remove(at: index)
             }
             if mutableSets.isEmpty {
-                self.workout.exercises.remove(exercise)
+                workout.exercises.remove(exercise)
+                workout.managedObjectContext?.delete(exercise)
             } else {
                 exercise.sets = mutableSets
             }
-            try! exercise.managedObjectContext?.save()
+            self.save()
         }
     }
     
@@ -73,13 +81,13 @@ extension WorkoutDetailsViewModel {
         var sets = exercise.sets
         sets.append(set)
         exercise.sets = sets
-        try! exercise.managedObjectContext?.save()
+        self.save()
     }
     
     func addExercise() {
         let path = RootPath.selectWorkoutActivity { [unowned self] activity in
             _ = PBExercise.new(workout: workout, activity: activity)
-            try! workout.managedObjectContext?.save()
+            self.save()
         }
         coordinator.present(path, style: .sheet)
     }
@@ -90,6 +98,11 @@ extension WorkoutDetailsViewModel {
         } set: { newValue in
             exercise.replace(entry: newValue)
         }
+    }
+    
+    func save() {
+        workout.versionID = UUID().uuidString
+        try! workout.managedObjectContext?.save()
     }
 
     

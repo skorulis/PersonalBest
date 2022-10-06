@@ -13,6 +13,7 @@ public class PBWorkout: NSManagedObject, Identifiable {
     @NSManaged public var startDate: Date
     @NSManaged public var endDate: Date?
     @NSManaged public var notes: String?
+    @NSManaged public var versionID: String
     
     @NSManaged public var exercises: Set<PBExercise>
     

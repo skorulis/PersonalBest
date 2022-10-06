@@ -13,6 +13,7 @@ public class PBRecordEntry: NSManagedObject, Identifiable {
     @NSManaged public var date: Date
     @NSManaged public var entryValuesData: Data
     @NSManaged public var activity: PBActivity
+    @NSManaged public var variant: PBVariant?
     
     static func new(activity: PBActivity, date: Date = Date(), values: [MeasurementType: Decimal]) -> PBRecordEntry {
         let record = PBRecordEntry(context: activity.managedObjectContext!)

@@ -11,6 +11,7 @@ final class AddEntryViewModel: CoordinatedViewModel, ObservableObject {
     private let recordAccess: RecordEntryAccess
     
     @Published var date: Date = Date()
+    @Published var selectedVariant: PBVariant?
     
     private var values: [MeasurementType: Decimal] = [:]
     
@@ -29,6 +30,10 @@ extension AddEntryViewModel {
     
     var fields: [MeasurementType] {
         return activity.measurementTypes
+    }
+    
+    var variantName: String {
+        return selectedVariant?.name ?? "None"
     }
     
 }
@@ -58,9 +63,16 @@ extension AddEntryViewModel {
             measures[field] = value
         }
         let entry = PBRecordEntry.new(activity: activity, date: date, values: measures)
+        entry.variant = selectedVariant
         try! entry.managedObjectContext?.save()
         
         dismiss()
+    }
+    
+    func selectVariation() {
+        coordinator.push(.selectVariant(activity, onSelect: { [unowned self] variant in
+            self.selectedVariant = variant
+        }))
     }
     
 }

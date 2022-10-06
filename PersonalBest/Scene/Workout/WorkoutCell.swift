@@ -21,7 +21,7 @@ extension WorkoutCell: View {
             dateView
             VStack(alignment: .leading) {
                 maybeEmptyLabel
-                ForEach(Array(workout.exercises)) { exercise in
+                ForEach(Array(workout.sortedExercises)) { exercise in
                     exerciseCounts(exercise)
                 }
             }

@@ -16,6 +16,7 @@ enum RootPath: CoordinatorPath, Hashable, Identifiable {
     case workoutList
     case workout(_ workout: PBWorkout)
     case selectWorkoutActivity(_ onSelect: (PBActivity) -> Void)
+    case selectVariant(_ activity: PBActivity, onSelect: (PBVariant?) -> Void)
     
     @ViewBuilder
     func render(coordinator: MainCoordinator) -> some View {
@@ -39,6 +40,9 @@ enum RootPath: CoordinatorPath, Hashable, Identifiable {
         case .selectWorkoutActivity(let onSelect):
             let arg = WorkoutActivityPickerViewModel.Argument(onSelect: onSelect)
             WorkoutActivityPickerView(viewModel: coordinator.resolve(WorkoutActivityPickerViewModel.self, argument: arg))
+        case .selectVariant(let activity, onSelect: let onSelect):
+            let arg = VariationListViewModel.Argument(activity: activity, onSelect: onSelect)
+            VariationListView(viewModel: coordinator.resolve(VariationListViewModel.self, argument: arg))
         }
     }
     
