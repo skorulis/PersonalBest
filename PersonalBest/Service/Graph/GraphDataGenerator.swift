@@ -19,59 +19,76 @@ extension GraphDataGenerator {
     
     func breakdown(activity: PBActivity, records: [PRecordEntry]) -> ActivityBreakdown {
         var lines = Self.getLines(activity: activity, records: records)
-        lines = Self.finalise(lines: lines)
-        return ActivityBreakdown(lines: lines)
+        lines = Self.finalise(data: lines)
+        return ActivityBreakdown(lineVariants: lines)
     }
     
-    private static func getLines(activity: PBActivity, records: [PRecordEntry]) -> [GraphLine] {
+    private static func getLines(activity: PBActivity, records: [PRecordEntry]) -> [String: [GraphLine]] {
         switch activity.trackingType {
         case .weightlifting:
             return repWeightBreakdown(records: records, unit: .kilograms)
         case .time:
-            return [singleFieldBreakdown(type: .time, records: records)]
+            return singleFieldBreakdown(type: .time, records: records)
         default:
-            return [singleFieldBreakdown(type: .reps, records: records)]
+            return singleFieldBreakdown(type: .reps, records: records)
         }
     }
     
-    static func singleFieldBreakdown(type: MeasurementType, records: [PRecordEntry]) -> GraphLine {
+    static func singleFieldBreakdown(type: MeasurementType, records: [PRecordEntry]) -> [String: [GraphLine]] {
         var topValue: Decimal = -1
-        var result: [EntryValue] = []
+        var result: [String: [EntryValue]] = [:]
         records.forEach { entry in
+            let variant = entry.variantName ?? PBVariant.none
+            var resultArray = result[variant] ?? []
             let values = entry.entryValues
             if let value = values[type], value > topValue {
                 topValue = value
                 let entryValue = EntryValue(date: entry.date, value: value)
-                result.append(entryValue)
+                resultArray.append(entryValue)
+                result[variant] = resultArray
             }
         }
-        
-        return GraphLine(name: type.name, unit: .reps, entries: result, color: .blue)
+        var mapped: [String: [GraphLine]] = [:]
+        for (key, value) in result {
+            let line = GraphLine(name: type.name, unit: .reps, entries: value, color: .blue)
+            mapped[key] = [line]
+        }
+        return mapped
     }
     
-    static func repWeightBreakdown(records: [PRecordEntry], unit: UnitType) -> [GraphLine] {
+    static func repWeightBreakdown(records: [PRecordEntry], unit: UnitType) -> [String: [GraphLine]] {
         let maxReps = 5
-        var repResults = [Int: [EntryValue]]()
+        var repResults = [String: [Int: [EntryValue]]]()
         
         records.forEach { entry in
             let values = entry.entryValues
             if let reps = values[.reps], let weight = values[.weight] {
+                let variant = entry.variantName ?? PBVariant.none
                 let repInt = (reps as NSDecimalNumber).intValue
-                var array = repResults[repInt] ?? []
+                let maxxedReps = min(repInt, maxReps)
+                var intMap = repResults[variant] ?? [:]
+                var array = intMap[maxxedReps] ?? []
                 let top = array.last?.value ?? -1
                 if weight > top {
                     let entryValue = EntryValue(date: entry.date, value: weight)
                     array.append(entryValue)
-                    repResults[repInt] = array
+                    intMap[maxxedReps] = array
+                    repResults[variant] = intMap
                 }
             }
         }
         
-        return (1...maxReps).compactMap { reps in
-            guard let entries = repResults[reps] else { return nil }
-            return GraphLine(name: "\(reps) Reps", unit: unit, entries: entries, color: color(index: reps))
+        var mapped: [String: [GraphLine]] = [:]
+        
+        repResults.forEach { (key, value) in
+            let repLines: [GraphLine] = (1...maxReps).compactMap { reps in
+                guard let entries = value[reps] else { return nil }
+                return GraphLine(name: "\(reps) Reps", unit: unit, entries: entries, color: color(index: reps))
+            }
+            mapped[key] = repLines
         }
         
+        return mapped
     }
     
     static func alignToDays(line: GraphLine) -> GraphLine {
@@ -100,6 +117,12 @@ extension GraphDataGenerator {
         array.append(placeholder)
         
         return line.with(entries: array)
+    }
+    
+    static func finalise(data: [String: [GraphLine]]) -> [String: [GraphLine]] {
+        return data.mapValues { lines in
+            return finalise(lines: lines)
+        }
     }
     
     static func finalise(lines: [GraphLine]) -> [GraphLine] {

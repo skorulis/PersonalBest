@@ -15,11 +15,23 @@ final class AddEntryViewModel: CoordinatedViewModel, ObservableObject {
     
     private var values: [MeasurementType: Decimal] = [:]
     
-    init(activity: PBActivity,
+    init(argument: Argument,
          recordAccess: RecordEntryAccess
     ) {
-        self.activity = activity
+        self.activity = argument.activity
+        self.selectedVariant = argument.initialVariant
         self.recordAccess = recordAccess
+    }
+    
+}
+
+// MARK: - Inner types
+
+extension AddEntryViewModel {
+    
+    struct Argument {
+        let activity: PBActivity
+        let initialVariant: PBVariant?
     }
     
 }

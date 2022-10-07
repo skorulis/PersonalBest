@@ -55,11 +55,12 @@ extension ActivityDetailsView: View {
     @ViewBuilder
     private var header: some View {
         VStack {
-            if let top = viewModel.recordBreakdown.highestValue {
+            if let top = viewModel.recordBreakdown.highestValue(variant: PBVariant.none) {
                 topRecord(top)
             } else {
                 Text("No records logged")
             }
+            maybeVariantPicker
             newEntry
         }
         .frame(maxWidth: .infinity)
@@ -102,21 +103,37 @@ extension ActivityDetailsView: View {
     }
     
     @ViewBuilder
+    private var maybeVariantPicker: some View {
+        if viewModel.recordBreakdown.variants.count > 1 {
+            Picker("Variant", selection: $viewModel.variant) {
+                ForEach(viewModel.recordBreakdown.variants, id: \.self) { variant in
+                    Text(variant)
+                        .tag(variant)
+                }
+            }
+            .pickerStyle(.menu)
+        }
+    }
+    
+    @ViewBuilder
     private var chartOrList: some View {
         switch viewModel.displayType {
         case .chart:
-            chartView
+            if let lines = viewModel.lines {
+                chartView(lines: lines)
+            } else {
+                Text("Insufficient data")
+            }
         case .list:
             historyList
         }
     }
     
-    private var chartView: some View {
+    private func chartView(lines: [GraphLine]) -> some View {
         Chart {
-            ForEach(viewModel.recordBreakdown.lines) { line in
+            ForEach(lines) { line in
                 lineContent(entries: line)
             }
-            
         }
         .frame(height: 400)
     }

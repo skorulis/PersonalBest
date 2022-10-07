@@ -31,18 +31,27 @@ struct EntryValue: Identifiable {
 
 struct ActivityBreakdown {
     
-    let lines: [GraphLine]
+    let lineVariants: [String: [GraphLine]]
+    
+    var variants: [String] {
+        return Array(lineVariants.keys)
+    }
     
     var canGraph: Bool {
-        return lines.first(where: {$0.entries.count >= 2}) != nil
+        return lineVariants.contains { (key, lines) in
+            return lines.first(where: {$0.entries.count >= 2}) != nil
+        }
     }
     
     var hasData: Bool {
-        return lines.first(where: {$0.entries.count >= 1}) != nil
+        return lineVariants.contains { (key, lines) in
+            return lines.first(where: {$0.entries.count >= 1}) != nil
+        }
     }
     
-    var highestValue: TopRecord? {
+    func highestValue(variant: String) -> TopRecord? {
         var best: TopRecord? = nil
+        guard let lines = lineVariants[variant] else { return nil }
         
         let items: [TopRecord] = lines.compactMap { line in
             guard let last = line.entries.last else {

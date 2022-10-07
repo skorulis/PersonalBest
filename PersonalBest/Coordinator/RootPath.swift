@@ -8,7 +8,7 @@ import SwiftUI
 enum RootPath: CoordinatorPath, Hashable, Identifiable {
     
     case activityDetails(_ activity: PBActivity)
-    case addEntry(_ activity: PBActivity)
+    case addEntry(_ activity: PBActivity, _ initialVariant: PBVariant?)
     case recent
     case settings
     case categories
@@ -23,8 +23,9 @@ enum RootPath: CoordinatorPath, Hashable, Identifiable {
         switch self {
         case .activityDetails(let activity):
             ActivityDetailsView(viewModel: coordinator.resolve(ActivityDetailsViewModel.self, argument: activity))
-        case .addEntry(let activity):
-            AddEntryView(viewModel: coordinator.resolve(AddEntryViewModel.self, argument: activity))
+        case .addEntry(let activity, let initialVariant):
+            let argument = AddEntryViewModel.Argument(activity: activity, initialVariant: initialVariant)
+            AddEntryView(viewModel: coordinator.resolve(AddEntryViewModel.self, argument: argument))
         case .recent:
             RecentHistoryView(viewModel: coordinator.resolve())
         case .settings:
@@ -49,7 +50,7 @@ enum RootPath: CoordinatorPath, Hashable, Identifiable {
     var id: String {
         switch self {
         case .activityDetails(let activity): return "activity-details-\(activity.id)"
-        case .addEntry(let activity): return "addEntry-\(activity.id)"
+        case .addEntry(let activity, _): return "addEntry-\(activity.id)"
         case .categoryActivities(let category): return "category-\(category)"
         case .workout(let workout): return "workout-\(workout)"
         case .selectWorkoutActivity(_): return "select-workout-activity"

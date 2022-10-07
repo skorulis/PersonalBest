@@ -13,6 +13,7 @@ final class ActivityDetailsViewModel: CoordinatedViewModel, ObservableObject {
     
     @Published var recordBreakdown: ActivityBreakdown
     @Published var displayType: DisplayType = .chart
+    @Published var variant: String = PBVariant.none
     
     init(activity: PBActivity,
          recordsStore: RecordsStore,
@@ -39,12 +40,23 @@ final class ActivityDetailsViewModel: CoordinatedViewModel, ObservableObject {
     
 }
 
+// MARK: - Computed values
+
+extension ActivityDetailsViewModel {
+ 
+    var lines: [GraphLine]? {
+        return recordBreakdown.lineVariants[variant]
+    }
+    
+}
+
 // MARK: - Logic
 
 extension ActivityDetailsViewModel {
     
     func addEntry() {
-        let path = RootPath.addEntry(activity)
+        let initialVariant = PBVariant.find(context: activity.managedObjectContext!, name: variant)
+        let path = RootPath.addEntry(activity, initialVariant)
         coordinator.present(path, style: .sheet)
     }
     
