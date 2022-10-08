@@ -27,8 +27,9 @@ extension WorkoutEntryCell: View {
     }
     
     private var setIndex: some View {
-        Text("\(exercise.indexOf(entry: entry))")
-            .font(.caption)
+        Text("\(exercise.indexOf(entry: entry) + 1)")
+            .typography(.caption)
+            .foregroundColor(isComplete ? .black : .black.opacity(0.5))
             .frame(minWidth: 30, minHeight: 30)
             .background(
                 Circle()
@@ -68,6 +69,16 @@ extension WorkoutEntryCell {
         }
     }
     
+    var isComplete: Bool {
+        for measure in activity.measurementTypes {
+            guard let value = entry.values[measure] else {
+                return false
+            }
+            return value > 0
+        }
+        return true
+    }
+    
 }
 
 // MARK: - Previews
@@ -77,14 +88,20 @@ struct WorkoutEntryCell_Previews: PreviewProvider {
     static var previews: some View {
         let ioc = IOC()
         let context = ioc.resolve(CoreDataStore.self).mainContext
-        let activity = PBActivity.new(context: context, name: "TEST", tracking: .weightlifting)
         
         let workout = PBWorkout.new(context: context)
         
-        let exercise = PBExercise.new(workout: workout, activity: activity)
+        let exercise1 = PreviewData.bodyExercise(workout)
+        let exercise2 = PreviewData.weightExercise(workout)
         
-        return StatefulPreviewWrapper(exercise.sets.first!) { entry in
-            WorkoutEntryCell(exercise: exercise, entry: entry)
+        return VStack {
+            StatefulPreviewWrapper(exercise1.sets.first!) { entry in
+                WorkoutEntryCell(exercise: exercise1, entry: entry)
+            }
+            
+            StatefulPreviewWrapper(exercise2.sets.first!) { entry in
+                WorkoutEntryCell(exercise: exercise2, entry: entry)
+            }
         }
     }
 }

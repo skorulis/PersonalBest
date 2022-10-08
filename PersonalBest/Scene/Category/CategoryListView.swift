@@ -36,7 +36,9 @@ extension CategoryListView: View {
             ForEach(categoryRows, id: \.0) { row in
                 GridRow {
                     categoryCell(category: row.0)
-                    categoryCell(category: row.1)
+                    if let second = row.1 {
+                        categoryCell(category: second)
+                    }
                 }
             }
         }
@@ -60,11 +62,12 @@ extension CategoryListView: View {
 
 extension CategoryListView {
     
-    var categoryRows: [(PBCategory, PBCategory)] {
+    var categoryRows: [(PBCategory, PBCategory?)] {
         let cats = categories
-        var result = [(PBCategory, PBCategory)]()
-        for i in stride(from: 0, to: cats.count - 1, by: 2) {
-            let row = (cats[i], cats[i + 1])
+        var result = [(PBCategory, PBCategory?)]()
+        for i in stride(from: 0, to: cats.count, by: 2) {
+            let second = i < cats.count - 1 ? cats[i + 1] : nil
+            let row = (cats[i], second)
             result.append(row)
         }
         

@@ -31,4 +31,19 @@ public class PBWorkout: NSManagedObject, Identifiable {
         return try! self.managedObjectContext!.fetch(query)
     }
     
+    var actvitySets: [PBActivity: [PRecordEntry]] {
+        var result: [PBActivity: [PRecordEntry]] = [:]
+        for exercise in exercises {
+            let sets = exercise.sets
+            var array = result[exercise.activity] ?? []
+            for set in sets {
+                let entry = RecordEntry(date: self.startDate, variantName: nil, entryValues: set.values)
+                array.append(entry)
+            }
+            result[exercise.activity] = array
+        }
+        
+        return result
+    }
+    
 }
