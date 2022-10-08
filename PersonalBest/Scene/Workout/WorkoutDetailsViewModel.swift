@@ -11,6 +11,7 @@ final class WorkoutDetailsViewModel: CoordinatedViewModel, ObservableObject {
     
     @Published var workout: PBWorkout
     @Published var showingDeletePrompt: Bool = false
+    @Published var focusPublisher: WorkoutFocus?
     
     @Published var endDate: Date {
         didSet {
@@ -74,6 +75,7 @@ extension WorkoutDetailsViewModel {
                 exercise.sets = mutableSets
             }
             self.save()
+            self.objectWillChange.send()
         }
     }
     
@@ -83,6 +85,8 @@ extension WorkoutDetailsViewModel {
         sets.append(set)
         exercise.sets = sets
         self.save()
+        let firstMeasure = exercise.activity.measurementTypes.first!
+        self.focusPublisher = .setEntry(exercise.number, setIndex: sets.count-1, measurement: firstMeasure)
     }
     
     func addExercise() {
@@ -93,11 +97,11 @@ extension WorkoutDetailsViewModel {
         coordinator.present(path, style: .sheet)
     }
     
-    func binding(_ exercise: PBExercise, _ entry: ExerciseEntry) -> Binding<ExerciseEntry> {
-        return Binding<ExerciseEntry> {
+    func binding(_ exercise: PBExercise, _ entry: ExerciseEntry) -> Binding<ExerciseEntry?> {
+        return Binding<ExerciseEntry?> {
             return exercise.entry(id: entry.id)
         } set: { newValue in
-            exercise.replace(entry: newValue)
+            exercise.replace(entry: newValue!)
             self.objectWillChange.send()
         }
     }

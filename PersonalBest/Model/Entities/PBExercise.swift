@@ -36,9 +36,9 @@ public class PBExercise: NSManagedObject, Identifiable {
         return exercise
     }
     
-    func entry(id: String) -> ExerciseEntry {
+    func entry(id: String) -> ExerciseEntry? {
         guard let index = sets.firstIndex(where: {$0.id == id}) else {
-            fatalError("Exercise not in workout \(id)")
+            return nil
         }
         return sets[index]
     }

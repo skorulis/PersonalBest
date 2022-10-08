@@ -8,6 +8,7 @@ import SwiftUI
 
 struct WorkoutDetailsView {
     @StateObject var viewModel: WorkoutDetailsViewModel
+    @FocusState var focusedField: WorkoutFocus?
 }
 
 // MARK: - Rendering
@@ -18,6 +19,9 @@ extension WorkoutDetailsView: View {
         ListTemplate(nav: nav, content: content)
             .confirmationDialog("Are you sure you want to delete this workout", isPresented: $viewModel.showingDeletePrompt, titleVisibility: .visible) {
                 Button("Delete", role: .destructive, action: viewModel.confirmDelete)
+            }
+            .onChange(of: viewModel.focusPublisher) { newValue in
+                focusedField = viewModel.focusPublisher
             }
     }
     
@@ -88,7 +92,9 @@ extension WorkoutDetailsView: View {
         }
         ForEach(exercise.sets) { entry in
             WorkoutEntryCell(exercise: exercise,
-                             entry: viewModel.binding(exercise, entry))
+                             entry: viewModel.binding(exercise, entry),
+                             focus: _focusedField
+            )
         }
         .onDelete(perform: viewModel.deleteEntry(exercise: exercise))
         Button(action: {viewModel.addSet(exercise: exercise)}) {
@@ -102,6 +108,19 @@ extension WorkoutDetailsView: View {
         return Text("Vol: \(Int(vol.value)) \(vol.symbol)")
     }
     
+}
+
+enum WorkoutFocus: Hashable {
+    case setEntry(_ exerciseNumber: Int16, setIndex: Int, measurement: MeasurementType)
+    
+    func hash(into hasher: inout Hasher) {
+        switch self {
+        case .setEntry(let number, let setIndex, let measurement):
+            hasher.combine(number)
+            hasher.combine(setIndex)
+            hasher.combine(measurement)
+        }
+    }
 }
 
 // MARK: - Previews

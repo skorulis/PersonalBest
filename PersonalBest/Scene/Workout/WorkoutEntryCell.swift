@@ -9,7 +9,17 @@ import SwiftUI
 struct WorkoutEntryCell {
     
     let exercise: PBExercise
-    @Binding var entry: ExerciseEntry
+    @Binding var entry: ExerciseEntry?
+    @FocusState var focusedField: WorkoutFocus?
+    
+    init(exercise: PBExercise,
+         entry: Binding<ExerciseEntry?>,
+         focus: FocusState<WorkoutFocus?>
+    ) {
+        self.exercise = exercise
+        _entry = entry
+        _focusedField = focus
+    }
     
 }
 
@@ -18,16 +28,20 @@ struct WorkoutEntryCell {
 extension WorkoutEntryCell: View {
     
     var body: some View {
-        HStack {
-            setIndex
-            ForEach(activity.measurementTypes) { type in
-                field(type: type)
+        if entry == nil {
+            EmptyView()
+        } else {
+            HStack {
+                setIndexView
+                ForEach(activity.measurementTypes) { type in
+                    field(type: type)
+                }
             }
         }
     }
     
-    private var setIndex: some View {
-        Text("\(exercise.indexOf(entry: entry) + 1)")
+    private var setIndexView: some View {
+        Text("\(setIndex + 1)")
             .typography(.caption)
             .foregroundColor(isComplete ? .black : .black.opacity(0.5))
             .frame(minWidth: 30, minHeight: 30)
@@ -47,6 +61,7 @@ extension WorkoutEntryCell: View {
                 Text(type.name)
                     .font(.caption)
                 DecimalField(type: type, value: binding(type: type))
+                    .focused($focusedField, equals: .setEntry(exercise.number, setIndex: setIndex, measurement: type))
             }
             
         }
@@ -54,6 +69,10 @@ extension WorkoutEntryCell: View {
     
     var activity: PBActivity {
         return exercise.activity
+    }
+    
+    var setIndex: Int {
+        exercise.indexOf(entry: entry!)
     }
 }
 
@@ -63,15 +82,15 @@ extension WorkoutEntryCell {
     
     func binding(type: MeasurementType) -> Binding<Decimal?> {
         return Binding<Decimal?> {
-            return self.entry.values[type]
+            return self.entry!.values[type]
         } set: { newValue in
-            self.entry.values[type] = newValue
+            self.entry!.values[type] = newValue
         }
     }
     
     var isComplete: Bool {
         for measure in activity.measurementTypes {
-            guard let value = entry.values[measure] else {
+            guard let value = entry?.values[measure] else {
                 return false
             }
             return value > 0
@@ -96,11 +115,11 @@ struct WorkoutEntryCell_Previews: PreviewProvider {
         
         return VStack {
             StatefulPreviewWrapper(exercise1.sets.first!) { entry in
-                WorkoutEntryCell(exercise: exercise1, entry: entry)
+                WorkoutEntryCell(exercise: exercise1, entry: entry, focus: .init())
             }
             
             StatefulPreviewWrapper(exercise2.sets.first!) { entry in
-                WorkoutEntryCell(exercise: exercise2, entry: entry)
+                WorkoutEntryCell(exercise: exercise2, entry: entry, focus: .init())
             }
         }
     }
