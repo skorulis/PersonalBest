@@ -55,5 +55,32 @@ public class PBExercise: NSManagedObject, Identifiable {
         sets[index] = entry
     }
     
+    func total(_ measurement: MeasurementType) -> Decimal {
+        return sets.map { $0.values[measurement] ?? 0}.reduce(0, +)
+    }
+    
+    
+    var totlaVolume: PMeasurement {
+        switch activity.trackingType {
+        case .reps:
+            let reps = total(.reps)
+            return Measurement<UnitReps>(value: reps.doubleValue, unit: .reps)
+        case .time:
+            let time = total(.time)
+            return Measurement<UnitDuration>(value: time.doubleValue, unit: .seconds)
+        case .weightlifting:
+            let vol = sets.map { entry in
+                let weight = entry.values[.weight] ?? 0
+                let reps = entry.values[.reps] ?? 0
+                return weight * reps
+            }
+            .reduce(0, +)
+            
+            return Measurement<UnitMass>(value: vol.doubleValue, unit: .kilograms)
+        case .cardio:
+            let dist = total(.distance)
+            return Measurement<UnitLength>(value: dist.doubleValue, unit: .kilometers)
+        }
+    }
     
 }

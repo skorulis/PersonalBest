@@ -80,8 +80,12 @@ extension WorkoutDetailsView: View {
     
     @ViewBuilder
     private func exerciseCell(_ exercise: PBExercise) -> some View {
-        Text(exercise.activity.name)
-            .bold()
+        HStack {
+            Text(exercise.activity.name)
+                .bold()
+            Spacer()
+            exerciseVolume(exercise)
+        }
         ForEach(exercise.sets) { entry in
             WorkoutEntryCell(exercise: exercise,
                              entry: viewModel.binding(exercise, entry))
@@ -91,8 +95,13 @@ extension WorkoutDetailsView: View {
             Text("Add set")
         }
         .deleteDisabled(true)
-        
     }
+    
+    private func exerciseVolume(_ exercise: PBExercise) -> some View {
+        let vol = exercise.totlaVolume
+        return Text("Vol: \(Int(vol.value)) \(vol.symbol)")
+    }
+    
 }
 
 // MARK: - Previews
