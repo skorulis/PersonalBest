@@ -5,10 +5,10 @@ import SwiftUI
 
 struct GraphDataGenerator {
     
-    let recordsStore: RecordsStore
+    private let breakdownService: BreakdownService
     
-    init(recordsStore: RecordsStore) {
-        self.recordsStore = recordsStore
+    init(breakdownService: BreakdownService) {
+        self.breakdownService = breakdownService
     }
     
 }
@@ -18,70 +18,37 @@ struct GraphDataGenerator {
 extension GraphDataGenerator {
     
     func breakdown(activity: PBActivity, records: [PRecordEntry]) -> ActivityBreakdown {
-        var lines = Self.getLines(activity: activity, records: records)
+        var lines = getLines(activity: activity, records: records)
         lines = Self.finalise(data: lines)
         return ActivityBreakdown(lineVariants: lines)
     }
     
-    private static func getLines(activity: PBActivity, records: [PRecordEntry]) -> [String: [GraphLine]] {
+    private func getLines(activity: PBActivity, records: [PRecordEntry]) -> [String: [GraphLine]] {
         switch activity.trackingType {
         case .weightlifting:
-            return repWeightBreakdown(records: records, unit: .kilograms)
-        case .time:
-            return singleFieldBreakdown(type: .time, records: records)
+            return repWeightBreakdown(records: records, unit: .kilograms, activity: activity)
         default:
-            return singleFieldBreakdown(type: .reps, records: records)
+            return singleFieldBreakdown(type: activity.primaryMeasure, records: records, activity: activity)
         }
     }
     
-    static func singleFieldBreakdown(type: MeasurementType, records: [PRecordEntry]) -> [String: [GraphLine]] {
-        var topValue: Decimal = -1
-        var result: [String: [EntryValue]] = [:]
-        records.forEach { entry in
-            let variant = entry.variantName ?? PBVariant.none
-            var resultArray = result[variant] ?? []
-            let values = entry.entryValues
-            if let value = values[type], value > topValue {
-                topValue = value
-                let entryValue = EntryValue(date: entry.date, value: value)
-                resultArray.append(entryValue)
-                result[variant] = resultArray
-            }
-        }
+    func singleFieldBreakdown(type: MeasurementType, records: [PRecordEntry], activity: PBActivity) -> [String: [GraphLine]] {
+        let breakdown = breakdownService.singleBreakdown(type: type, records: records, activity: activity)
         var mapped: [String: [GraphLine]] = [:]
-        for (key, value) in result {
+        for (key, value) in breakdown.values {
             let line = GraphLine(name: type.name, unit: .reps, entries: value, color: .blue)
             mapped[key] = [line]
         }
         return mapped
     }
     
-    static func repWeightBreakdown(records: [PRecordEntry], unit: UnitType) -> [String: [GraphLine]] {
-        let maxReps = 5
-        var repResults = [String: [Int: [EntryValue]]]()
-        
-        records.forEach { entry in
-            let values = entry.entryValues
-            if let reps = values[.reps], let weight = values[.weight] {
-                let variant = entry.variantName ?? PBVariant.none
-                let repInt = (reps as NSDecimalNumber).intValue
-                let maxxedReps = min(repInt, maxReps)
-                var intMap = repResults[variant] ?? [:]
-                var array = intMap[maxxedReps] ?? []
-                let top = array.last?.value ?? -1
-                if weight > top {
-                    let entryValue = EntryValue(date: entry.date, value: weight)
-                    array.append(entryValue)
-                    intMap[maxxedReps] = array
-                    repResults[variant] = intMap
-                }
-            }
-        }
+    func repWeightBreakdown(records: [PRecordEntry], unit: UnitType, activity: PBActivity) -> [String: [GraphLine]] {
+        let repResults = breakdownService.repWeightBreakdown(records: records, activity: activity)
         
         var mapped: [String: [GraphLine]] = [:]
         
-        repResults.forEach { (key, value) in
-            let repLines: [GraphLine] = (1...maxReps).compactMap { reps in
+        repResults.repValues.forEach { (key, value) in
+            let repLines: [GraphLine] = (1...BreakdownService.maxReps).compactMap { reps in
                 guard let entries = value[reps] else { return nil }
                 return GraphLine(name: "\(reps) Reps", unit: unit, entries: entries, color: color(index: reps))
             }
@@ -139,7 +106,7 @@ extension GraphDataGenerator {
         
     }
     
-    static func color(index: Int) -> Color {
+    func color(index: Int) -> Color {
         switch index {
         case 1: return .blue
         case 2: return .red

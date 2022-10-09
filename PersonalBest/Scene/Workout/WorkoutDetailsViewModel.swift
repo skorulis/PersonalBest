@@ -8,6 +8,8 @@ import SwiftUI
 final class WorkoutDetailsViewModel: CoordinatedViewModel, ObservableObject {
     
     private let activityService: ActivityService
+    private let breakdownService: BreakdownService
+    private let recordAccess: RecordEntryAccess
     
     @Published var workout: PBWorkout
     @Published var showingDeletePrompt: Bool = false
@@ -31,10 +33,14 @@ final class WorkoutDetailsViewModel: CoordinatedViewModel, ObservableObject {
     @Published var hasFinished: Bool
     
     init(workout: PBWorkout,
-         activityService: ActivityService
+         activityService: ActivityService,
+         breakdownService: BreakdownService,
+         recordAccess: RecordEntryAccess
     ) {
         self.workout = workout
         self.activityService = activityService
+        self.breakdownService = breakdownService
+        self.recordAccess = recordAccess
         self.endDate = workout.endDate ?? Date()
         self.startDate = workout.startDate
         self.hasFinished = workout.endDate != nil
@@ -91,7 +97,9 @@ extension WorkoutDetailsViewModel {
     
     func addExercise() {
         let path = RootPath.selectWorkoutActivity { [unowned self] activity in
-            _ = PBExercise.new(workout: workout, activity: activity)
+            let exercise = PBExercise.new(workout: workout, activity: activity)
+            let firstMeasure = exercise.activity.measurementTypes.first!
+            self.focusPublisher = .setEntry(exercise.number, setIndex: 0, measurement: firstMeasure)
             self.save()
         }
         coordinator.present(path, style: .sheet)
@@ -112,12 +120,30 @@ extension WorkoutDetailsViewModel {
     }
     
     func finish() {
-        self.endDate = Date()
+        //self.endDate = Date()
         
         // TODO: Create new records
         
+        let setMap = workout.actvitySets
         
-        save()
+        for (act, value) in setMap {
+            switch act.trackingType {
+            case .weightlifting:
+                let breakdown = breakdownService.repWeightBreakdown(records: value, activity: act)
+            default:
+                let breakdown = breakdownService.singleBreakdown(type: act.primaryMeasure, records: value, activity: act)
+                createRecords(breakdown: breakdown)
+            }
+        }
+        
+        //save()
+    }
+    
+    private func createRecords(breakdown: SimpleRecordsBreakdown) {
+        for (variant, values) in breakdown.values {
+            
+            // TODO: Check if higher and create record (or just always create the record?)
+        }
     }
     
     func delete() {

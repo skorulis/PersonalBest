@@ -23,6 +23,7 @@ extension WorkoutDetailsView: View {
             .onChange(of: viewModel.focusPublisher) { newValue in
                 focusedField = viewModel.focusPublisher
             }
+            .environment(\.defaultMinListRowHeight, 20)
     }
     
     private func nav() -> some View {
@@ -84,6 +85,11 @@ extension WorkoutDetailsView: View {
     
     @ViewBuilder
     private func exerciseCell(_ exercise: PBExercise) -> some View {
+        Color.lightShadow
+            .frame(height: 20)
+            .deleteDisabled(true)
+            .listRowInsets(EdgeInsets())
+            .listRowSeparator(.hidden)
         HStack {
             Text(exercise.activity.name)
                 .bold()

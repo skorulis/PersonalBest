@@ -53,6 +53,10 @@ extension PBActivity {
         }
     }
     
+    var primaryMeasure: MeasurementType {
+        trackingType.primaryMeasure
+    }
+    
     var orderedRecords: [PBRecordEntry] {
         let query = PBRecordEntry.fetch()
         query.sortDescriptors = [.init(key: "date", ascending: true)]

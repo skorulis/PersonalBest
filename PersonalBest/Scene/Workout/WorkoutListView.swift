@@ -10,7 +10,7 @@ struct WorkoutListView {
     
     @StateObject var viewModel: WorkoutListViewModel
     
-    @FetchRequest(sortDescriptors: [.init(key: "startDate", ascending: true)]) var workouts: FetchedResults<PBWorkout>
+    @FetchRequest(sortDescriptors: [.init(key: "startDate", ascending: false)]) var workouts: FetchedResults<PBWorkout>
     
 }
 

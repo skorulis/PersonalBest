@@ -22,6 +22,7 @@ public final class IOC: IOCService {
             .inObjectScope(.container)
         container.autoregister(ActivityService.self, initializer: ActivityService.init)
         container.autoregister(GraphDataGenerator.self, initializer: GraphDataGenerator.init)
+        container.autoregister(BreakdownService.self, initializer: BreakdownService.init)
     }
     
     private func registerStores() {
