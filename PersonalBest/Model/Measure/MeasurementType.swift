@@ -33,9 +33,9 @@ enum MeasurementType: String, Codable, Identifiable {
         case .reps:
             return .reps
         case .distance:
-            return .kilometers
+            return .meters
         case .weight:
-            return .kilograms
+            return .grams
         case .time:
             return .seconds
         }

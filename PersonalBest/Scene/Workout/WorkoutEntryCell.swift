@@ -33,10 +33,28 @@ extension WorkoutEntryCell: View {
         } else {
             HStack {
                 setIndexView
-                ForEach(activity.measurementTypes) { type in
-                    field(type: type)
-                }
+                fields
+                maybeVariantPicker
             }
+        }
+    }
+    
+    @ViewBuilder
+    private var fields: some View {
+        switch activity.trackingType {
+        case .cardio:
+            VStack(spacing: 0) {
+                field(type: .distance)
+                field(type: .time)
+            }
+        default:
+            horizontalFields
+        }
+    }
+    
+    private var horizontalFields: some View {
+        ForEach(activity.measurementTypes) { type in
+            field(type: type)
         }
     }
     
@@ -55,7 +73,7 @@ extension WorkoutEntryCell: View {
     private func field(type: MeasurementType) -> some View {
         switch type {
         case .time:
-            Text("TODO")
+            TimeField(value: binding(type: type))
         default:
             VStack(alignment: .leading, spacing: 0) {
                 Text(type.name)
@@ -73,6 +91,11 @@ extension WorkoutEntryCell: View {
     
     var setIndex: Int {
         exercise.indexOf(entry: entry!)
+    }
+    
+    @ViewBuilder
+    private var maybeVariantPicker: some View {
+        Text("Variant")
     }
 }
 
@@ -112,6 +135,7 @@ struct WorkoutEntryCell_Previews: PreviewProvider {
         
         let exercise1 = PreviewData.bodyExercise(workout)
         let exercise2 = PreviewData.weightExercise(workout)
+        let exercise3 = PreviewData.cardioExercise(workout)
         
         return VStack {
             StatefulPreviewWrapper(exercise1.sets.first!) { entry in
@@ -120,6 +144,10 @@ struct WorkoutEntryCell_Previews: PreviewProvider {
             
             StatefulPreviewWrapper(exercise2.sets.first!) { entry in
                 WorkoutEntryCell(exercise: exercise2, entry: entry, focus: .init())
+            }
+            
+            StatefulPreviewWrapper(exercise3.sets.first!) { entry in
+                WorkoutEntryCell(exercise: exercise3, entry: entry, focus: .init())
             }
         }
     }

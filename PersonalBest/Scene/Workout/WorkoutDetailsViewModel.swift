@@ -120,29 +120,55 @@ extension WorkoutDetailsViewModel {
     }
     
     func finish() {
-        //self.endDate = Date()
-        
-        // TODO: Create new records
-        
+        self.endDate = Date()
         let setMap = workout.actvitySets
         
         for (act, value) in setMap {
             switch act.trackingType {
             case .weightlifting:
                 let breakdown = breakdownService.repWeightBreakdown(records: value, activity: act)
+                createRecords(breakdown: breakdown)
             default:
                 let breakdown = breakdownService.singleBreakdown(type: act.primaryMeasure, records: value, activity: act)
                 createRecords(breakdown: breakdown)
             }
         }
         
-        //save()
+        save()
+    }
+    
+    private func createRecords(breakdown: RepWeightBreakdown) {
+        for (variant, repValues) in breakdown.repValues {
+            for (repCount, values) in repValues {
+                guard let top = values.last else {
+                    continue
+                }
+                
+                // TODO: Only create records if beating previous?
+                let variant = PBVariant.find(context: workout.managedObjectContext!, name: variant)
+                _ = PBRecordEntry.new(activity: breakdown.activity,
+                                      date: top.date,
+                                      variant: variant,
+                                      values: [.weight: top.value, .reps: Decimal(repCount)]
+                )
+            }
+        }
     }
     
     private func createRecords(breakdown: SimpleRecordsBreakdown) {
         for (variant, values) in breakdown.values {
+            guard let top = values.last else {
+                continue
+            }
             
-            // TODO: Check if higher and create record (or just always create the record?)
+            // TODO: Only create records if beating previous?
+            let variant = PBVariant.find(context: workout.managedObjectContext!, name: variant)
+            _ = PBRecordEntry.new(activity: breakdown.activity,
+                                  date: top.date,
+                                  variant: variant,
+                                  values: [breakdown.activity.primaryMeasure: top.value]
+            )
+            
         }
     }
     

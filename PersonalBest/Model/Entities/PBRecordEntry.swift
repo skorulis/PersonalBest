@@ -15,10 +15,15 @@ public class PBRecordEntry: NSManagedObject, Identifiable, PRecordEntry {
     @NSManaged public var activity: PBActivity
     @NSManaged public var variant: PBVariant?
     
-    static func new(activity: PBActivity, date: Date = Date(), values: [MeasurementType: Decimal]) -> PBRecordEntry {
+    
+    static func new(activity: PBActivity,
+                    date: Date = Date(),
+                    variant: PBVariant? = nil,
+                    values: [MeasurementType: Decimal]) -> PBRecordEntry {
         let record = PBRecordEntry(context: activity.managedObjectContext!)
         record.activity = activity
         record.date = date
+        record.variant = variant
         record.entryValues = values
         return record
     }

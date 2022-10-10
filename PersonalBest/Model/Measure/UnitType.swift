@@ -6,7 +6,7 @@ enum UnitType: String, Codable {
     case reps // Reps
     case meters, kilometers // Distance
     case seconds // Time
-    case kilograms // Weight
+    case grams, kilograms // Weight
     
     var unit: Dimension {
         switch self {
@@ -18,6 +18,8 @@ enum UnitType: String, Codable {
             return UnitLength.meters
         case .seconds:
             return UnitDuration.seconds
+        case .grams:
+            return UnitMass.grams
         case .kilograms:
             return UnitMass.kilograms
         }
