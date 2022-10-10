@@ -18,7 +18,7 @@ final class RecordEntryAccess {
 
 extension RecordEntryAccess {
     
-    func add(activity: PBActivity, date: Date, measures: [MeasurementType: Decimal]) {
+    func add(activity: PBActivity, date: Date, measures: [MeasurementType: Double]) {
         let entry = PBRecordEntry.new(activity: activity, date: date, values: measures)
         try! entry.managedObjectContext?.save()
     }

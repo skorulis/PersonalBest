@@ -4,7 +4,7 @@ import Foundation
 
 struct ExerciseEntry: Codable, Identifiable {
     let id: String
-    var values: [MeasurementType: Decimal]
+    var values: [MeasurementType: Double]
     
     init() {
         id = UUID().uuidString

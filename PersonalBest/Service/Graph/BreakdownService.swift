@@ -8,7 +8,7 @@ struct BreakdownService {
     static let maxReps = 5
     
     func singleBreakdown(type: MeasurementType, records: [PRecordEntry], activity: PBActivity) -> SimpleRecordsBreakdown {
-        var topValue: Decimal = -1
+        var topValue: Double = -1
         var result: [String: [EntryValue]] = [:]
         records.forEach { entry in
             let variant = entry.variantName ?? PBVariant.none
@@ -31,7 +31,7 @@ struct BreakdownService {
             let values = entry.entryValues
             if let reps = values[.reps], let weight = values[.weight] {
                 let variant = entry.variantName ?? PBVariant.none
-                let repInt = (reps as NSDecimalNumber).intValue
+                let repInt = Int(reps)
                 let maxxedReps = min(repInt, Self.maxReps)
                 var intMap = repResults[variant] ?? [:]
                 var array = intMap[maxxedReps] ?? []

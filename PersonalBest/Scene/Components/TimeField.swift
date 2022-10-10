@@ -10,15 +10,15 @@ import SwiftUI
 /// A field of entering time values
 struct TimeField {
     
-    @Binding var value: Decimal?
+    @Binding var value: Double?
     
     @State private var hoursText: String
     @State private var minutesText: String
     @State private var secondsText: String
     
-    init(value: Binding<Decimal?>) {
+    init(value: Binding<Double?>) {
         _value = value
-        let breakdown = TimeBreakdown(seconds: value.wrappedValue?.doubleValue ?? 0)
+        let breakdown = TimeBreakdown(seconds: value.wrappedValue ?? 0)
         if breakdown.seconds > 0 {
             _secondsText = State(wrappedValue: "\(breakdown.seconds)")
         } else {
@@ -73,7 +73,7 @@ extension TimeField: View {
             totalSeconds += Double(hours) * 60
         }
         
-        self.value = Decimal(totalSeconds)
+        self.value = totalSeconds
     }
 }
 
@@ -101,11 +101,11 @@ struct TimeField_Previews: PreviewProvider {
     
     static var previews: some View {
         VStack {
-            StatefulPreviewWrapper(Decimal(0)) { value in
+            StatefulPreviewWrapper(Double(0)) { value in
                 TimeField(value: value)
             }
             
-            StatefulPreviewWrapper(Decimal(100)) { value in
+            StatefulPreviewWrapper(Double(100)) { value in
                 TimeField(value: value)
             }
         }

@@ -149,7 +149,7 @@ extension WorkoutDetailsViewModel {
                 _ = PBRecordEntry.new(activity: breakdown.activity,
                                       date: top.date,
                                       variant: variant,
-                                      values: [.weight: top.value, .reps: Decimal(repCount)]
+                                      values: [.weight: top.value, .reps: Double(repCount)]
                 )
             }
         }

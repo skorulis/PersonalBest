@@ -19,7 +19,7 @@ public class PBRecordEntry: NSManagedObject, Identifiable, PRecordEntry {
     static func new(activity: PBActivity,
                     date: Date = Date(),
                     variant: PBVariant? = nil,
-                    values: [MeasurementType: Decimal]) -> PBRecordEntry {
+                    values: [MeasurementType: Double]) -> PBRecordEntry {
         let record = PBRecordEntry(context: activity.managedObjectContext!)
         record.activity = activity
         record.date = date
@@ -28,9 +28,9 @@ public class PBRecordEntry: NSManagedObject, Identifiable, PRecordEntry {
         return record
     }
     
-    var entryValues: [MeasurementType: Decimal] {
+    var entryValues: [MeasurementType: Double] {
         get {
-            try! JSONDecoder().decode([MeasurementType: Decimal].self, from: entryValuesData)
+            try! JSONDecoder().decode([MeasurementType: Double].self, from: entryValuesData)
         }
         set {
             entryValuesData = try! JSONEncoder().encode(newValue)
@@ -41,13 +41,13 @@ public class PBRecordEntry: NSManagedObject, Identifiable, PRecordEntry {
         return variant?.name
     }
     
-    func set(type: MeasurementType, value: Decimal) {
+    func set(type: MeasurementType, value: Double) {
         var dict = entryValues
         dict[type] = value
         entryValues = dict
     }
     
-    func value(type: MeasurementType) -> Decimal? {
+    func value(type: MeasurementType) -> Double? {
         return entryValues[type]
     }
     

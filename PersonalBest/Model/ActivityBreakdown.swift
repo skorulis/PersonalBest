@@ -19,7 +19,7 @@ struct GraphLine: Identifiable {
 struct EntryValue: Identifiable {
     
     let date: Date
-    let value: Decimal
+    let value: Double
     
     var id: Date { date }
     
@@ -81,7 +81,7 @@ enum BreakdownType {
 
 struct TopRecord: Identifiable {
     let date: Date
-    let value: Decimal
+    let value: Double
     let unit: UnitType
     
     var id: Date { date }

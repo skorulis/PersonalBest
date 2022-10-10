@@ -13,7 +13,7 @@ final class AddEntryViewModel: CoordinatedViewModel, ObservableObject {
     @Published var date: Date = Date()
     @Published var selectedVariant: PBVariant?
     
-    private var values: [MeasurementType: Decimal] = [:]
+    private var values: [MeasurementType: Double] = [:]
     
     init(argument: Argument,
          recordAccess: RecordEntryAccess
@@ -54,8 +54,8 @@ extension AddEntryViewModel {
 
 extension AddEntryViewModel {
     
-    func binding(_ type: MeasurementType) -> Binding<Decimal?> {
-        return Binding<Decimal?> { [unowned self] in
+    func binding(_ type: MeasurementType) -> Binding<Double?> {
+        return Binding<Double?> { [unowned self] in
             return self.values[type]
         } set: { [unowned self] newValue in
             self.values[type] = newValue
@@ -63,7 +63,7 @@ extension AddEntryViewModel {
     }
     
     func save() {
-        var measures = [MeasurementType: Decimal]()
+        var measures = [MeasurementType: Double]()
         for field in fields {
             guard let value = binding(field).wrappedValue else {
                 // TODO: Show error

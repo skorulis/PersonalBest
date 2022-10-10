@@ -9,7 +9,7 @@ import SwiftUI
 struct DecimalField {
     
     let type: MeasurementType
-    @Binding var value: Decimal?
+    @Binding var value: Double?
 }
 
 // MARK: - Rendering
@@ -44,7 +44,7 @@ private extension MeasurementType {
 struct DecimalField_Previews: PreviewProvider {
     
     static var previews: some View {
-        StatefulPreviewWrapper(Decimal(0)) { value in
+        StatefulPreviewWrapper(Double(0)) { value in
             DecimalField(type: .distance, value: value)
         }
         

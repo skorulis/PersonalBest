@@ -7,7 +7,7 @@ import SwiftUI
 
 struct RecordValueDisplay {
     
-    let value: Decimal
+    let value: Double
     let unit: UnitType
     
 }

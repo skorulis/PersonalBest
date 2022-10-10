@@ -10,9 +10,9 @@ import SwiftUI
 struct RepsField {
     
     // Only ints are allowed but takes a double for consistency
-    @Binding var value: Decimal?
+    @Binding var value: Double?
     
-    init(value: Binding<Decimal?>) {
+    init(value: Binding<Double?>) {
         _value = value
     }
      
@@ -35,7 +35,7 @@ extension RepsField: View {
 struct RepsField_Previews: PreviewProvider {
     
     static var previews: some View {
-        StatefulPreviewWrapper(Decimal(0)) { value in
+        StatefulPreviewWrapper(Double(0)) { value in
             RepsField(value: value)
         }
         

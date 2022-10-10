@@ -103,8 +103,8 @@ extension WorkoutEntryCell: View {
 
 extension WorkoutEntryCell {
     
-    func binding(type: MeasurementType) -> Binding<Decimal?> {
-        return Binding<Decimal?> {
+    func binding(type: MeasurementType) -> Binding<Double?> {
+        return Binding<Double?> {
             return self.entry!.values[type]
         } set: { newValue in
             self.entry!.values[type] = newValue
