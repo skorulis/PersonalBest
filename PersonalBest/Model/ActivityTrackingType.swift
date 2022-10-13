@@ -32,6 +32,17 @@ enum ActivityTrackingType: String {
         }
     }
     
+    func unit(for type: MeasurementType) -> UnitType {
+        switch (self, type) {
+        case (.weightlifting, .weight):
+            return .kilograms
+        case (.cardio, .distance):
+            return .kilometers
+        default:
+            return type.defaultUnit
+        }
+    }
+    
     var primaryMeasure: MeasurementType {
         switch self {
         case .weightlifting: return .weight

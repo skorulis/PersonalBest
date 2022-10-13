@@ -2,7 +2,7 @@
 
 import Foundation
 
-enum UnitType: String, Codable {
+enum UnitType: String, Codable, Identifiable {
     case reps // Reps
     case meters, kilometers // Distance
     case seconds // Time
@@ -28,6 +28,8 @@ enum UnitType: String, Codable {
     var symbolString: String {
         return unit.symbol
     }
+    
+    var id: String { rawValue }
     
 }
 

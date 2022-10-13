@@ -1,6 +1,7 @@
 //Created by Alexander Skorulis on 27/9/2022.
 
 import Foundation
+import SwiftUI
 
 // MARK: - Memory footprint
 
@@ -48,6 +49,10 @@ extension ActivityDetailsViewModel {
         return recordBreakdown.lineVariants[variant]
     }
     
+    var editableUnits: [MeasurementType] {
+        return activity.editableUnits
+    }
+    
 }
 
 // MARK: - Logic
@@ -58,6 +63,19 @@ extension ActivityDetailsViewModel {
         let initialVariant = PBVariant.find(context: activity.managedObjectContext!, name: variant)
         let path = RootPath.addEntry(activity, initialVariant)
         coordinator.present(path, style: .sheet)
+    }
+    
+    func unitTypeBinding(_ measurement: MeasurementType) -> Binding<UnitType> {
+        return Binding<UnitType> { [unowned self] in
+            return self.activity.units[measurement] ?? self.activity.trackingType.unit(for: measurement)
+        } set: { newValue in
+            self.activity.units[measurement] = newValue
+            self.save()
+        }
+    }
+    
+    func save() {
+        try! self.activity.managedObjectContext?.save()
     }
     
 }

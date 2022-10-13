@@ -3,6 +3,7 @@
     <entity name="PBActivity" representedClassName="PBActivity" syncable="YES">
         <attribute name="name" attributeType="String"/>
         <attribute name="trackingTypeString" attributeType="String"/>
+        <attribute name="unitsData" optional="YES" attributeType="Binary"/>
         <relationship name="category" maxCount="1" deletionRule="Nullify" destinationEntity="PBCategory" inverseName="activities" inverseEntity="PBCategory"/>
         <relationship name="exercises" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PBExercise" inverseName="activity" inverseEntity="PBExercise"/>
         <relationship name="records" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PBRecordEntry" inverseName="activity" inverseEntity="PBRecordEntry"/>

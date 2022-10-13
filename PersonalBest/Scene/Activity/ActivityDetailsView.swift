@@ -62,6 +62,7 @@ extension ActivityDetailsView: View {
             }
             maybeVariantPicker
             newEntry
+            unitEdit
         }
         .frame(maxWidth: .infinity)
     }
@@ -163,6 +164,23 @@ extension ActivityDetailsView: View {
         }
         .buttonStyle(ShadowButtonStyle())
         .padding(.vertical, 20)
+    }
+    
+    @ViewBuilder
+    private var unitEdit: some View {
+        if !viewModel.editableUnits.isEmpty {
+            VStack {
+                ForEach(viewModel.editableUnits) { measurement in
+                    Picker(measurement.name, selection: viewModel.unitTypeBinding(measurement)) {
+                        ForEach(measurement.unitOptions) { unit in
+                            Text(unit.symbolString)
+                                .tag(unit)
+                        }
+                    }
+                }
+            }
+        }
+        
     }
     
     private var iconAnimation: Animation {

@@ -21,6 +21,7 @@ enum MeasurementType: String, Codable, Identifiable {
             ]
         case .weight:
             return [
+                .grams,
                 .kilograms
             ]
         case .time:

@@ -19,6 +19,20 @@ public class PBActivity: NSManagedObject, Identifiable {
         }
     }
     
+    var units: [MeasurementType: UnitType] {
+        get {
+            guard let data = unitsData else { return [:] }
+            return try! JSONDecoder().decode([MeasurementType: UnitType].self, from: data)
+        }
+        set {
+            if newValue.isEmpty {
+                unitsData = nil
+            } else {
+                unitsData = try! JSONEncoder().encode(newValue)
+            }
+        }
+    }
+    
     static func new(context: NSManagedObjectContext, name: String, tracking: ActivityTrackingType) -> PBActivity {
         let activity = PBActivity(context: context)
         activity.name = name
@@ -28,6 +42,7 @@ public class PBActivity: NSManagedObject, Identifiable {
     
     @NSManaged public var name: String
     @NSManaged public var trackingTypeString: String
+    @NSManaged private var unitsData: Data?
     
     @NSManaged public var records: Set<PBRecordEntry>
     @NSManaged public var variants: Set<PBVariant>
@@ -62,6 +77,10 @@ extension PBActivity {
         query.sortDescriptors = [.init(key: "date", ascending: true)]
         query.predicate = NSPredicate(format: "activity == %@", self)
         return try! self.managedObjectContext!.fetch(query)
+    }
+    
+    var editableUnits: [MeasurementType] {
+        return measurementTypes.filter { $0.unitOptions.count > 1}
     }
     
 }
