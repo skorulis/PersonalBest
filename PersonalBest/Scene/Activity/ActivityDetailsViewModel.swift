@@ -67,10 +67,11 @@ extension ActivityDetailsViewModel {
     
     func unitTypeBinding(_ measurement: MeasurementType) -> Binding<UnitType> {
         return Binding<UnitType> { [unowned self] in
-            return self.activity.units[measurement] ?? self.activity.trackingType.unit(for: measurement)
+            return self.activity.currentUnit(measurement)
         } set: { newValue in
             self.activity.units[measurement] = newValue
             self.save()
+            self.objectWillChange.send()
         }
     }
     

@@ -34,5 +34,9 @@ enum UnitType: String, Codable, Identifiable {
 }
 
 class UnitReps: Dimension {
-    static let reps = UnitReps(symbol: "reps")
+    static let reps = UnitReps(symbol: "reps", converter: UnitConverterLinear(coefficient: 1))
+    
+    override class func baseUnit() -> Self {
+        return reps as! Self
+    }
 }

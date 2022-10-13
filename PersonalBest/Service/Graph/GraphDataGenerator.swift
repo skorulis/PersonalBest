@@ -26,7 +26,7 @@ extension GraphDataGenerator {
     private func getLines(activity: PBActivity, records: [PRecordEntry]) -> [String: [GraphLine]] {
         switch activity.trackingType {
         case .weightlifting:
-            return repWeightBreakdown(records: records, unit: .kilograms, activity: activity)
+            return repWeightBreakdown(records: records, activity: activity)
         default:
             return singleFieldBreakdown(type: activity.primaryMeasure, records: records, activity: activity)
         }
@@ -42,8 +42,9 @@ extension GraphDataGenerator {
         return mapped
     }
     
-    func repWeightBreakdown(records: [PRecordEntry], unit: UnitType, activity: PBActivity) -> [String: [GraphLine]] {
+    func repWeightBreakdown(records: [PRecordEntry], activity: PBActivity) -> [String: [GraphLine]] {
         let repResults = breakdownService.repWeightBreakdown(records: records, activity: activity)
+        let unit = activity.currentUnit(.weight)
         
         var mapped: [String: [GraphLine]] = [:]
         

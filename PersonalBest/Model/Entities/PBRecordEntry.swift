@@ -51,6 +51,10 @@ public class PBRecordEntry: NSManagedObject, Identifiable, PRecordEntry {
         return entryValues[type]
     }
     
+    func convertedValue(type: MeasurementType) -> Double? {
+        return self.convertedValue(type: type, toUnit: activity.currentUnit(type))
+    }
+    
     var dateString: String {
         return DateFormatter.mediumDate.string(from: date)
     }

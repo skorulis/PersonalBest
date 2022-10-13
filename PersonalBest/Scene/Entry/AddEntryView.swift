@@ -49,13 +49,28 @@ extension AddEntryView: View {
     
     @ViewBuilder
     private func field(type: MeasurementType) -> some View {
-        switch type {
-        case .reps:
-            RepsField(value: viewModel.binding(.reps))
-        case .weight, .distance:
-            DecimalField(type: type, value: viewModel.binding(type))
-        case .time:
-            TimeField(value: viewModel.binding(.time))
+        HStack {
+            switch type {
+            case .reps:
+                RepsField(value: viewModel.binding(.reps))
+            case .weight, .distance:
+                DecimalField(type: type, value: viewModel.binding(type))
+            case .time:
+                TimeField(value: viewModel.binding(.time))
+            }
+            maybeUnitPicker(type: type)
+        }
+    }
+    
+    @ViewBuilder
+    private func maybeUnitPicker(type: MeasurementType) -> some View {
+        if type.unitOptions.count > 1 {
+            Picker(type.name, selection: viewModel.unitTypeBinding(type)) {
+                ForEach(type.unitOptions) { unit in
+                    Text(unit.symbolString)
+                        .tag(unit)
+                }
+            }
         }
     }
 }

@@ -156,6 +156,7 @@ extension ActivityDetailsView: View {
             ActivityEntryCell(entry: entry)
         }
         .onDelete(perform: delete(indexSet:))
+        .id(viewModel.activity.unitSelectionID)
     }
     
     private var newEntry: some View {

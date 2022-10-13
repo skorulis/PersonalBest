@@ -45,4 +45,13 @@ enum MeasurementType: String, Codable, Identifiable {
     var name: String {
         return self.rawValue.capitalized
     }
+    
+    static func convert(value: Double, from: UnitType, to: UnitType) -> Double {
+        let measure = Measurement(value: value, unit: from.unit)
+        return measure.converted(to: to.unit).value
+    }
+    
+    func convert(value: Double, from: UnitType) -> Double {
+        return Self.convert(value: value, from: from, to: self.defaultUnit)
+    }
 }

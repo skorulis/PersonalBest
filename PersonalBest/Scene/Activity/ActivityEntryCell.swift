@@ -43,14 +43,9 @@ extension ActivityEntryCell: View {
     
     @ViewBuilder
     private func valueItem(type: MeasurementType) -> some View {
-        if let value = entry.value(type: type) {
-            RecordValueDisplay(value: value, unit: getUnit(type: type))
+        if let value = entry.convertedValue(type: type) {
+            RecordValueDisplay(value: value, unit: activity.currentUnit(type))
         }
-    }
-    
-    private func getUnit(type: MeasurementType) -> UnitType {
-        let match = activity.measurements.first(where: {$0.type == type})
-        return match?.defaultUnit ?? type.defaultUnit
     }
     
     var activity: PBActivity {

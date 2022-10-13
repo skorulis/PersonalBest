@@ -26,10 +26,11 @@ struct BreakdownService {
     
     func repWeightBreakdown(records: [PRecordEntry], activity: PBActivity) -> RepWeightBreakdown {
         var repResults = [String: [Int: [EntryValue]]]()
+        let unit = activity.currentUnit(.weight)
         
         records.forEach { entry in
             let values = entry.entryValues
-            if let reps = values[.reps], let weight = values[.weight] {
+            if let reps = values[.reps], let weight = entry.convertedValue(type: .weight, toUnit: unit) {
                 let variant = entry.variantName ?? PBVariant.none
                 let repInt = Int(reps)
                 let maxxedReps = min(repInt, Self.maxReps)

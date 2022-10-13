@@ -72,7 +72,8 @@ extension AddEntryViewModel {
             guard value > 0 else {
                 return
             }
-            measures[field] = value
+            
+            measures[field] = field.convert(value: value, from: activity.currentUnit(field))
         }
         let entry = PBRecordEntry.new(activity: activity, date: date, values: measures)
         entry.variant = selectedVariant
@@ -85,6 +86,15 @@ extension AddEntryViewModel {
         coordinator.push(.selectVariant(activity, onSelect: { [unowned self] variant in
             self.selectedVariant = variant
         }))
+    }
+    
+    func unitTypeBinding(_ measurement: MeasurementType) -> Binding<UnitType> {
+        return Binding<UnitType> { [unowned self] in
+            return self.activity.currentUnit(measurement)
+        } set: { newValue in
+            self.activity.units[measurement] = newValue
+            self.objectWillChange.send()
+        }
     }
     
 }

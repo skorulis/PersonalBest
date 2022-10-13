@@ -83,4 +83,12 @@ extension PBActivity {
         return measurementTypes.filter { $0.unitOptions.count > 1}
     }
     
+    func currentUnit(_ measurement: MeasurementType) -> UnitType {
+        return units[measurement] ?? trackingType.unit(for: measurement)
+    }
+    
+    var unitSelectionID: String {
+        return measurementTypes.map { self.currentUnit($0).rawValue }.joined(separator: "-")
+    }
+    
 }
