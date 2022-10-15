@@ -27,19 +27,18 @@ extension RecordEntryAccess {
         var best: [MeasurementType: TopRecord] = [:]
         let types = activity.measurementTypes
         for entry in activity.records {
-            let values = entry.entryValues
             for type in types {
-                guard let value = values[type] else {
+                guard let value = entry.convertedValue(type: type) else {
                     continue
                 }
                 
                 guard let safebest = best[type] else {
-                    best[type] = TopRecord(date: entry.date, value: value, unit: type.defaultUnit)
+                    best[type] = TopRecord(date: entry.date, value: value, unit: activity.currentUnit(type))
                     continue
                 }
                 // TODO: Handle backwards types
                 if value > safebest.value {
-                    best[type] = TopRecord(date: entry.date, value: value, unit: type.defaultUnit)
+                    best[type] = TopRecord(date: entry.date, value: value, unit: activity.currentUnit(type))
                 }
             }
         }

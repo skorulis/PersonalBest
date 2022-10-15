@@ -76,12 +76,20 @@ extension WorkoutEntryCell: View {
             TimeField(value: binding(type: type))
         default:
             VStack(alignment: .leading, spacing: 0) {
-                Text(type.name)
+                Text(fieldName(type: type))
                     .font(.caption)
                 DecimalField(type: type, value: binding(type: type))
                     .focused($focusedField, equals: .setEntry(exercise.number, setIndex: setIndex, measurement: type))
             }
             
+        }
+    }
+    
+    func fieldName(type: MeasurementType) -> String {
+        if type.unitOptions.count == 1 {
+            return type.name
+        } else {
+            return "\(type.name) (\(exercise.activity.currentUnit(type).symbolString))"
         }
     }
     
@@ -105,9 +113,16 @@ extension WorkoutEntryCell {
     
     func binding(type: MeasurementType) -> Binding<Double?> {
         return Binding<Double?> {
-            return self.entry!.values[type]
+            guard let value = self.entry!.values[type] else {
+                return nil
+            }
+            return type.convert(value: value, to: activity.currentUnit(type))
         } set: { newValue in
-            self.entry!.values[type] = newValue
+            guard let value = newValue else {
+                self.entry!.values[type] = nil
+                return
+            }
+            self.entry!.values[type] = type.convert(value: value, from: activity.currentUnit(type))
         }
     }
     

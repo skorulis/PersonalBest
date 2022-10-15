@@ -69,14 +69,16 @@ public class PBExercise: NSManagedObject, Identifiable {
             let time = total(.time)
             return Measurement<UnitDuration>(value: time, unit: .seconds)
         case .weightlifting:
+            let unit = activity.currentUnit(.weight)
             let vol: Double = sets.map { entry in
-                let weight = entry.values[.weight] ?? 0
+                let value = entry.values[.weight] ?? 0
+                let weight = MeasurementType.weight.convert(value: value, to: unit)
                 let reps = entry.values[.reps] ?? 0
                 return weight * reps
             }
             .reduce(0, +)
             
-            return Measurement<UnitMass>(value: vol, unit: .grams)
+            return Measurement<UnitMass>(value: vol, unit: unit.unit as! UnitMass)
         case .cardio:
             let dist = total(.distance)
             return Measurement<UnitLength>(value: dist, unit: .meters)

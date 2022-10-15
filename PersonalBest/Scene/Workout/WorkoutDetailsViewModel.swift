@@ -111,6 +111,7 @@ extension WorkoutDetailsViewModel {
         } set: { newValue in
             exercise.replace(entry: newValue!)
             self.objectWillChange.send()
+            self.save()
         }
     }
     

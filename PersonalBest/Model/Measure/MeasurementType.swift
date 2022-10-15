@@ -54,4 +54,8 @@ enum MeasurementType: String, Codable, Identifiable {
     func convert(value: Double, from: UnitType) -> Double {
         return Self.convert(value: value, from: from, to: self.defaultUnit)
     }
+    
+    func convert(value: Double, to: UnitType) -> Double {
+        return Self.convert(value: value, from: self.defaultUnit, to: to)
+    }
 }
