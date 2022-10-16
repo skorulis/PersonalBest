@@ -81,7 +81,6 @@ extension WorkoutEntryCell: View {
                 DecimalField(type: type, value: binding(type: type))
                     .focused($focusedField, equals: .setEntry(exercise.number, setIndex: setIndex, measurement: type))
             }
-            
         }
     }
     
@@ -113,7 +112,7 @@ extension WorkoutEntryCell {
     
     func binding(type: MeasurementType) -> Binding<Double?> {
         return Binding<Double?> {
-            guard let value = self.entry!.values[type] else {
+            guard let value = self.entry?.values[type] else {
                 return nil
             }
             return type.convert(value: value, to: activity.currentUnit(type))

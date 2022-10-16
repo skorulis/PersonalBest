@@ -9,7 +9,7 @@ import SwiftUI
 struct WorkoutActivityPickerView {
     
     @StateObject var viewModel: WorkoutActivityPickerViewModel
-    @FetchRequest(sortDescriptors: []) var activities: FetchedResults<PBActivity>
+    @FetchRequest(sortDescriptors: [SortDescriptor(\PBActivity.name)]) var activities: FetchedResults<PBActivity>
     
 }
 
@@ -19,6 +19,9 @@ extension WorkoutActivityPickerView: View {
     
     var body: some View {
         PageTemplate(nav: nav, content: content)
+            .onChange(of: viewModel.searchText) { newValue in
+                activities.nsPredicate = newValue.isEmpty ? nil : NSPredicate(format: "name CONTAINS[cd] %@", newValue)
+            }
     }
     
     private func nav() -> some View {
@@ -30,12 +33,14 @@ extension WorkoutActivityPickerView: View {
     
     private func content() -> some View {
         VStack {
+            TextField("Search", text: $viewModel.searchText)
             ForEach(activities) { activity in
                 Button(action: viewModel.select(activity)) {
                     ActivityCell(activity: activity)
                 }
             }
         }
+        .padding(.horizontal, 16)
     }
 }
 

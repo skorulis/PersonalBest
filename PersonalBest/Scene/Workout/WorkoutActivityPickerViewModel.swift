@@ -7,6 +7,8 @@ final class WorkoutActivityPickerViewModel: CoordinatedViewModel, ObservableObje
     private let onSelect: (PBActivity) -> Void
     private let activityService: ActivityService
     
+    @Published var searchText: String = ""
+    
     init(argument: Argument, activityService: ActivityService) {
         self.onSelect = argument.onSelect
         self.activityService = activityService

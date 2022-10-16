@@ -142,7 +142,7 @@ extension ActivityDetailsView: View {
     private func lineContent(entries: GraphLine) -> some ChartContent {
         ForEach(entries.entries) { entry in
             LineMark(x: .value("Date", entry.date) ,
-                     y: .value(entries.name, entry.value)
+                     y: .value(entries.name,  entry.value)
             )
         }
         .foregroundStyle(by: .value("Name", entries.name))

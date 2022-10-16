@@ -121,7 +121,7 @@ extension WorkoutDetailsViewModel {
     }
     
     func finish() {
-        self.endDate = Date()
+        //self.endDate = Date()
         let setMap = workout.actvitySets
         
         for (act, value) in setMap {

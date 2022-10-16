@@ -36,7 +36,10 @@ extension GraphDataGenerator {
         let breakdown = breakdownService.singleBreakdown(type: type, records: records, activity: activity)
         var mapped: [String: [GraphLine]] = [:]
         for (key, value) in breakdown.values {
-            let line = GraphLine(name: type.name, unit: .reps, entries: value, color: .blue)
+            let converted = value.map {
+                EntryValue(date: $0.date, value: type.convert(value: $0.value, to: activity.currentUnit(type)))
+            }
+            let line = GraphLine(name: type.name, unit: .reps, entries: converted, color: .blue)
             mapped[key] = [line]
         }
         return mapped
@@ -51,7 +54,10 @@ extension GraphDataGenerator {
         repResults.repValues.forEach { (key, value) in
             let repLines: [GraphLine] = (1...BreakdownService.maxReps).compactMap { reps in
                 guard let entries = value[reps] else { return nil }
-                return GraphLine(name: "\(reps) Reps", unit: unit, entries: entries, color: color(index: reps))
+                let converted = entries.map {
+                    EntryValue(date: $0.date, value: MeasurementType.weight.convert(value: $0.value, to: activity.currentUnit(.weight)))
+                }
+                return GraphLine(name: "\(reps) Reps", unit: unit, entries: converted, color: color(index: reps))
             }
             mapped[key] = repLines
         }

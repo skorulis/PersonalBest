@@ -56,6 +56,7 @@ extension RecentHistoryView: View {
     }
 }
 
+
 // MARK: - Previews
 
 struct RecentHistoryView_Previews: PreviewProvider {
