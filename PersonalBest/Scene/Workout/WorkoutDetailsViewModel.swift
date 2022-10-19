@@ -85,6 +85,13 @@ extension WorkoutDetailsViewModel {
         }
     }
     
+    func duplicate(exercise: PBExercise, entry: ExerciseEntry) -> () -> Void {
+        return { [unowned self] in
+            exercise.sets.append(entry.duplicate())
+            self.objectWillChange.send()
+        }
+    }
+    
     func addSet(exercise: PBExercise) {
         let set = ExerciseEntry()
         var sets = exercise.sets

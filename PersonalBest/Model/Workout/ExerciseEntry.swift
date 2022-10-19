@@ -12,4 +12,11 @@ struct ExerciseEntry: Codable, Identifiable {
         values = [:]
     }
     
+    func duplicate() -> ExerciseEntry {
+        var result = ExerciseEntry()
+        result.variant = self.variant
+        result.values = self.values
+        return result
+    }
+    
 }

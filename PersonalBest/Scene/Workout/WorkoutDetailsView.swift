@@ -101,6 +101,12 @@ extension WorkoutDetailsView: View {
                              entry: viewModel.binding(exercise, entry),
                              focus: _focusedField
             )
+            .swipeActions(edge: .leading) {
+                Button(action: viewModel.duplicate(exercise: exercise, entry: entry)) {
+                    Text("Duplicate")
+                }
+                .tint(.purple)
+            }
         }
         .onDelete(perform: viewModel.deleteEntry(exercise: exercise))
         Button(action: {viewModel.addSet(exercise: exercise)}) {
