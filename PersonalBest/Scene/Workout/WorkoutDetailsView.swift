@@ -63,7 +63,7 @@ extension WorkoutDetailsView: View {
     
     @ViewBuilder
     private var finishSection: some View {
-        if viewModel.hasFinished && false {
+        if viewModel.hasFinished {
             DatePicker(selection: $viewModel.endDate, displayedComponents: [.date, .hourAndMinute]) {
                 Text("End date")
             }

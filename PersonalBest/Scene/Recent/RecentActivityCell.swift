@@ -24,7 +24,7 @@ extension RecentActivityCell: View {
     private var content: some View {
         HStack {
             VStack(alignment: .leading) {
-                Text(recent.activity.name)
+                Text(mainText)
                     .typography(.title)
                     .multilineTextAlignment(.leading)
                 Text(DateFormatter.mediumDate.string(from: recent.value.date))
@@ -37,6 +37,17 @@ extension RecentActivityCell: View {
         }
         .foregroundColor(.primary)
         .padding(12)
+    }
+    
+    private var mainText: String {
+        var text = recent.activity.name
+        if let variant = recent.key.variant {
+            text += " (\(variant))"
+        }
+        if let autoType = recent.key.autoType {
+            text += "\n\(autoType.displayText)"
+        }
+        return text
     }
 }
 
@@ -57,7 +68,8 @@ struct RecentActivityCell_Previews: PreviewProvider {
         activity.records.insert(entry)
         
         let top = recordAccess.topValues(activity: activity)
-        let recent = RecentEntry(activity: activity, value: top.values.first!)
+        let key = entry.topValueKey(type: .weight)
+        let recent = RecentEntry(activity: activity, key: key, value: top.values.first!)
         
         return VStack {
             RecentActivityCell(recent: recent, onPress: {_ in })

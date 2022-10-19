@@ -12,7 +12,7 @@ final class RecentHistoryViewModel: CoordinatedViewModel, ObservableObject {
     private let activityService: ActivityService
     private let recordAccess: RecordEntryAccess
     
-    @Published var toDelete: PBActivity?
+    @Published var toDelete: RecentEntry?
     
     init(recordsStore: RecordsStore,
          activityService: ActivityService,
@@ -45,26 +45,65 @@ extension RecentHistoryViewModel {
 
 extension RecentHistoryViewModel {
     
-    func entry(activity: PBActivity) -> RecentEntry {
-        let top = recordAccess.topPrimaryValue(activity: activity)!
-        return RecentEntry(activity: activity, value: top)
+    func collect(activities: [PBActivity]) -> [RecentEntry] {
+        let recent = activities.flatMap { act in
+            return entries(activity: act)
+        }
+        return recent.sorted { a, b in
+            return a.value.date > b.value.date
+        }
+    }
+    
+    func entries(activity: PBActivity) -> [RecentEntry] {
+        let top = recordAccess.topValues(activity: activity)
+        return top.compactMap { (key, value) in
+            guard key.measurement == activity.primaryMeasure else { return nil }
+            return RecentEntry(activity: activity, key: key, value: value)
+        }
     }
     
     func show(activity: PBActivity) {
         coordinator.push(RootPath.activityDetails(activity))
     }
     
-    func deleteAction(activity: PBActivity) -> () -> Void {
+    func deleteAction(entry: RecentEntry) -> () -> Void {
         return { [unowned self] in
-            self.toDelete = activity
+            self.toDelete = entry
         }
     }
     
-    func confirmDelete(activity: PBActivity) {
+    func confirmDelete(entry: RecentEntry) {
         self.toDelete = nil
-        let context = activity.managedObjectContext!
-        activity.records.forEach { context.delete($0) }
+        let context = entry.activity.managedObjectContext!
+        let mainPred = NSPredicate(format: "activity = %@", entry.activity)
+        
+        let fetch = PBRecordEntry.fetch()
+        fetch.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [mainPred,
+                                                                              autoPredicate(entry: entry),
+                                                                              varientPredicate(entry: entry)
+                                                                             ])
+        
+        let matches = try! context.fetch(fetch)
+        matches.forEach { context.delete($0) }
+        
         try! context.save()
+    }
+    
+    private func autoPredicate(entry: RecentEntry) -> NSPredicate {
+        if let autoType = entry.key.autoType {
+            return NSPredicate(format: "autoTypeString = %@", autoType.rawValue)
+        } else {
+            return NSPredicate(format: "autoTypeString == NULL")
+        }
+    }
+    
+    private func varientPredicate(entry: RecentEntry) -> NSPredicate {
+        if let variantString = entry.key.variant,
+           let variant = PBVariant.find(context: entry.activity.managedObjectContext!, name: variantString) {
+            return NSPredicate(format: "variant = %@", variant)
+        } else {
+            return NSPredicate(format: "variant == NULL")
+        }
     }
     
 }
@@ -74,8 +113,19 @@ extension RecentHistoryViewModel {
 struct RecentEntry: Identifiable {
     
     let activity: PBActivity
+    let key: TopValueKey
     let value: TopRecord
     
-    var id: NSManagedObjectID { activity.objectID }
+    var id: String {
+        return "\(activity.objectID)-\(value.id)-\(key.id)"
+    }
+    
+    var name: String {
+        if let suffix = key.suffix {
+            return "\(activity.name) \(suffix)"
+        } else {
+            return activity.name
+        }
+    }
     
 }

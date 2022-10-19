@@ -32,7 +32,7 @@ enum ActivityTrackingType: String {
         }
     }
     
-    func unit(for type: MeasurementType) -> UnitType {
+    func unit(for type: MeasurementType) -> KnownUnit {
         switch (self, type) {
         case (.weightlifting, .weight):
             return .kilograms

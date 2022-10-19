@@ -20,6 +20,7 @@
         <relationship name="workout" maxCount="1" deletionRule="Nullify" destinationEntity="PBWorkout" inverseName="exercises" inverseEntity="PBWorkout"/>
     </entity>
     <entity name="PBRecordEntry" representedClassName="PBRecordEntry" syncable="YES">
+        <attribute name="autoTypeString" optional="YES" attributeType="String"/>
         <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="entryValuesData" attributeType="Binary"/>
         <relationship name="activity" maxCount="1" deletionRule="Nullify" destinationEntity="PBActivity" inverseName="records" inverseEntity="PBActivity"/>

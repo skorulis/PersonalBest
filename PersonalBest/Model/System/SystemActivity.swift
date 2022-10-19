@@ -51,6 +51,7 @@ extension SystemActivity {
             .init(name: "Overhead barbell press", category: .weights, tracking: .weightlifting),
             .init(name: "Pec fly", category: .weights, tracking: .weightlifting),
             .init(name: "Shoulder press machine", category: .weights, tracking: .weightlifting),
+            .init(name: "Seated cable row", category: .weights, tracking: .weightlifting),
             .init(name: "Sled push", category: .weights, tracking: .weightlifting),
             .init(name: "Tricep pushdown", category: .weights, tracking: .weightlifting),
             .init(name: "Weighted dips", category: .weights, tracking: .weightlifting),

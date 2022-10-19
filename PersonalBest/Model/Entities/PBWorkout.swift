@@ -37,7 +37,7 @@ public class PBWorkout: NSManagedObject, Identifiable {
             let sets = exercise.sets
             var array = result[exercise.activity] ?? []
             for set in sets {
-                let entry = RecordEntry(date: self.startDate, variantName: nil, entryValues: set.values)
+                let entry = RecordEntry(date: self.startDate, variantName: nil, entryValues: set.values, autoType: nil)
                 array.append(entry)
             }
             result[exercise.activity] = array

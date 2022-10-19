@@ -65,8 +65,8 @@ extension ActivityDetailsViewModel {
         coordinator.present(path, style: .sheet)
     }
     
-    func unitTypeBinding(_ measurement: MeasurementType) -> Binding<UnitType> {
-        return Binding<UnitType> { [unowned self] in
+    func unitTypeBinding(_ measurement: MeasurementType) -> Binding<KnownUnit> {
+        return Binding<KnownUnit> { [unowned self] in
             return self.activity.currentUnit(measurement)
         } set: { newValue in
             self.activity.units[measurement] = newValue

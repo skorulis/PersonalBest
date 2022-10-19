@@ -8,7 +8,7 @@ import SwiftUI
 struct RecordValueDisplay {
     
     let value: Double
-    let unit: UnitType
+    let unit: KnownUnit
     
 }
 

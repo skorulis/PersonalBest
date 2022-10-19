@@ -5,6 +5,7 @@ import Foundation
 struct ExerciseEntry: Codable, Identifiable {
     let id: String
     var values: [MeasurementType: Double]
+    var variant: String?
     
     init() {
         id = UUID().uuidString

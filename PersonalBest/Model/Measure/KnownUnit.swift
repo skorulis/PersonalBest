@@ -2,7 +2,7 @@
 
 import Foundation
 
-enum UnitType: String, Codable, Identifiable {
+enum KnownUnit: String, Codable, Identifiable {
     case reps // Reps
     case meters, kilometers // Distance
     case seconds // Time
@@ -15,7 +15,7 @@ enum UnitType: String, Codable, Identifiable {
         case .meters:
             return UnitLength.meters
         case .kilometers:
-            return UnitLength.meters
+            return UnitLength.kilometers
         case .seconds:
             return UnitDuration.seconds
         case .grams:
@@ -30,6 +30,24 @@ enum UnitType: String, Codable, Identifiable {
     }
     
     var id: String { rawValue }
+    
+    static func from(unit: Unit) -> KnownUnit {
+        if unit == UnitReps.reps {
+            return reps
+        } else if unit == UnitLength.meters {
+            return .meters
+        } else if unit == UnitLength.kilometers {
+            return .kilometers
+        } else if unit == UnitDuration.seconds {
+            return .seconds
+        } else if unit == UnitMass.grams {
+            return .grams
+        } else if unit == UnitMass.kilograms {
+            return .kilograms
+        }
+        
+        fatalError("Unknown unit \(unit)")
+    }
     
 }
 

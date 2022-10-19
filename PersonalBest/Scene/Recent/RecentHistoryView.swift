@@ -30,19 +30,19 @@ extension RecentHistoryView: View {
         NavBar(mid: BarButtonItem.title("Records"))
             .alert("Delete all \(viewModel.toDelete?.name ?? "") records?",
                    isPresented: viewModel.alertShowingBinding,
-                   presenting: viewModel.toDelete) { activity in
-                Button("Delete", role: .destructive) { viewModel.confirmDelete(activity: activity) }
+                   presenting: viewModel.toDelete) { entry in
+                Button("Delete", role: .destructive) { viewModel.confirmDelete(entry: entry) }
                 Button("Cancel", role: .cancel) { }
             }
     }
     
     private func content() -> some View {
-        ForEach(recentActivities) { activity in
-            row(activity)
+        ForEach(viewModel.collect(activities: recentActivities.reversed())) { entry in
+            RecentActivityCell(recent: entry, onPress: viewModel.show)
             .listRowSeparator(.hidden)
             .listRowBackground(EmptyView())
             .swipeActions(allowsFullSwipe: false) {
-                Button(action: viewModel.deleteAction(activity: activity)) {
+                Button(action: viewModel.deleteAction(entry: entry)) {
                     Text("Delete")
                 }
                 .tint(.red)
@@ -50,10 +50,6 @@ extension RecentHistoryView: View {
         }
     }
     
-    private func row(_ activity: PBActivity) -> some View {
-        let recent = viewModel.entry(activity: activity)
-        return RecentActivityCell(recent: recent, onPress: viewModel.show)
-    }
 }
 
 

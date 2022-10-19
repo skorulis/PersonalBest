@@ -19,10 +19,10 @@ public class PBActivity: NSManagedObject, Identifiable {
         }
     }
     
-    var units: [MeasurementType: UnitType] {
+    var units: [MeasurementType: KnownUnit] {
         get {
             guard let data = unitsData else { return [:] }
-            return try! JSONDecoder().decode([MeasurementType: UnitType].self, from: data)
+            return try! JSONDecoder().decode([MeasurementType: KnownUnit].self, from: data)
         }
         set {
             if newValue.isEmpty {
@@ -83,7 +83,7 @@ extension PBActivity {
         return measurementTypes.filter { $0.unitOptions.count > 1}
     }
     
-    func currentUnit(_ measurement: MeasurementType) -> UnitType {
+    func currentUnit(_ measurement: MeasurementType) -> KnownUnit {
         return units[measurement] ?? trackingType.unit(for: measurement)
     }
     

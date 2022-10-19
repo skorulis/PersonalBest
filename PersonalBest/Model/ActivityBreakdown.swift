@@ -5,7 +5,7 @@ import SwiftUI
 
 struct GraphLine: Identifiable {
     let name: String
-    let unit: UnitType
+    let unit: KnownUnit
     let entries: [EntryValue]
     let color: Color
     
@@ -57,7 +57,7 @@ struct ActivityBreakdown {
             guard let last = line.entries.last else {
                 return nil
             }
-            return TopRecord(date: last.date, value: last.value, unit: line.unit)
+            return TopRecord(date: last.date,  value: last.value, unit: line.unit)
         }
 
         for value in items {
@@ -82,7 +82,7 @@ enum BreakdownType {
 struct TopRecord: Identifiable {
     let date: Date
     let value: Double
-    let unit: UnitType
+    let unit: KnownUnit
     
     var id: Date { date }
 }

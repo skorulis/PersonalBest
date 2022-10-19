@@ -23,32 +23,28 @@ extension RecordEntryAccess {
         try! entry.managedObjectContext?.save()
     }
     
-    func topValues(activity: PBActivity) -> [MeasurementType: TopRecord] {
-        var best: [MeasurementType: TopRecord] = [:]
+    func topValues(activity: PBActivity) -> [TopValueKey: TopRecord] {
+        var best: [TopValueKey: TopRecord] = [:]
         let types = activity.measurementTypes
         for entry in activity.records {
             for type in types {
                 guard let value = entry.convertedValue(type: type) else {
                     continue
                 }
+                let key = entry.topValueKey(type: type)
                 
-                guard let safebest = best[type] else {
-                    best[type] = TopRecord(date: entry.date, value: value, unit: activity.currentUnit(type))
+                guard let safebest = best[key] else {
+                    best[key] = TopRecord(date: entry.date, value: value, unit: activity.currentUnit(type))
                     continue
                 }
                 // TODO: Handle backwards types
                 if value > safebest.value {
-                    best[type] = TopRecord(date: entry.date, value: value, unit: activity.currentUnit(type))
+                    best[key] = TopRecord(date: entry.date, value: value, unit: activity.currentUnit(type))
                 }
             }
         }
         
         return best
     }
-    
-    func topPrimaryValue(activity: PBActivity) -> TopRecord? {
-        let values = topValues(activity: activity)
-        return values[activity.trackingType.primaryMeasure]
-    }
-    
+        
 }

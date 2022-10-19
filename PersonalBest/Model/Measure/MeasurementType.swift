@@ -2,7 +2,7 @@
 
 import Foundation
 
-enum MeasurementType: String, Codable, Identifiable {
+enum MeasurementType: String, Codable, Identifiable, CaseIterable {
     case reps
     case weight
     case distance
@@ -10,7 +10,7 @@ enum MeasurementType: String, Codable, Identifiable {
     
     var id: String { rawValue }
     
-    var unitOptions: [UnitType] {
+    var unitOptions: [KnownUnit] {
         switch self {
         case .reps:
             return [.reps]
@@ -29,7 +29,7 @@ enum MeasurementType: String, Codable, Identifiable {
         }
     }
     
-    var defaultUnit: UnitType {
+    var defaultUnit: KnownUnit {
         switch self {
         case .reps:
             return .reps
@@ -42,20 +42,28 @@ enum MeasurementType: String, Codable, Identifiable {
         }
     }
     
+    static func type(unit: KnownUnit) -> MeasurementType {
+        guard let result = MeasurementType.allCases.first(where: {$0.unitOptions.contains(unit)}) else {
+            fatalError("Could not find measurement type for unit \(unit)")
+        }
+        return result
+    }
+    
     var name: String {
         return self.rawValue.capitalized
     }
     
-    static func convert(value: Double, from: UnitType, to: UnitType) -> Double {
+    static func convert(value: Double, from: KnownUnit, to: KnownUnit) -> Double {
         let measure = Measurement(value: value, unit: from.unit)
         return measure.converted(to: to.unit).value
     }
     
-    func convert(value: Double, from: UnitType) -> Double {
+    func convert(value: Double, from: KnownUnit) -> Double {
         return Self.convert(value: value, from: from, to: self.defaultUnit)
     }
     
-    func convert(value: Double, to: UnitType) -> Double {
+    func convert(value: Double, to: KnownUnit) -> Double {
         return Self.convert(value: value, from: self.defaultUnit, to: to)
     }
+    
 }

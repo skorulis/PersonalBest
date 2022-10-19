@@ -121,7 +121,7 @@ extension WorkoutDetailsViewModel {
     }
     
     func finish() {
-        //self.endDate = Date()
+        self.endDate = Date()
         let setMap = workout.actvitySets
         
         for (act, value) in setMap {
@@ -135,7 +135,25 @@ extension WorkoutDetailsViewModel {
             }
         }
         
+        createVolumeRecords()
+        
         save()
+    }
+    
+    private func createVolumeRecords() {
+        for exercise in workout.exercises {
+            let volume = exercise.totlaVolume
+            let values: [MeasurementType: Double] = [
+                volume.type: volume.type.convert(value: volume.value, from: volume.knownUnit)
+            ]
+            if volume.value > 0 {
+                _ = PBRecordEntry.new(activity: exercise.activity,
+                                      date: self.startDate,
+                                      values: values,
+                                      autoType: .volume
+                )
+            }
+        }
     }
     
     private func createRecords(breakdown: RepWeightBreakdown) {

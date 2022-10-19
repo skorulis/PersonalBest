@@ -14,17 +14,20 @@ public class PBRecordEntry: NSManagedObject, Identifiable, PRecordEntry {
     @NSManaged public var entryValuesData: Data
     @NSManaged public var activity: PBActivity
     @NSManaged public var variant: PBVariant?
-    
+    @NSManaged public var autoTypeString: String?
     
     static func new(activity: PBActivity,
                     date: Date = Date(),
                     variant: PBVariant? = nil,
-                    values: [MeasurementType: Double]) -> PBRecordEntry {
+                    values: [MeasurementType: Double],
+                    autoType: AutoRecordType? = nil
+    ) -> PBRecordEntry {
         let record = PBRecordEntry(context: activity.managedObjectContext!)
         record.activity = activity
         record.date = date
         record.variant = variant
         record.entryValues = values
+        record.autoType = autoType
         return record
     }
     
@@ -35,6 +38,17 @@ public class PBRecordEntry: NSManagedObject, Identifiable, PRecordEntry {
         set {
             entryValuesData = try! JSONEncoder().encode(newValue)
         }
+    }
+    
+    var autoType: AutoRecordType? {
+        get {
+            guard let string = autoTypeString else { return nil }
+            return AutoRecordType(rawValue: string) ?? nil
+        }
+        set {
+            self.autoTypeString = newValue?.rawValue
+        }
+        
     }
     
     var variantName: String? {
@@ -53,6 +67,10 @@ public class PBRecordEntry: NSManagedObject, Identifiable, PRecordEntry {
     
     func convertedValue(type: MeasurementType) -> Double? {
         return self.convertedValue(type: type, toUnit: activity.currentUnit(type))
+    }
+    
+    func topValueKey(type: MeasurementType) -> TopValueKey {
+        return TopValueKey(measurement: type, autoType: autoType, variant: variantName)
     }
     
     var dateString: String {

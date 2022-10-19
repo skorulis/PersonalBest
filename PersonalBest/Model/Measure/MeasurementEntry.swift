@@ -3,16 +3,16 @@
 import CryptoKit
 import Foundation
 
-struct MeasurementEntry: Codable {
+struct MeasurementEntry {
     let type: MeasurementType
     let lowerIsBetter: Bool
-    let defaultUnit: UnitType
+    let defaultUnit: KnownUnit
     let isRecord: Bool // Whether this field should be considered a record
     
     init(type: MeasurementType,
          isRecord: Bool,
          lowerIsBetter: Bool = false,
-         defaultUnit: UnitType
+         defaultUnit: KnownUnit
     ) {
         self.type = type
         self.isRecord = isRecord

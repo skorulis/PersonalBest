@@ -31,9 +31,11 @@ extension WorkoutEntryCell: View {
         if entry == nil {
             EmptyView()
         } else {
-            HStack {
-                setIndexView
-                fields
+            VStack {
+                HStack {
+                    setIndexView
+                    fields
+                }
                 maybeVariantPicker
             }
         }
@@ -79,7 +81,7 @@ extension WorkoutEntryCell: View {
                 Text(fieldName(type: type))
                     .font(.caption)
                 DecimalField(type: type, value: binding(type: type))
-                    .focused($focusedField, equals: .setEntry(exercise.number, setIndex: setIndex, measurement: type))
+                    //.focused($focusedField, equals: .setEntry(exercise.number, setIndex: setIndex, measurement: type))
             }
         }
     }
@@ -102,7 +104,15 @@ extension WorkoutEntryCell: View {
     
     @ViewBuilder
     private var maybeVariantPicker: some View {
-        Text("Variant")
+        if activity.variants.count > 0 {
+            Picker("Variant", selection: variantBinding) {
+                ForEach(variantOptions, id: \.self) { variant in
+                    Text(variant)
+                        .tag(variant)
+                }
+            }
+            .pickerStyle(.menu)
+        }
     }
 }
 
@@ -133,6 +143,22 @@ extension WorkoutEntryCell {
             return value > 0
         }
         return true
+    }
+    
+    var variantOptions: [String] {
+        return [PBVariant.none] + activity.variants.map { $0.name }
+    }
+    
+    var variantBinding: Binding<String> {
+        return Binding<String> {
+            return entry?.variant ?? PBVariant.none
+        } set: { newValue in
+            if newValue == PBVariant.none {
+                entry?.variant = nil
+            } else {
+                entry?.variant = newValue
+            }
+        }
     }
     
 }
