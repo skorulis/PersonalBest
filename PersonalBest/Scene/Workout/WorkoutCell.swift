@@ -20,6 +20,7 @@ extension WorkoutCell: View {
         HStack(alignment: .top, spacing: 8) {
             dateView
             middleContent
+            Spacer()
         }
     }
     
@@ -30,6 +31,7 @@ extension WorkoutCell: View {
             ForEach(Array(workout.sortedExercises)) { exercise in
                 exerciseCounts(exercise)
             }
+            maybeTime
         }
     }
     
@@ -62,6 +64,17 @@ extension WorkoutCell: View {
         }
     }
     
+    @ViewBuilder
+    private var maybeTime: some View {
+        if let minutes = workout.totalMinutes {
+            VStack {
+                Text("\(minutes) Minutes")
+                    .typography(.smallBody)
+            }
+            
+        }
+    }
+    
 }
 
 // MARK: - Previews
@@ -69,11 +82,19 @@ extension WorkoutCell: View {
 struct WorkoutCell_Previews: PreviewProvider {
     
     static var previews: some View {
-        let context = IOC().resolve(CoreDataStore.self).mainContext
-        let workout = PBWorkout(context: context)
-        workout.startDate = Date()
-        workout.versionID = ""
-        return WorkoutCell(workout: workout)
+        let ioc = IOC()
+        let context = ioc.resolve(CoreDataStore.self).mainContext
+        let workout = PBWorkout.new(context: context)
+        let finishedWorkout = PBWorkout.new(context: context)
+        finishedWorkout.endDate = Date(timeIntervalSinceNow: 10000)
+        
+        return VStack {
+            WorkoutCell(workout: workout)
+                .environment(\.factory, ioc)
+            
+            WorkoutCell(workout: finishedWorkout)
+                .environment(\.factory, ioc)
+        }
     }
 }
 

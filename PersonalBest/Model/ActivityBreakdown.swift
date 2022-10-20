@@ -31,10 +31,11 @@ struct EntryValue: Identifiable {
 
 struct ActivityBreakdown {
     
-    let lineVariants: [String: [GraphLine]]
+    let lineVariants: [RecordKey: [GraphLine]]
     
     var variants: [String] {
-        return Array(lineVariants.keys)
+        let set = Set(lineVariants.keys.compactMap { $0.variant })
+        return Array(set)
     }
     
     var canGraph: Bool {
@@ -51,7 +52,8 @@ struct ActivityBreakdown {
     
     func highestValue(variant: String) -> TopRecord? {
         var best: TopRecord? = nil
-        guard let lines = lineVariants[variant] else { return nil }
+        let key = RecordKey(autoType: nil, variant: variant)
+        guard let lines = lineVariants[key] else { return nil }
         
         let items: [TopRecord] = lines.compactMap { line in
             guard let last = line.entries.last else {

@@ -25,15 +25,19 @@ extension WorkoutActivityPickerView: View {
     }
     
     private func nav() -> some View {
-        NavBar(left: EmptyView(),
-               mid: BarButtonItem.title("Activities"),
-               right: BarButtonItem.close(viewModel.dismiss)
-        )
+        VStack {
+            NavBar(left: EmptyView(),
+                   mid: BarButtonItem.title("Activities"),
+                   right: BarButtonItem.close(viewModel.dismiss)
+            )
+            TextField("Search", text: $viewModel.searchText)
+                .textFieldStyle(.roundedBorder)
+        }
     }
     
     private func content() -> some View {
         VStack {
-            TextField("Search", text: $viewModel.searchText)
+            
             ForEach(activities) { activity in
                 Button(action: viewModel.select(activity)) {
                     ActivityCell(activity: activity)

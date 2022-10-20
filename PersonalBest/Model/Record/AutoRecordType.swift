@@ -9,7 +9,7 @@ enum AutoRecordType: String {
     var displayText: String {
         switch self {
         case .volume:
-            return "Total volume"
+            return "Volume"
         }
     }
 }

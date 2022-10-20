@@ -46,7 +46,8 @@ final class ActivityDetailsViewModel: CoordinatedViewModel, ObservableObject {
 extension ActivityDetailsViewModel {
  
     var lines: [GraphLine]? {
-        return recordBreakdown.lineVariants[variant]
+        let key = RecordKey(autoType: nil, variant: variant)
+        return recordBreakdown.lineVariants[key]
     }
     
     var editableUnits: [MeasurementType] {

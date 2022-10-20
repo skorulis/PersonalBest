@@ -21,7 +21,8 @@ public class PBVariant: NSManagedObject, Identifiable {
 
 extension PBVariant {
     
-    static func find(context: NSManagedObjectContext, name: String) -> PBVariant? {
+    static func find(context: NSManagedObjectContext, name: String?) -> PBVariant? {
+        guard let name else { return nil }
         if name == PBVariant.none {
             return nil
         }

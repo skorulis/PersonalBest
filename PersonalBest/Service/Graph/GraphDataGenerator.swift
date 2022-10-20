@@ -23,7 +23,7 @@ extension GraphDataGenerator {
         return ActivityBreakdown(lineVariants: lines)
     }
     
-    private func getLines(activity: PBActivity, records: [PRecordEntry]) -> [String: [GraphLine]] {
+    private func getLines(activity: PBActivity, records: [PRecordEntry]) -> [RecordKey: [GraphLine]] {
         switch activity.trackingType {
         case .weightlifting:
             return repWeightBreakdown(records: records, activity: activity)
@@ -32,24 +32,25 @@ extension GraphDataGenerator {
         }
     }
     
-    func singleFieldBreakdown(type: MeasurementType, records: [PRecordEntry], activity: PBActivity) -> [String: [GraphLine]] {
+    func singleFieldBreakdown(type: MeasurementType, records: [PRecordEntry], activity: PBActivity) -> [RecordKey: [GraphLine]] {
         let breakdown = breakdownService.singleBreakdown(type: type, records: records, activity: activity)
-        var mapped: [String: [GraphLine]] = [:]
+        var mapped: [RecordKey: [GraphLine]] = [:]
+        let unit = activity.currentUnit(type)
         for (key, value) in breakdown.values {
             let converted = value.map {
-                EntryValue(date: $0.date, value: type.convert(value: $0.value, to: activity.currentUnit(type)))
+                EntryValue(date: $0.date, value: type.convert(value: $0.value, to: unit))
             }
-            let line = GraphLine(name: type.name, unit: .reps, entries: converted, color: .blue)
+            let line = GraphLine(name: type.name, unit: unit, entries: converted, color: .blue)
             mapped[key] = [line]
         }
         return mapped
     }
     
-    func repWeightBreakdown(records: [PRecordEntry], activity: PBActivity) -> [String: [GraphLine]] {
+    func repWeightBreakdown(records: [PRecordEntry], activity: PBActivity) -> [RecordKey: [GraphLine]] {
         let repResults = breakdownService.repWeightBreakdown(records: records, activity: activity)
         let unit = activity.currentUnit(.weight)
         
-        var mapped: [String: [GraphLine]] = [:]
+        var mapped: [RecordKey: [GraphLine]] = [:]
         
         repResults.repValues.forEach { (key, value) in
             let repLines: [GraphLine] = (1...BreakdownService.maxReps).compactMap { reps in
@@ -93,7 +94,7 @@ extension GraphDataGenerator {
         return line.with(entries: array)
     }
     
-    static func finalise(data: [String: [GraphLine]]) -> [String: [GraphLine]] {
+    static func finalise(data: [RecordKey: [GraphLine]]) -> [RecordKey: [GraphLine]] {
         return data.mapValues { lines in
             return finalise(lines: lines)
         }

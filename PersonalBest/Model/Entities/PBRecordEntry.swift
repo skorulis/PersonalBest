@@ -77,5 +77,4 @@ public class PBRecordEntry: NSManagedObject, Identifiable, PRecordEntry {
         return DateFormatter.mediumDate.string(from: date)
     }
     
-    
 }

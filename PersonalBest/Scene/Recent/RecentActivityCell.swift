@@ -16,15 +16,31 @@ extension RecentActivityCell: View {
     
     var body: some View {
         Button(action: { onPress(recent.activity) }) {
-            content
+            ZStack(alignment: .top) {
+                content
+                tags
+            }
+            
         }
         .buttonStyle(ShadowButtonStyle())
+    }
+    
+    private var tags: some View {
+        HStack {
+            Spacer()
+            if let variant = recent.key.variant {
+                TextBadge(text: variant, color: .blue.opacity(0.3))
+            }
+            if let autoType = recent.key.autoType {
+                TextBadge(text: autoType.displayText, color: .orange.opacity(0.3))
+            }
+        }
     }
     
     private var content: some View {
         HStack {
             VStack(alignment: .leading) {
-                Text(mainText)
+                Text(recent.activity.name)
                     .typography(.title)
                     .multilineTextAlignment(.leading)
                 Text(DateFormatter.mediumDate.string(from: recent.value.date))
@@ -39,16 +55,6 @@ extension RecentActivityCell: View {
         .padding(12)
     }
     
-    private var mainText: String {
-        var text = recent.activity.name
-        if let variant = recent.key.variant {
-            text += " (\(variant))"
-        }
-        if let autoType = recent.key.autoType {
-            text += "\n\(autoType.displayText)"
-        }
-        return text
-    }
 }
 
 // MARK: - Previews

@@ -20,6 +20,10 @@ extension PRecordEntry {
         return MeasurementType.convert(value: base, from: type.defaultUnit, to: toUnit)
     }
     
+    var key: RecordKey {
+        return RecordKey(autoType: autoType, variant: variantName)
+    }
+    
 }
 
 /// record entry not linked to core data

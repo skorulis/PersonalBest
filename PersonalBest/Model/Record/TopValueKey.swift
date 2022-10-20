@@ -2,8 +2,27 @@
 
 import Foundation
 
+struct RecordKey: Equatable, Hashable, Identifiable {
+    let autoType: AutoRecordType?
+    let variant: String?
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(autoType?.rawValue)
+        hasher.combine(variant)
+    }
+    
+    var id: String {
+        return "\(autoType?.rawValue ?? "")-\(variant ?? PBVariant.none)"
+    }
+    
+    static func == (lhs: RecordKey, rhs: RecordKey) -> Bool {
+        return lhs.autoType == rhs.autoType && lhs.variant == rhs.variant
+    }
+}
+
 struct TopValueKey: Equatable, Hashable {
     let measurement: MeasurementType
+    // TODO: Maybe merge with record
     let autoType: AutoRecordType?
     let variant: String?
     

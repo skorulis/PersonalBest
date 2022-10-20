@@ -37,13 +37,22 @@ public class PBWorkout: NSManagedObject, Identifiable {
             let sets = exercise.sets
             var array = result[exercise.activity] ?? []
             for set in sets {
-                let entry = RecordEntry(date: self.startDate, variantName: nil, entryValues: set.values, autoType: nil)
+                let entry = RecordEntry(date: self.startDate,
+                                        variantName: set.variant ?? PBVariant.none,
+                                        entryValues: set.values,
+                                        autoType: nil)
                 array.append(entry)
             }
             result[exercise.activity] = array
         }
         
         return result
+    }
+    
+    var totalMinutes: Int? {
+        guard let endDate else { return nil }
+        let minutes = endDate.timeIntervalSince1970 - startDate.timeIntervalSince1970
+        return Int(minutes / 60)
     }
     
 }

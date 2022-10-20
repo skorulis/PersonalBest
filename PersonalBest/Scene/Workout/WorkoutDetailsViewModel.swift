@@ -164,14 +164,14 @@ extension WorkoutDetailsViewModel {
     }
     
     private func createRecords(breakdown: RepWeightBreakdown) {
-        for (variant, repValues) in breakdown.repValues {
+        for (key, repValues) in breakdown.repValues {
             for (repCount, values) in repValues {
                 guard let top = values.last else {
                     continue
                 }
                 
                 // TODO: Only create records if beating previous?
-                let variant = PBVariant.find(context: workout.managedObjectContext!, name: variant)
+                let variant = PBVariant.find(context: workout.managedObjectContext!, name: key.variant)
                 _ = PBRecordEntry.new(activity: breakdown.activity,
                                       date: top.date,
                                       variant: variant,
@@ -182,13 +182,13 @@ extension WorkoutDetailsViewModel {
     }
     
     private func createRecords(breakdown: SimpleRecordsBreakdown) {
-        for (variant, values) in breakdown.values {
+        for (key, values) in breakdown.values {
             guard let top = values.last else {
                 continue
             }
             
             // TODO: Only create records if beating previous?
-            let variant = PBVariant.find(context: workout.managedObjectContext!, name: variant)
+            let variant = PBVariant.find(context: workout.managedObjectContext!, name: key.variant)
             _ = PBRecordEntry.new(activity: breakdown.activity,
                                   date: top.date,
                                   variant: variant,
