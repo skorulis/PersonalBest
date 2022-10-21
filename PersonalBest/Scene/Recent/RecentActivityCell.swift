@@ -22,7 +22,7 @@ extension RecentActivityCell: View {
             }
             
         }
-        .buttonStyle(ShadowButtonStyle())
+        .buttonStyle(HalfCapsuleButtonStyle())
     }
     
     private var tags: some View {

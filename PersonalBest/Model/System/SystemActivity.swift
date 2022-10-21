@@ -41,6 +41,7 @@ extension SystemActivity {
             
             .init(name: "Barbell row", category: .weights, tracking: .weightlifting, variations: ["Pendlay", "Yates"]),
             .init(name: "Bench press", category: .weights, tracking: .weightlifting, variations: ["Close grip"]),
+            .init(name: "Cable crossover", category: .weights, tracking: .weightlifting),
             .init(name: "Chest press machine", category: .weights, tracking: .weightlifting),
             .init(name: "Cross body hammer curl", category: .weights, tracking: .weightlifting),
             .init(name: "Deadlift", category: .weights, tracking: .weightlifting),

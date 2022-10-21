@@ -90,12 +90,7 @@ extension WorkoutDetailsView: View {
             .deleteDisabled(true)
             .listRowInsets(EdgeInsets())
             .listRowSeparator(.hidden)
-        HStack {
-            Text(exercise.activity.name)
-                .bold()
-            Spacer()
-            exerciseVolume(exercise)
-        }
+        exerciseCellHeader(exercise)
         ForEach(exercise.sets) { entry in
             WorkoutEntryCell(exercise: exercise,
                              entry: viewModel.binding(exercise, entry),
@@ -113,6 +108,20 @@ extension WorkoutDetailsView: View {
             Text("Add set")
         }
         .deleteDisabled(true)
+    }
+    
+    private func exerciseCellHeader(_ exercise: PBExercise) -> some View {
+        HStack {
+            VStack(alignment: .leading) {
+                Text(exercise.activity.name)
+                    .bold()
+                exerciseVolume(exercise)
+            }
+            Spacer()
+            Button(action: {viewModel.detailsPressed(exercise)}) {
+                Image(systemName: "info.circle")
+            }
+        }
     }
     
     private func exerciseVolume(_ exercise: PBExercise) -> some View {

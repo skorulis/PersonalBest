@@ -40,7 +40,7 @@ extension WorkoutActivityPickerView: View {
             
             ForEach(activities) { activity in
                 Button(action: viewModel.select(activity)) {
-                    ActivityCell(activity: activity)
+                    ActivityCell(activity: activity, onInfoPressed: {viewModel.infoPressed(activity)})
                 }
             }
         }

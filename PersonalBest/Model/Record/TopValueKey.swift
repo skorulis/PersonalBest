@@ -8,15 +8,19 @@ struct RecordKey: Equatable, Hashable, Identifiable {
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(autoType?.rawValue)
-        hasher.combine(variant)
+        hasher.combine(nonOptVariant)
     }
     
     var id: String {
-        return "\(autoType?.rawValue ?? "")-\(variant ?? PBVariant.none)"
+        return "\(autoType?.rawValue ?? "")-\(nonOptVariant)"
+    }
+    
+    private var nonOptVariant: String {
+        return variant ?? PBVariant.none
     }
     
     static func == (lhs: RecordKey, rhs: RecordKey) -> Bool {
-        return lhs.autoType == rhs.autoType && lhs.variant == rhs.variant
+        return lhs.autoType == rhs.autoType && lhs.nonOptVariant == rhs.nonOptVariant
     }
 }
 
