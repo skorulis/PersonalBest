@@ -66,21 +66,23 @@ struct RecentActivityCell_Previews: PreviewProvider {
         let recordAccess = ioc.resolve(RecordEntryAccess.self)
         let context = ioc.resolve(CoreDataStore.self).mainContext
         
-        let activity = PBActivity(context: context)
-        activity.name = "Bench press"
-        activity.trackingType = .weightlifting
+        let activity = PreviewData.weightActivity(context)
         
         let entry = PBRecordEntry.new(activity: activity, values: [.reps: 10, .weight: 20])
-        activity.records.insert(entry)
         
-        let top = recordAccess.topValues(activity: activity)
-        let key = entry.topValueKey(type: .weight)
-        let recent = RecentEntry(activity: activity, key: key, value: top.values.first!)
+        let recent = toRecent(entry: entry, access: recordAccess)
         
         return VStack {
             RecentActivityCell(recent: recent, onPress: {_ in })
         }
         .padding(16)
+    }
+    
+    private static func toRecent(entry: PBRecordEntry,
+                                 access: RecordEntryAccess) -> RecentEntry {
+        let top = access.topValues(activity: entry.activity)
+        let key = entry.topValueKey(type: .weight)
+        return RecentEntry(activity: entry.activity, key: key, value: top.values.first!)
     }
 }
 
