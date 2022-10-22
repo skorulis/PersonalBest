@@ -25,7 +25,7 @@ extension CategoryActivitiesViewModel {
     
     func show(activity: PBActivity) -> () -> Void {
         return { [unowned self] in
-            coordinator.push(.activityDetails(activity))
+            coordinator.push(.activityDetails(activity, nil))
         }
     }
     

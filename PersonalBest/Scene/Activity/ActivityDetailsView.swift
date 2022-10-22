@@ -31,10 +31,11 @@ extension ActivityDetailsView: View {
             content()
         }
         .navigationBarHidden(true)
+        .background(Color.white)
     }
     
     private func nav() -> some View {
-        NavBar(left: BarButtonItem.back(viewModel.back),
+        NavBar(left: BarButtonItem.back(viewModel.close),
                mid: BarButtonItem.title(viewModel.activity.name)
         )
     }

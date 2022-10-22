@@ -38,7 +38,7 @@ extension WorkoutActivityPickerViewModel {
     }
     
     func infoPressed(_ activity: PBActivity) {
-        let path = RootPath.activityDetails(activity)
+        let path = RootPath.activityDetails(activity, nil)
         self.coordinator.push(path)
     }
     

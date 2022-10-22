@@ -24,7 +24,8 @@ struct RecordKey: Equatable, Hashable, Identifiable {
     }
 }
 
-struct TopValueKey: Equatable, Hashable {
+struct TopValueKey: Equatable, Hashable, Comparable {
+    
     let measurement: MeasurementType
     // TODO: Maybe merge with record
     let autoType: AutoRecordType?
@@ -58,5 +59,15 @@ struct TopValueKey: Equatable, Hashable {
             result += "volume "
         }
         return result.isEmpty ? nil : result
+    }
+    
+    static func < (lhs: TopValueKey, rhs: TopValueKey) -> Bool {
+        if lhs.measurement != rhs.measurement {
+            return lhs.measurement.name > rhs.measurement.name
+        }
+        if lhs.variant != rhs.variant {
+            return (lhs.variant ?? "") > (rhs.variant ?? "")
+        }
+        return (lhs.autoType?.rawValue ?? "") > (rhs.autoType?.rawValue ?? "")
     }
 }

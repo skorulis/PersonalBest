@@ -209,7 +209,7 @@ extension WorkoutDetailsViewModel {
     }
 
     func detailsPressed(_ exercise: PBExercise) {
-        let route = RootPath.activityDetails(exercise.activity)
+        let route = RootPath.activityDetails(exercise.activity, nil)
         coordinator.push(route)
     }
     

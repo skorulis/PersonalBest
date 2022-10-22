@@ -23,7 +23,15 @@ struct RecentHistoryView {
 extension RecentHistoryView: View {
     
     var body: some View {
-        ListTemplate(nav: nav, content: content)
+        ZStack {
+            ListTemplate(nav: nav, content: content)
+            if let overlay = viewModel.overlayPath {
+                overlay.render(coordinator: viewModel.coordinator)
+                    .zIndex(2)
+            }
+        }
+        .transition(.opacity)
+        .animation(.easeInOut, value: viewModel.overlayPath)
     }
     
     private func nav() ->some View {

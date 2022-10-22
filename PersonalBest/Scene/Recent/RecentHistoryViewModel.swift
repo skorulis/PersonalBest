@@ -13,6 +13,7 @@ final class RecentHistoryViewModel: CoordinatedViewModel, ObservableObject {
     private let recordAccess: RecordEntryAccess
     
     @Published var toDelete: RecentEntry?
+    @Published var overlayPath: RootPath?
     
     init(recordsStore: RecordsStore,
          activityService: ActivityService,
@@ -50,6 +51,9 @@ extension RecentHistoryViewModel {
             return entries(activity: act)
         }
         return recent.sorted { a, b in
+            if a.value.date == b.value.date {
+                return a.key > b.key
+            }
             return a.value.date > b.value.date
         }
     }
@@ -63,7 +67,9 @@ extension RecentHistoryViewModel {
     }
     
     func show(activity: PBActivity) {
-        coordinator.push(RootPath.activityDetails(activity))
+        self.overlayPath = RootPath.activityDetails(activity) { [unowned self] in
+            self.overlayPath = nil
+        }
     }
     
     func deleteAction(entry: RecentEntry) -> () -> Void {
