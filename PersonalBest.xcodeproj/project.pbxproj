@@ -80,6 +80,7 @@
 		FA6E7FB628F133E900DD34F6 /* PMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6E7FB528F133E900DD34F6 /* PMeasurement.swift */; };
 		FA6E7FBC28F226C800DD34F6 /* BreakdownService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6E7FBB28F226C800DD34F6 /* BreakdownService.swift */; };
 		FAAD236D29033E480066669B /* HalfCapsuleShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAD236C29033E480066669B /* HalfCapsuleShape.swift */; };
+		FAAD236F2904ADC00066669B /* RecordValueHighlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAD236E2904ADC00066669B /* RecordValueHighlight.swift */; };
 		FAE05D8C28E2B8B200F4697E /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE05D8B28E2B8B200F4697E /* MainCoordinator.swift */; };
 		FAE05D8E28E2B8C100F4697E /* RootPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE05D8D28E2B8C100F4697E /* RootPath.swift */; };
 		FAE05D9028E2B96C00F4697E /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE05D8F28E2B96C00F4697E /* ContentViewModel.swift */; };
@@ -179,6 +180,7 @@
 		FA6E7FB528F133E900DD34F6 /* PMeasurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PMeasurement.swift; sourceTree = "<group>"; };
 		FA6E7FBB28F226C800DD34F6 /* BreakdownService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakdownService.swift; sourceTree = "<group>"; };
 		FAAD236C29033E480066669B /* HalfCapsuleShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfCapsuleShape.swift; sourceTree = "<group>"; };
+		FAAD236E2904ADC00066669B /* RecordValueHighlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordValueHighlight.swift; sourceTree = "<group>"; };
 		FAE05D8B28E2B8B200F4697E /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		FAE05D8D28E2B8C100F4697E /* RootPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootPath.swift; sourceTree = "<group>"; };
 		FAE05D8F28E2B96C00F4697E /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
@@ -575,6 +577,7 @@
 				FAE05DA228E3E8CE00F4697E /* DecimalField.swift */,
 				FA2D796328E5719A0032BEC0 /* RecordValueDisplay.swift */,
 				FA2D79A928EBEF090032BEC0 /* TimeField.swift */,
+				FAAD236E2904ADC00066669B /* RecordValueHighlight.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -739,6 +742,7 @@
 				FA6E7FAB28F12EE200DD34F6 /* PreviewData.swift in Sources */,
 				FA6D959A28E18E39004D4D98 /* ContentView.swift in Sources */,
 				FA6E7F9128EED15900DD34F6 /* RecentActivityCell.swift in Sources */,
+				FAAD236F2904ADC00066669B /* RecordValueHighlight.swift in Sources */,
 				FA2D796428E5719A0032BEC0 /* RecordValueDisplay.swift in Sources */,
 				FAE05D8E28E2B8C100F4697E /* RootPath.swift in Sources */,
 				FA2D797228E67D630032BEC0 /* CategoryListView.swift in Sources */,

@@ -70,20 +70,24 @@ extension ActivityDetailsView: View {
     
     private func topRecord(_ value: TopRecord) -> some View {
         VStack {
-            Image("first-icon")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(height: 60)
-                .padding(.vertical, 30)
-                .scaleEffect(iconAnimating ? 1.2 : 1)
-                .animation(iconAnimation, value: iconAnimating)
-                .onAppear {
-                    iconAnimating = true
-                }
-            RecordValueDisplay(value: value.value, unit: value.unit)
+            // image
             
-            Text(DateFormatter.mediumDate.string(from: value.date))
+            RecordValueHighlight(value: value)
         }
+        .padding(.top, 40)
+    }
+    
+    private var image: some View {
+        Image("first-icon")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(height: 60)
+            .padding(.vertical, 30)
+            .scaleEffect(iconAnimating ? 1.2 : 1)
+            .animation(iconAnimation, value: iconAnimating)
+            .onAppear {
+                iconAnimating = true
+            }
     }
     
     @ViewBuilder
@@ -209,13 +213,13 @@ struct ActivityDetailsView_Previews: PreviewProvider {
     static var previews: some View {
         let ioc = IOC()
         let context = ioc.resolve(CoreDataStore.self).mainContext
-        let example = PBActivity(context: context)
-        example.name = "Pull up"
-        example.trackingType = .reps
+        let example = PBActivity.new(context: context, name: "Pull up", tracking: .reps)
         _ = PBRecordEntry.new(activity: example, date: Date(), values: [.reps: 20])
         _ = PBRecordEntry.new(activity: example, date: Date().advanced(by: 2200000), values: [.reps: 22])
+        
+        let argument = ActivityDetailsViewModel.Argument(activity: example, customDismiss: nil)
 
-        return ActivityDetailsView(viewModel: ioc.resolve(ActivityDetailsViewModel.self, argument: example))
+        return ActivityDetailsView(viewModel: ioc.resolve(ActivityDetailsViewModel.self, argument: argument))
     }
 }
 
