@@ -83,7 +83,6 @@
 		FA7FC7482905DE9800517157 /* HalfTriangleShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7FC7472905DE9800517157 /* HalfTriangleShape.swift */; };
 		FAAD236D29033E480066669B /* HalfCapsuleShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAD236C29033E480066669B /* HalfCapsuleShape.swift */; };
 		FAAD236F2904ADC00066669B /* RecordValueHighlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAD236E2904ADC00066669B /* RecordValueHighlight.swift */; };
-		FAE05D8C28E2B8B200F4697E /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE05D8B28E2B8B200F4697E /* MainCoordinator.swift */; };
 		FAE05D8E28E2B8C100F4697E /* RootPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE05D8D28E2B8C100F4697E /* RootPath.swift */; };
 		FAE05D9028E2B96C00F4697E /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE05D8F28E2B96C00F4697E /* ContentViewModel.swift */; };
 		FAE05D9328E2C0CE00F4697E /* PageTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE05D9228E2C0CE00F4697E /* PageTemplate.swift */; };
@@ -185,7 +184,6 @@
 		FA7FC7472905DE9800517157 /* HalfTriangleShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfTriangleShape.swift; sourceTree = "<group>"; };
 		FAAD236C29033E480066669B /* HalfCapsuleShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfCapsuleShape.swift; sourceTree = "<group>"; };
 		FAAD236E2904ADC00066669B /* RecordValueHighlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordValueHighlight.swift; sourceTree = "<group>"; };
-		FAE05D8B28E2B8B200F4697E /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		FAE05D8D28E2B8C100F4697E /* RootPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootPath.swift; sourceTree = "<group>"; };
 		FAE05D8F28E2B96C00F4697E /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		FAE05D9228E2C0CE00F4697E /* PageTemplate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageTemplate.swift; sourceTree = "<group>"; };
@@ -539,7 +537,6 @@
 		FAE05D8A28E2B8AD00F4697E /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
-				FAE05D8B28E2B8B200F4697E /* MainCoordinator.swift */,
 				FAE05D8D28E2B8C100F4697E /* RootPath.swift */,
 			);
 			path = Coordinator;
@@ -724,7 +721,6 @@
 				FA2D79B728EE40750032BEC0 /* PBVariant.swift in Sources */,
 				FA2D797428E67D6F0032BEC0 /* CategoryListViewModel.swift in Sources */,
 				FA2D797828E6A5A80032BEC0 /* CategoryActivitiesViewModel.swift in Sources */,
-				FAE05D8C28E2B8B200F4697E /* MainCoordinator.swift in Sources */,
 				FA6E7FB628F133E900DD34F6 /* PMeasurement.swift in Sources */,
 				FA6E7F9328EF7BE500DD34F6 /* ShadowButtonStyle.swift in Sources */,
 				FA2D795D28E55C2E0032BEC0 /* MorphableShape.swift in Sources */,

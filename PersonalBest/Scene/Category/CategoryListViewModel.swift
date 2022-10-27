@@ -1,5 +1,6 @@
 //Created by Alexander Skorulis on 30/9/2022.
 
+import ASKCore
 import Foundation
 
 // MARK: - Memory footprint

@@ -1,5 +1,6 @@
 //Created by Alexander Skorulis on 2/10/2022.
 
+import ASKCore
 import Foundation
 
 final class WorkoutActivityPickerViewModel: CoordinatedViewModel, ObservableObject {

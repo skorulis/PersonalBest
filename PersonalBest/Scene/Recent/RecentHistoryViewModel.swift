@@ -1,5 +1,6 @@
 //Created by Alexander Skorulis on 29/9/2022.
 
+import ASKCore
 import Foundation
 import CoreData
 import SwiftUI

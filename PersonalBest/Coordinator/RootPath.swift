@@ -5,7 +5,7 @@ import ASKCore
 import Foundation
 import SwiftUI
 
-enum RootPath: CoordinatorPath, Hashable, Identifiable {
+enum RootPath: BoundCoordinatorPath, Hashable, Identifiable {
     
     case activityDetails(_ activity: PBActivity, _ customDismiss: (() -> Void)?)
     case addEntry(_ activity: PBActivity, _ initialVariant: PBVariant?)
@@ -19,7 +19,7 @@ enum RootPath: CoordinatorPath, Hashable, Identifiable {
     case selectVariant(_ activity: PBActivity, onSelect: (PBVariant?) -> Void)
     
     @ViewBuilder
-    func render(coordinator: MainCoordinator) -> some View {
+    func render(coordinator: StandardCoordinator) -> some View {
         switch self {
         case .activityDetails(let activity, let customDismiss):
             let argument = ActivityDetailsViewModel.Argument(activity: activity, customDismiss: customDismiss)

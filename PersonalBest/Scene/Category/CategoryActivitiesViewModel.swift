@@ -1,5 +1,6 @@
 //Created by Alexander Skorulis on 30/9/2022.
 
+import ASKCore
 import Foundation
 
 // MARK: - Memory footprint
@@ -25,7 +26,7 @@ extension CategoryActivitiesViewModel {
     
     func show(activity: PBActivity) -> () -> Void {
         return { [unowned self] in
-            coordinator.push(.activityDetails(activity, nil))
+            coordinator.push(RootPath.activityDetails(activity, nil))
         }
     }
     

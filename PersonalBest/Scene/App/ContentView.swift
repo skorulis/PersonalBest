@@ -22,7 +22,7 @@ struct ContentView: View {
     }
     
     private var recentTab: some View {
-        CoordinatorView(coordinator: MainCoordinator(root: .recent, factory: factory))
+        CoordinatorView(coordinator: StandardCoordinator(root: RootPath.recent, factory: factory))
             .tabItem {
                 Text("Recent")
                 Image(systemName: "clock.fill")
@@ -30,7 +30,7 @@ struct ContentView: View {
     }
     
     private var activityTab: some View {
-        CoordinatorView(coordinator: MainCoordinator(root: .categories, factory: factory))
+        CoordinatorView(coordinator: StandardCoordinator(root: RootPath.categories, factory: factory))
             .tabItem {
                 Text("Activity")
                 Image(systemName: "list.bullet")
@@ -38,7 +38,7 @@ struct ContentView: View {
     }
     
     private var workoutTab: some View {
-        CoordinatorView(coordinator: MainCoordinator(root: .workoutList, factory: factory))
+        CoordinatorView(coordinator: StandardCoordinator(root: RootPath.workoutList, factory: factory))
             .tabItem {
                 Text("Workouts")
                 Image("dumbbell")
@@ -46,7 +46,7 @@ struct ContentView: View {
     }
     
     private var settingsTab: some View {
-        CoordinatorView(coordinator: MainCoordinator(root: .settings, factory: factory))
+        CoordinatorView(coordinator: StandardCoordinator(root: RootPath.settings, factory: factory))
             .tabItem {
                 Text("Settings")
                 Image(systemName: "gearshape.fill")

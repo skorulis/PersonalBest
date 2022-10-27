@@ -22,12 +22,12 @@ extension WorkoutListViewModel {
         workout.startDate = Date()
         workout.versionID = UUID().uuidString
         try! workout.managedObjectContext?.save()
-        coordinator.push(.workout(workout))
+        coordinator.push(RootPath.workout(workout))
     }
     
     func select(workout: PBWorkout) -> () -> Void {
         return { [unowned self] in
-            self.coordinator.push(.workout(workout))
+            self.coordinator.push(RootPath.workout(workout))
         }
     }
     
