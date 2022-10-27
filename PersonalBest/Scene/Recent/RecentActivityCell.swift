@@ -7,7 +7,9 @@ import SwiftUI
 
 struct RecentActivityCell {
     let recent: RecentEntry
+    let namespace: Namespace.ID
     let onPress: (PBActivity) -> Void
+    
 }
 
 // MARK: - Rendering
@@ -16,18 +18,13 @@ extension RecentActivityCell: View {
     
     var body: some View {
         Button(action: { onPress(recent.activity) }) {
-            ZStack(alignment: .top) {
-                content
-                tags
-            }
-            
+            content
         }
         .buttonStyle(HalfCapsuleButtonStyle())
     }
     
     private var tags: some View {
         HStack {
-            Spacer()
             if let variant = recent.key.variant {
                 TextBadge(text: variant, color: .blue.opacity(0.3))
             }
@@ -43,16 +40,16 @@ extension RecentActivityCell: View {
                 Text(recent.activity.name)
                     .typography(.title)
                     .multilineTextAlignment(.leading)
+                tags
                 Text(DateFormatter.mediumDate.string(from: recent.value.date))
                     .typography(.body)
             }
             Spacer()
-            VStack(alignment: .leading) {
-                RecordValueDisplay(value: recent.value.value, unit: recent.value.unit)
-            }
+            RecordValueHighlight(value: recent.value, showBorder: false)
+                .matchedGeometryEffect(id: recent.id, in: namespace)
         }
         .foregroundColor(.primary)
-        .padding(12)
+        .padding(2)
     }
     
 }
@@ -60,6 +57,8 @@ extension RecentActivityCell: View {
 // MARK: - Previews
 
 struct RecentActivityCell_Previews: PreviewProvider {
+    
+    @Namespace static var namespace
     
     static var previews: some View {
         let ioc = IOC()
@@ -73,7 +72,9 @@ struct RecentActivityCell_Previews: PreviewProvider {
         let recent = toRecent(entry: entry, access: recordAccess)
         
         return VStack {
-            RecentActivityCell(recent: recent, onPress: {_ in })
+            RecentActivityCell(recent: recent,
+                               namespace: namespace,
+                               onPress: {_ in })
         }
         .padding(16)
     }

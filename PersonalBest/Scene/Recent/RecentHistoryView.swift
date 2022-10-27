@@ -12,6 +12,8 @@ struct RecentHistoryView {
     
     @FetchRequest var recentActivities: FetchedResults<PBActivity>
     
+    @Namespace private var highlightNamespace
+    
     init(viewModel: RecentHistoryViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
         _recentActivities = FetchRequest<PBActivity>(sortDescriptors: [], predicate: NSPredicate(format: "records.@count > 0"))
@@ -27,6 +29,7 @@ extension RecentHistoryView: View {
             ListTemplate(nav: nav, content: content)
             if let overlay = viewModel.overlayPath {
                 overlay.render(coordinator: viewModel.coordinator)
+                    .environment(\.namespace, highlightNamespace)
                     .zIndex(2)
             }
         }
@@ -46,7 +49,9 @@ extension RecentHistoryView: View {
     
     private func content() -> some View {
         ForEach(viewModel.collect(activities: recentActivities.reversed())) { entry in
-            RecentActivityCell(recent: entry, onPress: viewModel.show)
+            RecentActivityCell(recent: entry,
+                               namespace: highlightNamespace,
+                               onPress: viewModel.show)
             .listRowSeparator(.hidden)
             .listRowBackground(EmptyView())
             .swipeActions(allowsFullSwipe: false) {

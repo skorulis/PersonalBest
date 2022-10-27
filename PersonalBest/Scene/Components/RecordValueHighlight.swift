@@ -7,10 +7,11 @@ import SwiftUI
 
 struct RecordValueHighlight {
     let value: TopRecord
+    let showBorder: Bool
     @State private var textSize: CGSize = .zero
     @State private var isAnimating: Bool = false
     
-    private static let textPadding: CGFloat = 38
+    private static let textPadding: CGFloat = 18
 }
 
 // MARK: - Rendering
@@ -28,14 +29,18 @@ extension RecordValueHighlight: View {
     @ViewBuilder
     private var maybeBackground: some View {
         if textSize.width > 0 {
-            backgroundCircle
+            if showBorder {
+                fullBackground
+            } else {
+                middleCircle
+            }
         }
     }
     
-    private var backgroundCircle: some View {
+    private var fullBackground: some View {
         Image("medal-background")
             .resizable()
-            .scaleEffect(isAnimating ? 1.2: 1)
+            .scaleEffect(isAnimating ? 1.4: 1.2)
             .animation(animation, value: isAnimating)
             
             .overlay(middleCircle)
@@ -51,19 +56,21 @@ extension RecordValueHighlight: View {
             Circle()
                 .stroke(Color.orange, lineWidth: 6)
         }
-        .padding(22)
     }
     
     private var text: some View {
         VStack {
             RecordValueDisplay(value: value.value, unit: value.unit)
-            Text(DateFormatter.mediumDate.string(from: value.date))
+            if showBorder {
+                // Text(DateFormatter.mediumDate.string(from: value.date))
+            }
         }
     }
     
     private var animation: Animation {
         return .linear(duration: 0.7).repeatForever(autoreverses: true)
     }
+    
 }
 
 // MARK: - Previews
@@ -72,7 +79,16 @@ struct RecordValueHighlight_Previews: PreviewProvider {
     
     static var previews: some View {
         let top = TopRecord(date: Date(), value: 100, unit: .reps)
-        RecordValueHighlight(value: top)
+        VStack {
+            RecordValueHighlight(value: top, showBorder: true)
+            
+            RecordValueHighlight(value: top, showBorder: false)
+                .background(
+                    Rectangle()
+                        .stroke(Color.black)
+                )
+        }
+        
     }
 }
 

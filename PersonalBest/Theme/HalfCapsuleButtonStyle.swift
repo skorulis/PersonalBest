@@ -15,13 +15,14 @@ extension HalfCapsuleButtonStyle {
     
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .padding(6)
+            //.padding(6)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(
                 HalfCapsuleShape()
                     .fill(Color.white)
+                    .shadow(color: Color.black.opacity(0.07), radius: 20)
             )
-            .shadow(color: Color.black.opacity(0.07), radius: 20)
+            
     }
 }
 

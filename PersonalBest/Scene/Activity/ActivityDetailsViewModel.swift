@@ -66,6 +66,17 @@ extension ActivityDetailsViewModel {
         return activity.editableUnits
     }
     
+    var topValueKey: TopValueKey {
+        return TopValueKey(measurement: activity.primaryMeasure,
+                           autoType: nil,
+                           variant: variant
+        )
+    }
+    
+    var highlightID: String {
+        return "\(activity.objectID)-\(topValueKey.id)"
+    }
+    
 }
 
 // MARK: - Logic

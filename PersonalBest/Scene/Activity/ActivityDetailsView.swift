@@ -13,6 +13,7 @@ struct ActivityDetailsView {
     @State private var iconAnimating = false
     
     @FetchRequest var records: FetchedResults<PBRecordEntry>
+    @Environment(\.namespace) private var namespace
     
     init(viewModel: ActivityDetailsViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
@@ -44,6 +45,7 @@ extension ActivityDetailsView: View {
         List {
             header
                 .listRowSeparator(.hidden)
+                .listRowInsets(EdgeInsets())
             
             if viewModel.recordBreakdown.hasData {
                 bottomSection
@@ -66,15 +68,26 @@ extension ActivityDetailsView: View {
             unitEdit
         }
         .frame(maxWidth: .infinity)
+        .padding(EdgeInsets(top: 80, leading: 0, bottom: 40, trailing: 0))
+        .background(headerBackground)
+    }
+    
+    private var headerBackground: some View {
+        ZStack {
+            HalfTriangleShape(position: .left)
+                .fill(Color.darkShadow)
+            HalfTriangleShape(position: .right)
+                .fill(Color.lightShadow)
+        }
     }
     
     private func topRecord(_ value: TopRecord) -> some View {
         VStack {
             // image
             
-            RecordValueHighlight(value: value)
+            RecordValueHighlight(value: value, showBorder: true)
+                //.matchedGeometryEffect(id: viewModel.highlightID, in: namespace!)
         }
-        .padding(.top, 40)
     }
     
     private var image: some View {

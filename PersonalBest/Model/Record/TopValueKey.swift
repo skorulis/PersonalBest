@@ -27,9 +27,20 @@ struct RecordKey: Equatable, Hashable, Identifiable {
 struct TopValueKey: Equatable, Hashable, Comparable {
     
     let measurement: MeasurementType
-    // TODO: Maybe merge with record
-    let autoType: AutoRecordType?
-    let variant: String?
+    let recordKey: RecordKey
+    
+    init(measurement: MeasurementType, recordKey: RecordKey) {
+        self.measurement = measurement
+        self.recordKey = recordKey
+    }
+    
+    init(measurement: MeasurementType,
+         autoType: AutoRecordType?,
+         variant: String?
+    ) {
+        self.measurement = measurement
+        self.recordKey = RecordKey(autoType: autoType, variant: variant)
+    }
     
     static func == (lhs: TopValueKey, rhs: TopValueKey) -> Bool {
         return lhs.measurement == rhs.measurement &&
@@ -44,7 +55,15 @@ struct TopValueKey: Equatable, Hashable, Comparable {
     }
     
     var id: String {
-        return "\(measurement.rawValue)-\(autoType?.rawValue ?? "")-\(variant ?? "")"
+        return "\(measurement.rawValue)-\(autoType?.rawValue ?? "")-\(variant ?? PBVariant.none)"
+    }
+    
+    var autoType: AutoRecordType? {
+        return recordKey.autoType
+    }
+    
+    var variant: String? {
+        return recordKey.variant
     }
     
     var suffix: String? {

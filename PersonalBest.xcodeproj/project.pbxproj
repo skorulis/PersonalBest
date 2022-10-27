@@ -79,6 +79,8 @@
 		FA6E7FB228F132C700DD34F6 /* MeasurementType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6E7FAF28F132C700DD34F6 /* MeasurementType.swift */; };
 		FA6E7FB628F133E900DD34F6 /* PMeasurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6E7FB528F133E900DD34F6 /* PMeasurement.swift */; };
 		FA6E7FBC28F226C800DD34F6 /* BreakdownService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6E7FBB28F226C800DD34F6 /* BreakdownService.swift */; };
+		FA7FC74629050BEF00517157 /* NamespaceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7FC74529050BEF00517157 /* NamespaceKey.swift */; };
+		FA7FC7482905DE9800517157 /* HalfTriangleShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7FC7472905DE9800517157 /* HalfTriangleShape.swift */; };
 		FAAD236D29033E480066669B /* HalfCapsuleShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAD236C29033E480066669B /* HalfCapsuleShape.swift */; };
 		FAAD236F2904ADC00066669B /* RecordValueHighlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAD236E2904ADC00066669B /* RecordValueHighlight.swift */; };
 		FAE05D8C28E2B8B200F4697E /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE05D8B28E2B8B200F4697E /* MainCoordinator.swift */; };
@@ -179,6 +181,8 @@
 		FA6E7FAF28F132C700DD34F6 /* MeasurementType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeasurementType.swift; sourceTree = "<group>"; };
 		FA6E7FB528F133E900DD34F6 /* PMeasurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PMeasurement.swift; sourceTree = "<group>"; };
 		FA6E7FBB28F226C800DD34F6 /* BreakdownService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakdownService.swift; sourceTree = "<group>"; };
+		FA7FC74529050BEF00517157 /* NamespaceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamespaceKey.swift; sourceTree = "<group>"; };
+		FA7FC7472905DE9800517157 /* HalfTriangleShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfTriangleShape.swift; sourceTree = "<group>"; };
 		FAAD236C29033E480066669B /* HalfCapsuleShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfCapsuleShape.swift; sourceTree = "<group>"; };
 		FAAD236E2904ADC00066669B /* RecordValueHighlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordValueHighlight.swift; sourceTree = "<group>"; };
 		FAE05D8B28E2B8B200F4697E /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
@@ -556,6 +560,7 @@
 				FA4228A728FFE3AF0084646C /* TextBadge.swift */,
 				FA4228A9290274FA0084646C /* HalfCapsuleButtonStyle.swift */,
 				FAAD236C29033E480066669B /* HalfCapsuleShape.swift */,
+				FA7FC7472905DE9800517157 /* HalfTriangleShape.swift */,
 			);
 			name = Theme;
 			path = PersonalBest/Theme;
@@ -578,6 +583,7 @@
 				FA2D796328E5719A0032BEC0 /* RecordValueDisplay.swift */,
 				FA2D79A928EBEF090032BEC0 /* TimeField.swift */,
 				FAAD236E2904ADC00066669B /* RecordValueHighlight.swift */,
+				FA7FC74529050BEF00517157 /* NamespaceKey.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -709,7 +715,9 @@
 				FA2D79A828EAC3B30032BEC0 /* RecordEntryAccess.swift in Sources */,
 				FA6E7F9628EFAB0600DD34F6 /* RecordEntry.swift in Sources */,
 				FA2D795728E55ADA0032BEC0 /* WobbleButtonStyle.swift in Sources */,
+				FA7FC7482905DE9800517157 /* HalfTriangleShape.swift in Sources */,
 				FA6D95C128E2A6A2004D4D98 /* RecordsStore.swift in Sources */,
+				FA7FC74629050BEF00517157 /* NamespaceKey.swift in Sources */,
 				FA2D79BA28EE43E80032BEC0 /* VariationListView.swift in Sources */,
 				FA2D79B328EC26F20032BEC0 /* PBWorkout.swift in Sources */,
 				FA2D798428E828B80032BEC0 /* WorkoutCell.swift in Sources */,

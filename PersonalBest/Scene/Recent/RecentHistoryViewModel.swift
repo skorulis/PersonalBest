@@ -123,7 +123,7 @@ struct RecentEntry: Identifiable {
     let value: TopRecord
     
     var id: String {
-        return "\(activity.objectID)-\(value.id)-\(key.id)"
+        return "\(activity.objectID)-\(key.id)"
     }
     
     var name: String {
