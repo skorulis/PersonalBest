@@ -85,7 +85,7 @@ extension ActivityDetailsViewModel {
 extension ActivityDetailsViewModel {
     
     func addEntry() {
-        let initialVariant = PBVariant.find(context: activity.managedObjectContext!, name: variant)
+        let initialVariant = PBVariant.find(activity: activity, name: variant)
         let path = RootPath.addEntry(activity, initialVariant)
         coordinator.present(path, style: .sheet)
     }

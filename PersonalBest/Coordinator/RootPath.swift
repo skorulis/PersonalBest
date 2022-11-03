@@ -17,6 +17,7 @@ enum RootPath: BoundCoordinatorPath, Hashable, Identifiable {
     case workout(_ workout: PBWorkout)
     case selectWorkoutActivity(_ onSelect: (PBActivity) -> Void)
     case selectVariant(_ activity: PBActivity, onSelect: (PBVariant?) -> Void)
+    case newVariant(_ activity: PBActivity)
     
     @ViewBuilder
     func render(coordinator: StandardCoordinator) -> some View {
@@ -45,6 +46,8 @@ enum RootPath: BoundCoordinatorPath, Hashable, Identifiable {
         case .selectVariant(let activity, onSelect: let onSelect):
             let arg = VariationListViewModel.Argument(activity: activity, onSelect: onSelect)
             VariationListView(viewModel: coordinator.resolve(VariationListViewModel.self, argument: arg))
+        case .newVariant(let activity):
+            NewVariationView(viewModel: coordinator.resolve(NewVariationViewModel.self, argument: activity))
         }
     }
     

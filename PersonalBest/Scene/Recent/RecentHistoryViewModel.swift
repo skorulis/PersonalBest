@@ -106,7 +106,7 @@ extension RecentHistoryViewModel {
     
     private func varientPredicate(entry: RecentEntry) -> NSPredicate {
         if let variantString = entry.key.variant,
-           let variant = PBVariant.find(context: entry.activity.managedObjectContext!, name: variantString) {
+           let variant = PBVariant.find(activity: entry.activity, name: variantString) {
             return NSPredicate(format: "variant = %@", variant)
         } else {
             return NSPredicate(format: "variant == NULL")

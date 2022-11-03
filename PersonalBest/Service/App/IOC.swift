@@ -23,6 +23,10 @@ public final class IOC: IOCService {
         container.autoregister(ActivityService.self, initializer: ActivityService.init)
         container.autoregister(GraphDataGenerator.self, initializer: GraphDataGenerator.init)
         container.autoregister(BreakdownService.self, initializer: BreakdownService.init)
+        
+        container.autoregister(PErrorService.self, initializer: ErrorService.init)
+            .inObjectScope(.container)
+        container.autoregister(ErrorPresentationManager.self, initializer: ErrorPresentationManager.init)
     }
     
     private func registerStores() {
@@ -82,6 +86,11 @@ public final class IOC: IOCService {
         container.autoregister(VariationListViewModel.self,
                                argument: VariationListViewModel.Argument.self,
                                initializer: VariationListViewModel.init)
+        
+        container.autoregister(NewVariationViewModel.self,
+                               argument: PBActivity.self,
+                               initializer: NewVariationViewModel.init)
+        
         
         
         

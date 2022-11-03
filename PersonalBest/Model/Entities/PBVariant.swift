@@ -21,14 +21,21 @@ public class PBVariant: NSManagedObject, Identifiable {
 
 extension PBVariant {
     
-    static func find(context: NSManagedObjectContext, name: String?) -> PBVariant? {
+    static func new(activity: PBActivity, name: String) -> PBVariant {
+        let item = PBVariant(context: activity.managedObjectContext!)
+        item.activity = activity
+        item.name = name
+        return item
+    }
+    
+    static func find(activity: PBActivity, name: String?) -> PBVariant? {
         guard let name else { return nil }
         if name == PBVariant.none {
             return nil
         }
         let query = PBVariant.fetch()
-        query.predicate = NSPredicate(format: "name == %@", name)
-        return try! context.fetch(query).first
+        query.predicate = NSPredicate(format: "name == [cd] %@ AND activity == %@", name, activity)
+        return try! activity.managedObjectContext!.fetch(query).first
     }
     
 }

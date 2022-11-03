@@ -7,7 +7,6 @@ import SwiftUI
 
 struct RecentActivityCell {
     let recent: RecentEntry
-    let namespace: Namespace.ID
     let onPress: (PBActivity) -> Void
     
 }
@@ -20,7 +19,7 @@ extension RecentActivityCell: View {
         Button(action: { onPress(recent.activity) }) {
             content
         }
-        .buttonStyle(HalfCapsuleButtonStyle())
+        .buttonStyle(ShadowButtonStyle())
     }
     
     private var tags: some View {
@@ -41,12 +40,14 @@ extension RecentActivityCell: View {
                     .typography(.title)
                     .multilineTextAlignment(.leading)
                 tags
+                
+            }
+            Spacer()
+            VStack(alignment: .leading) {
+                RecordValueDisplay(value: recent.value.value, unit: recent.value.unit)
                 Text(DateFormatter.mediumDate.string(from: recent.value.date))
                     .typography(.body)
             }
-            Spacer()
-            RecordValueHighlight(value: recent.value, showBorder: false)
-                .matchedGeometryEffect(id: recent.id, in: namespace)
         }
         .foregroundColor(.primary)
         .padding(2)
@@ -73,7 +74,6 @@ struct RecentActivityCell_Previews: PreviewProvider {
         
         return VStack {
             RecentActivityCell(recent: recent,
-                               namespace: namespace,
                                onPress: {_ in })
         }
         .padding(16)

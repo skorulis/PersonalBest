@@ -172,7 +172,7 @@ extension WorkoutDetailsViewModel {
                 }
                 
                 // TODO: Only create records if beating previous?
-                let variant = PBVariant.find(context: workout.managedObjectContext!, name: key.variant)
+                let variant = PBVariant.find(activity: breakdown.activity, name: key.variant)
                 _ = PBRecordEntry.new(activity: breakdown.activity,
                                       date: top.date,
                                       variant: variant,
@@ -189,7 +189,7 @@ extension WorkoutDetailsViewModel {
             }
             
             // TODO: Only create records if beating previous?
-            let variant = PBVariant.find(context: workout.managedObjectContext!, name: key.variant)
+            let variant = PBVariant.find(activity: breakdown.activity, name: key.variant)
             _ = PBRecordEntry.new(activity: breakdown.activity,
                                   date: top.date,
                                   variant: variant,

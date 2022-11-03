@@ -95,6 +95,8 @@
 		FAE05DA328E3E8CE00F4697E /* DecimalField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE05DA228E3E8CE00F4697E /* DecimalField.swift */; };
 		FAE05DA528E3F8D100F4697E /* ActivityEntryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE05DA428E3F8D100F4697E /* ActivityEntryCell.swift */; };
 		FAE05DA828E401A000F4697E /* RecordsStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE05DA728E401A000F4697E /* RecordsStoreTests.swift */; };
+		FAEBF422291252FB00F19A1D /* NewVariationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEBF421291252FB00F19A1D /* NewVariationView.swift */; };
+		FAEBF4242912530900F19A1D /* NewVariationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEBF4232912530900F19A1D /* NewVariationViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -196,6 +198,8 @@
 		FAE05DA228E3E8CE00F4697E /* DecimalField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalField.swift; sourceTree = "<group>"; };
 		FAE05DA428E3F8D100F4697E /* ActivityEntryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityEntryCell.swift; sourceTree = "<group>"; };
 		FAE05DA728E401A000F4697E /* RecordsStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsStoreTests.swift; sourceTree = "<group>"; };
+		FAEBF421291252FB00F19A1D /* NewVariationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewVariationView.swift; sourceTree = "<group>"; };
+		FAEBF4232912530900F19A1D /* NewVariationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewVariationViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -331,6 +335,8 @@
 			children = (
 				FA2D79B928EE43E80032BEC0 /* VariationListView.swift */,
 				FA2D79BB28EE43F60032BEC0 /* VariationListViewModel.swift */,
+				FAEBF421291252FB00F19A1D /* NewVariationView.swift */,
+				FAEBF4232912530900F19A1D /* NewVariationViewModel.swift */,
 			);
 			path = Variation;
 			sourceTree = "<group>";
@@ -731,6 +737,7 @@
 				FAE05D9328E2C0CE00F4697E /* PageTemplate.swift in Sources */,
 				FA2D79B228EC26F20032BEC0 /* PBExercise.swift in Sources */,
 				FA2D797628E6A5980032BEC0 /* CategoryActivitiesView.swift in Sources */,
+				FAEBF4242912530900F19A1D /* NewVariationViewModel.swift in Sources */,
 				FA4228A828FFE3AF0084646C /* TextBadge.swift in Sources */,
 				FAE05D9928E2D87400F4697E /* ActivityDetailsViewModel.swift in Sources */,
 				FA2D799228E9392E0032BEC0 /* ExerciseEntry.swift in Sources */,
@@ -743,6 +750,7 @@
 				FA2D794A28E521C00032BEC0 /* GraphDataGenerator.swift in Sources */,
 				FA6E7F9B28EFCF5F00DD34F6 /* FontName.swift in Sources */,
 				FA2D79A428EA6AFD0032BEC0 /* SystemActivity.swift in Sources */,
+				FAEBF422291252FB00F19A1D /* NewVariationView.swift in Sources */,
 				FA6E7FAB28F12EE200DD34F6 /* PreviewData.swift in Sources */,
 				FA6D959A28E18E39004D4D98 /* ContentView.swift in Sources */,
 				FA6E7F9128EED15900DD34F6 /* RecentActivityCell.swift in Sources */,

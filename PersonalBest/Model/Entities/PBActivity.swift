@@ -91,4 +91,8 @@ extension PBActivity {
         return measurementTypes.map { self.currentUnit($0).rawValue }.joined(separator: "-")
     }
     
+    var variantsID: String {
+        return variants.map { $0.name }.joined(separator: "-")
+    }
+    
 }

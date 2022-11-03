@@ -21,7 +21,10 @@ extension VariationListView: View {
     }
     
     private func nav() -> some View {
-        NavBar(left: BarButtonItem.back(viewModel.back), mid: BarButtonItem.title("Variations"))
+        NavBar(left: BarButtonItem.back(viewModel.back),
+               mid: BarButtonItem.title("Variations"),
+               right: BarButtonItem.iconButton(Image(systemName: "plus"), viewModel.newOption)
+        )
     }
     
     private func content() -> some View {
@@ -31,6 +34,7 @@ extension VariationListView: View {
                 cell(variant: variant)
             }
         }
+        .id(viewModel.activity.variantsID)
     }
     
     private func cell(variant: PBVariant?) -> some View {

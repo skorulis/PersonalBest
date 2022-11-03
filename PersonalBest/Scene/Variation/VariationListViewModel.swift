@@ -14,6 +14,11 @@ final class VariationListViewModel: CoordinatedViewModel, ObservableObject {
         self.activity = argument.activity
         self.onSelect = argument.onSelect
         super.init()
+        
+        activity.objectWillChange.sink { [unowned self] _ in
+            self.objectWillChange.send()
+        }
+        .store(in: &subscribers)
     }
     
 }
@@ -36,6 +41,11 @@ extension VariationListViewModel {
     func select(_ variant: PBVariant?) {
         onSelect(variant)
         back()
+    }
+    
+    func newOption() {
+        let path = RootPath.newVariant(activity)
+        coordinator.push(path)
     }
     
 }
