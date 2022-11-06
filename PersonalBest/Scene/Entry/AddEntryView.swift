@@ -8,6 +8,8 @@ import SwiftUI
 
 struct AddEntryView {
     @StateObject var viewModel: AddEntryViewModel
+    
+    @Environment(\.navigationType) private var navType
 }
 
 // MARK: - Rendering
@@ -16,12 +18,13 @@ extension AddEntryView: View {
     
     var body: some View {
         PageTemplate(nav: nav, content: content)
+            .onAppear {
+                viewModel.navType = navType
+            }
     }
     
     private func nav() -> some View {
-        NavBar(left: EmptyView(),
-               mid: BarButtonItem.title("Add record"),
-               right:BarButtonItem.close(viewModel.dismiss) )
+        DismissingNavBar(mid: BarButtonItem.title("Add record"))
     }
     
     private func content() -> some View {

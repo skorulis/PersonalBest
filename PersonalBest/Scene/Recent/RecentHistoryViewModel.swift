@@ -113,6 +113,15 @@ extension RecentHistoryViewModel {
         }
     }
     
+    func addRecord() {
+        let path = RootPath.selectWorkoutActivity { [unowned self] activity in
+            print("Finish")
+            let addPath = RootPath.addEntry(activity, nil)
+            self.coordinator.push(addPath)
+        }
+        coordinator.push(path)
+    }
+    
 }
 
 // MARK: - Inner types

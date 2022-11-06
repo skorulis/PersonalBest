@@ -83,6 +83,7 @@
 		FA7FC7482905DE9800517157 /* HalfTriangleShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7FC7472905DE9800517157 /* HalfTriangleShape.swift */; };
 		FAAD236D29033E480066669B /* HalfCapsuleShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAD236C29033E480066669B /* HalfCapsuleShape.swift */; };
 		FAAD236F2904ADC00066669B /* RecordValueHighlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAD236E2904ADC00066669B /* RecordValueHighlight.swift */; };
+		FACCE4532917729B00B605F3 /* DismissingNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACCE4522917729B00B605F3 /* DismissingNavBar.swift */; };
 		FAE05D8E28E2B8C100F4697E /* RootPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE05D8D28E2B8C100F4697E /* RootPath.swift */; };
 		FAE05D9028E2B96C00F4697E /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE05D8F28E2B96C00F4697E /* ContentViewModel.swift */; };
 		FAE05D9328E2C0CE00F4697E /* PageTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE05D9228E2C0CE00F4697E /* PageTemplate.swift */; };
@@ -186,6 +187,7 @@
 		FA7FC7472905DE9800517157 /* HalfTriangleShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfTriangleShape.swift; sourceTree = "<group>"; };
 		FAAD236C29033E480066669B /* HalfCapsuleShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfCapsuleShape.swift; sourceTree = "<group>"; };
 		FAAD236E2904ADC00066669B /* RecordValueHighlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordValueHighlight.swift; sourceTree = "<group>"; };
+		FACCE4522917729B00B605F3 /* DismissingNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissingNavBar.swift; sourceTree = "<group>"; };
 		FAE05D8D28E2B8C100F4697E /* RootPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootPath.swift; sourceTree = "<group>"; };
 		FAE05D8F28E2B96C00F4697E /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		FAE05D9228E2C0CE00F4697E /* PageTemplate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageTemplate.swift; sourceTree = "<group>"; };
@@ -587,6 +589,7 @@
 				FA2D79A928EBEF090032BEC0 /* TimeField.swift */,
 				FAAD236E2904ADC00066669B /* RecordValueHighlight.swift */,
 				FA7FC74529050BEF00517157 /* NamespaceKey.swift */,
+				FACCE4522917729B00B605F3 /* DismissingNavBar.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -781,6 +784,7 @@
 				FA2D799528EA457D0032BEC0 /* Model.xcdatamodeld in Sources */,
 				FA2D795B28E55BC90032BEC0 /* AnimatableVector.swift in Sources */,
 				FA2D79BC28EE43F60032BEC0 /* VariationListViewModel.swift in Sources */,
+				FACCE4532917729B00B605F3 /* DismissingNavBar.swift in Sources */,
 				FAE05DA128E3A85300F4697E /* RepsField.swift in Sources */,
 				FA2D798228E81DC90032BEC0 /* WorkoutListViewModel.swift in Sources */,
 				FA2D795528E54B090032BEC0 /* DateFormatter+Common.swift in Sources */,

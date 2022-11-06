@@ -27,10 +27,7 @@ extension WorkoutActivityPickerView: View {
     
     private func nav() -> some View {
         VStack {
-            NavBar(left: EmptyView(),
-                   mid: BarButtonItem.title("Activities"),
-                   right: BarButtonItem.close(viewModel.dismiss)
-            )
+            DismissingNavBar(mid: BarButtonItem.title("Activities"))
             TextField("Search", text: $viewModel.searchText)
                 .textFieldStyle(.roundedBorder)
         }

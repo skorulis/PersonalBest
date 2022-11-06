@@ -13,6 +13,7 @@ final class AddEntryViewModel: CoordinatedViewModel, ObservableObject {
     
     @Published var date: Date = Date()
     @Published var selectedVariant: PBVariant?
+    @Published var navType: NavigationType?
     
     private var values: [MeasurementType: Double] = [:]
     
@@ -80,7 +81,7 @@ extension AddEntryViewModel {
         entry.variant = selectedVariant
         try! entry.managedObjectContext?.save()
         
-        dismiss()
+        dismiss(navType: self.navType!)
     }
     
     func selectVariation() {

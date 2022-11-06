@@ -32,18 +32,19 @@ extension RecentHistoryView: View {
         }
         .transition(.opacity)
         .animation(.easeInOut, value: viewModel.overlayPath)
+        .alert("Delete all \(viewModel.toDelete?.name ?? "") records?",
+               isPresented: viewModel.alertShowingBinding,
+               presenting: viewModel.toDelete) { entry in
+            Button("Delete", role: .destructive) { viewModel.confirmDelete(entry: entry) }
+            Button("Cancel", role: .cancel) { }
+        }
     }
     
     private func nav() ->some View {
-        NavBar(mid: BarButtonItem.title("Records"))
-            .alert("Delete all \(viewModel.toDelete?.name ?? "") records?",
-                   isPresented: viewModel.alertShowingBinding,
-                   presenting: viewModel.toDelete) { entry in
-                Button("Delete", role: .destructive) { viewModel.confirmDelete(entry: entry) }
-                Button("Cancel", role: .cancel) { }
-            }
+        NavBar(mid: BarButtonItem.title("Records"),
+               right: BarButtonItem.iconButton(Image(systemName: "plus"), viewModel.addRecord)
+        )
     }
-    
     
     private func content() -> some View {
         ForEach(viewModel.collect(activities: recentActivities.reversed())) { entry in
