@@ -16,6 +16,7 @@ public class PBWorkout: NSManagedObject, Identifiable {
     @NSManaged public var versionID: String
     
     @NSManaged public var exercises: Set<PBExercise>
+    @NSManaged public var records: Set<PBRecordEntry>
     
     static func new(context: NSManagedObjectContext) -> PBWorkout {
         let workout = PBWorkout(context: context)

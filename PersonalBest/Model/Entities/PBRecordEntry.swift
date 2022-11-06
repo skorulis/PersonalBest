@@ -12,9 +12,11 @@ public class PBRecordEntry: NSManagedObject, Identifiable, PRecordEntry {
     
     @NSManaged public var date: Date
     @NSManaged public var entryValuesData: Data
+    @NSManaged public var autoTypeString: String?
+    
     @NSManaged public var activity: PBActivity
     @NSManaged public var variant: PBVariant?
-    @NSManaged public var autoTypeString: String?
+    @NSManaged public var workout: PBWorkout?
     
     static func new(activity: PBActivity,
                     date: Date = Date(),

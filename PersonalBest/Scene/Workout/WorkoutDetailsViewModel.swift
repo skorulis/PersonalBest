@@ -155,11 +155,12 @@ extension WorkoutDetailsViewModel {
                 volume.type: volume.type.convert(value: volume.value, from: volume.knownUnit)
             ]
             if volume.value > 0 {
-                _ = PBRecordEntry.new(activity: exercise.activity,
+                let record = PBRecordEntry.new(activity: exercise.activity,
                                       date: self.startDate,
                                       values: values,
                                       autoType: .volume
                 )
+                record.workout = workout
             }
         }
     }
@@ -173,11 +174,12 @@ extension WorkoutDetailsViewModel {
                 
                 // TODO: Only create records if beating previous?
                 let variant = PBVariant.find(activity: breakdown.activity, name: key.variant)
-                _ = PBRecordEntry.new(activity: breakdown.activity,
+                let record = PBRecordEntry.new(activity: breakdown.activity,
                                       date: top.date,
                                       variant: variant,
                                       values: [.weight: top.value, .reps: Double(repCount)]
                 )
+                record.workout = workout
             }
         }
     }
@@ -190,11 +192,12 @@ extension WorkoutDetailsViewModel {
             
             // TODO: Only create records if beating previous?
             let variant = PBVariant.find(activity: breakdown.activity, name: key.variant)
-            _ = PBRecordEntry.new(activity: breakdown.activity,
+            let record = PBRecordEntry.new(activity: breakdown.activity,
                                   date: top.date,
                                   variant: variant,
                                   values: [breakdown.activity.primaryMeasure: top.value]
             )
+            record.workout = workout
             
         }
     }

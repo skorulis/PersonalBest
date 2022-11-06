@@ -25,6 +25,7 @@
         <attribute name="entryValuesData" attributeType="Binary"/>
         <relationship name="activity" maxCount="1" deletionRule="Nullify" destinationEntity="PBActivity" inverseName="records" inverseEntity="PBActivity"/>
         <relationship name="variant" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PBVariant" inverseName="records" inverseEntity="PBVariant"/>
+        <relationship name="workout" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PBWorkout" inverseName="records" inverseEntity="PBWorkout"/>
     </entity>
     <entity name="PBVariant" representedClassName="PBVariant" syncable="YES">
         <attribute name="name" attributeType="String"/>
@@ -37,5 +38,6 @@
         <attribute name="startDate" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="versionID" attributeType="String" defaultValueString="NONE"/>
         <relationship name="exercises" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PBExercise" inverseName="workout" inverseEntity="PBExercise"/>
+        <relationship name="records" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PBRecordEntry" inverseName="workout" inverseEntity="PBRecordEntry"/>
     </entity>
 </model>
