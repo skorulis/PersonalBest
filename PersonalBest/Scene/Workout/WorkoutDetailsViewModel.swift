@@ -100,14 +100,20 @@ extension WorkoutDetailsViewModel {
         exercise.sets = sets
         self.save()
         let firstMeasure = exercise.activity.measurementTypes.first!
-        self.focusPublisher = .setEntry(exercise.number, setIndex: sets.count-1, measurement: firstMeasure)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+            // Slight delay for the render to start
+            self.focusPublisher = .setEntry(exercise.number, setIndex: sets.count-1, measurement: firstMeasure)
+        }
     }
     
     func addExercise() {
         let path = RootPath.selectWorkoutActivity { [unowned self] activity in
             let exercise = PBExercise.new(workout: workout, activity: activity)
             let firstMeasure = exercise.activity.measurementTypes.first!
-            self.focusPublisher = .setEntry(exercise.number, setIndex: 0, measurement: firstMeasure)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                // Slight delay for the render to start 
+                self.focusPublisher = .setEntry(exercise.number, setIndex: 0, measurement: firstMeasure)
+            }
             self.save()
         }
         coordinator.present(path, style: .sheet)

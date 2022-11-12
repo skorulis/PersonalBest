@@ -22,24 +22,13 @@ extension RecentActivityCell: View {
         .buttonStyle(ShadowButtonStyle())
     }
     
-    private var tags: some View {
-        HStack {
-            if let variant = recent.key.variant {
-                TextBadge(text: variant, color: .blue.opacity(0.3))
-            }
-            if let autoType = recent.key.autoType {
-                TextBadge(text: autoType.displayText, color: .orange.opacity(0.3))
-            }
-        }
-    }
-    
     private var content: some View {
         HStack {
             VStack(alignment: .leading) {
                 Text(recent.activity.name)
                     .typography(.title)
                     .multilineTextAlignment(.leading)
-                tags
+                RecordEntryTags(key: recent.key.recordKey)
                 
             }
             Spacer()

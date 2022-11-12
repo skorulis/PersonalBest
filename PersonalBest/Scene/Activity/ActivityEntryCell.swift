@@ -22,9 +22,8 @@ extension ActivityEntryCell: View {
             VStack(alignment: .leading) {
                 Text(entry.dateString)
                     .font(.title)
-                if let variant = entry.variant {
-                    Text(variant.name)
-                }
+                
+                RecordEntryTags(key: entry.key)
             }
             
             Spacer()

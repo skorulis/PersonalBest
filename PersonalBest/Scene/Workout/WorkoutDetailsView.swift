@@ -8,7 +8,6 @@ import SwiftUI
 
 struct WorkoutDetailsView {
     @StateObject var viewModel: WorkoutDetailsViewModel
-    @FocusState var focusedField: WorkoutFocus?
 }
 
 // MARK: - Rendering
@@ -19,9 +18,6 @@ extension WorkoutDetailsView: View {
         ListTemplate(nav: nav, content: content)
             .confirmationDialog("Are you sure you want to delete this workout", isPresented: $viewModel.showingDeletePrompt, titleVisibility: .visible) {
                 Button("Delete", role: .destructive, action: viewModel.confirmDelete)
-            }
-            .onChange(of: viewModel.focusPublisher) { newValue in
-                focusedField = viewModel.focusPublisher
             }
             .environment(\.defaultMinListRowHeight, 20)
     }
@@ -94,7 +90,7 @@ extension WorkoutDetailsView: View {
         ForEach(exercise.sets) { entry in
             WorkoutEntryCell(exercise: exercise,
                              entry: viewModel.binding(exercise, entry),
-                             focus: _focusedField
+                             focus: $viewModel.focusPublisher
             )
             .swipeActions(edge: .leading) {
                 Button(action: viewModel.duplicate(exercise: exercise, entry: entry)) {

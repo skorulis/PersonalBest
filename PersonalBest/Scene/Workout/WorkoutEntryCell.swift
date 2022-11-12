@@ -10,15 +10,17 @@ struct WorkoutEntryCell {
     
     let exercise: PBExercise
     @Binding var entry: ExerciseEntry?
-    @FocusState var focusedField: WorkoutFocus?
+    @Binding var focusedField: WorkoutFocus?
+    @FocusState private var internalFocus: WorkoutFocus?
     
     init(exercise: PBExercise,
          entry: Binding<ExerciseEntry?>,
-         focus: FocusState<WorkoutFocus?>
+         focus: Binding<WorkoutFocus?>
     ) {
         self.exercise = exercise
         _entry = entry
         _focusedField = focus
+        self.internalFocus = focus.wrappedValue
     }
     
 }
@@ -38,6 +40,9 @@ extension WorkoutEntryCell: View {
                 }
                 maybeVariantPicker
             }
+            .onChange(of: focusedField) { newValue in
+                self.internalFocus = newValue
+            }
         }
     }
     
@@ -55,9 +60,12 @@ extension WorkoutEntryCell: View {
     }
     
     private var horizontalFields: some View {
-        ForEach(activity.measurementTypes) { type in
-            field(type: type)
+        VStack {
+            ForEach(activity.measurementTypes) { type in
+                field(type: type)
+            }
         }
+        
     }
     
     private var setIndexView: some View {
@@ -80,8 +88,19 @@ extension WorkoutEntryCell: View {
             VStack(alignment: .leading, spacing: 0) {
                 Text(fieldName(type: type))
                     .font(.caption)
-                DecimalField(type: type, value: binding(type: type))
-                    //.focused($focusedField, equals: .setEntry(exercise.number, setIndex: setIndex, measurement: type))
+                if focusedField == focusValue(type) {
+                    DecimalField(type: type, value: binding(type: type))
+                        .focused($internalFocus, equals: focusValue(type))
+                } else {
+                    DecimalField(type: type, value: binding(type: type))
+                        
+                        .overlay(
+                            Button(action: {takeFocus(type)}) {
+                                Color.black.opacity(0.0001)
+                            }
+                                .buttonStyle(.plain)
+                        )
+                }
             }
         }
     }
@@ -114,11 +133,21 @@ extension WorkoutEntryCell: View {
             .pickerStyle(.menu)
         }
     }
+    
+    
 }
 
 // MARK: - Logic
 
 extension WorkoutEntryCell {
+    
+    private func takeFocus(_ type: MeasurementType) {
+        self.focusedField = focusValue(type)
+    }
+    
+    private func focusValue(_ type: MeasurementType) -> WorkoutFocus {
+        return .setEntry(exercise.number, setIndex: setIndex, measurement: type)
+    }
     
     func binding(type: MeasurementType) -> Binding<Double?> {
         return Binding<Double?> {
@@ -177,17 +206,19 @@ struct WorkoutEntryCell_Previews: PreviewProvider {
         let exercise2 = PreviewData.weightExercise(workout)
         let exercise3 = PreviewData.cardioExercise(workout)
         
+        let focus = WorkoutFocus.setEntry(exercise1.number, setIndex: 1, measurement: .weight)
+        
         return VStack {
             StatefulPreviewWrapper(exercise1.sets.first!) { entry in
-                WorkoutEntryCell(exercise: exercise1, entry: entry, focus: .init())
+                WorkoutEntryCell(exercise: exercise1, entry: entry, focus: .constant(focus))
             }
             
             StatefulPreviewWrapper(exercise2.sets.first!) { entry in
-                WorkoutEntryCell(exercise: exercise2, entry: entry, focus: .init())
+                WorkoutEntryCell(exercise: exercise2, entry: entry, focus: .constant(focus))
             }
             
             StatefulPreviewWrapper(exercise3.sets.first!) { entry in
-                WorkoutEntryCell(exercise: exercise3, entry: entry, focus: .init())
+                WorkoutEntryCell(exercise: exercise3, entry: entry, focus: .constant(focus))
             }
         }
     }
