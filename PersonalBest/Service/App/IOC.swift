@@ -9,24 +9,20 @@ public final class IOC: IOCService {
     
     override init(purpose: IOCPurpose = .testing) {
         super.init(purpose: purpose)
-        setupServices()
-        setupViewModels()
+        registerServices()
+        registerViewModels()
         registerStores()
         registerAccess()
         
         self.resolve(ActivityService.self).setupSystemData()
     }
     
-    private func setupServices() {
+    private func registerServices() {
         container.autoregister(UnitService.self, initializer: UnitService.init)
             .inObjectScope(.container)
         container.autoregister(ActivityService.self, initializer: ActivityService.init)
         container.autoregister(GraphDataGenerator.self, initializer: GraphDataGenerator.init)
         container.autoregister(BreakdownService.self, initializer: BreakdownService.init)
-        
-        container.autoregister(PErrorService.self, initializer: ErrorService.init)
-            .inObjectScope(.container)
-        container.autoregister(ErrorPresentationManager.self, initializer: ErrorPresentationManager.init)
     }
     
     private func registerStores() {
@@ -56,7 +52,7 @@ public final class IOC: IOCService {
         container.autoregister(RecordEntryAccess.self, initializer: RecordEntryAccess.init)
     }
     
-    private func setupViewModels() {
+    private func registerViewModels() {
         container.autoregister(ContentViewModel.self, initializer: ContentViewModel.init)
         container.autoregister(ActivityDetailsViewModel.self,
                                argument: ActivityDetailsViewModel.Argument.self,

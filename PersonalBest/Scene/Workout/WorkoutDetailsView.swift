@@ -31,6 +31,8 @@ extension WorkoutDetailsView: View {
     
     private var rightButton: some View {
         Menu {
+            Button("Add exercise", action: viewModel.addExercise)
+            Button("Finish", action: viewModel.finish)
             Button("Delete", role: .destructive, action: viewModel.delete)
         } label: {
             Image(systemName: "ellipsis.circle")
