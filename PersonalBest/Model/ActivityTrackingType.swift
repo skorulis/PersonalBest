@@ -2,7 +2,7 @@
 
 import Foundation
 
-enum ActivityTrackingType: String {
+enum ActivityTrackingType: String, CaseIterable, Identifiable {
     
     case weightlifting
     case cardio
@@ -32,6 +32,8 @@ enum ActivityTrackingType: String {
         }
     }
     
+    var id: String { rawValue }
+    
     func unit(for type: MeasurementType) -> KnownUnit {
         switch (self, type) {
         case (.weightlifting, .weight):
@@ -49,6 +51,15 @@ enum ActivityTrackingType: String {
         case .cardio: return .distance
         case .reps: return .reps
         case .time: return .time
+        }
+    }
+    
+    var name: String {
+        switch self {
+        case .weightlifting: return "Weights"
+        case .cardio: return "Cardio"
+        case .reps: return "Reps"
+        case .time: return "Time"
         }
     }
     

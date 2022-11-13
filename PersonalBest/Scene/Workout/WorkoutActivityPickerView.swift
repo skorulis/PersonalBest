@@ -35,14 +35,27 @@ extension WorkoutActivityPickerView: View {
     
     private func content() -> some View {
         VStack {
-            
             ForEach(activities) { activity in
                 Button(action: viewModel.select(activity)) {
                     ActivityCell(activity: activity, onInfoPressed: {viewModel.infoPressed(activity)})
                 }
             }
+            emptyView
         }
         .padding(.horizontal, 16)
+    }
+    
+    private var emptyView: some View {
+        VStack {
+            Button(action: viewModel.addRecord) {
+                Image(systemName: "plus.circle.fill")
+                    .resizable()
+                    .frame(width: 64, height: 64)
+            }
+            Text("Create a new activity")
+                .typography(.body)
+                .frame(maxWidth: .infinity)
+        }
     }
 }
 

@@ -43,4 +43,12 @@ extension WorkoutActivityPickerViewModel {
         self.coordinator.push(path)
     }
     
+    func addRecord() {
+        let path = RootPath.editActivity { [unowned self] activity in
+            self.onSelect(activity)
+            self.dismiss()
+        }
+        coordinator.push(path)
+    }
+    
 }

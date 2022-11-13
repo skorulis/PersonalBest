@@ -87,7 +87,9 @@ public final class IOC: IOCService {
                                argument: PBActivity.self,
                                initializer: NewVariationViewModel.init)
         
-        
+        container.autoregister(ActivityEditViewModel.self,
+                               argument: ActivityEditViewModel.Argument.self,
+                               initializer: ActivityEditViewModel.init)
         
         
     }
