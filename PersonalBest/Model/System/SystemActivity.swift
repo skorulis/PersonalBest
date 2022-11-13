@@ -66,7 +66,7 @@ extension SystemActivity {
             
             
             // Running
-            .init(name: "Running", category: .running, tracking: .cardio),
+            .init(name: "Running", category: .cardio, tracking: .cardio),
             .init(name: "Rowing", category: .cardio, tracking: .cardio),
         ]
     }

@@ -46,8 +46,20 @@ extension RecentHistoryView: View {
         )
     }
     
+    @ViewBuilder
     private func content() -> some View {
-        ForEach(viewModel.collect(activities: recentActivities.reversed())) { entry in
+        let activities = viewModel.collect(activities: recentActivities.reversed())
+        if activities.isEmpty {
+            emptyContent
+                .listRowSeparator(.hidden)
+            
+        } else {
+            fullContent(activities)
+        }
+    }
+    
+    private func fullContent(_ activities: [RecentEntry]) -> some View {
+        ForEach(activities) { entry in
             RecentActivityCell(recent: entry,
                                onPress: viewModel.show)
             .listRowSeparator(.hidden)
@@ -59,6 +71,21 @@ extension RecentHistoryView: View {
                 .tint(.red)
             }
         }
+    }
+    
+    private var emptyContent: some View {
+        VStack {
+            Button(action: viewModel.addRecord) {
+                Image(systemName: "plus.circle.fill")
+                    .resizable()
+                    .frame(width: 64, height: 64)
+            }
+            Text("Add your first record")
+                .typography(.body)
+                .frame(maxWidth: .infinity)
+            
+        }
+        .padding(.top, 100)
     }
     
 }

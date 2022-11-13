@@ -60,12 +60,9 @@ extension WorkoutEntryCell: View {
     }
     
     private var horizontalFields: some View {
-        VStack {
-            ForEach(activity.measurementTypes) { type in
-                field(type: type)
-            }
+        ForEach(activity.measurementTypes) { type in
+            field(type: type)
         }
-        
     }
     
     private var setIndexView: some View {
@@ -192,6 +189,8 @@ extension WorkoutEntryCell {
     
 }
 
+#if DEBUG
+
 // MARK: - Previews
 
 struct WorkoutEntryCell_Previews: PreviewProvider {
@@ -224,3 +223,4 @@ struct WorkoutEntryCell_Previews: PreviewProvider {
     }
 }
 
+#endif

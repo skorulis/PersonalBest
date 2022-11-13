@@ -17,7 +17,7 @@ struct ContentView: View {
             recentTab
             workoutTab
             activityTab
-            settingsTab
+            // settingsTab
         }
     }
     

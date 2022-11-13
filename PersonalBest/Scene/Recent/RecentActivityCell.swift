@@ -44,6 +44,8 @@ extension RecentActivityCell: View {
     
 }
 
+#if DEBUG
+
 // MARK: - Previews
 
 struct RecentActivityCell_Previews: PreviewProvider {
@@ -76,3 +78,4 @@ struct RecentActivityCell_Previews: PreviewProvider {
     }
 }
 
+#endif

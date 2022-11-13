@@ -38,6 +38,8 @@ extension NewVariationView: View {
     }
 }
 
+#if DEBUG
+
 // MARK: - Previews
 
 struct NewVariationView_Previews: PreviewProvider {
@@ -51,3 +53,5 @@ struct NewVariationView_Previews: PreviewProvider {
     }
 }
 
+
+#endif

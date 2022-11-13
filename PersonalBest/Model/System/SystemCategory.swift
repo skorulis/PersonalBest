@@ -6,9 +6,9 @@ enum SystemCategory: String, CaseIterable {
     
     case bodyWeight = "Bodyweight training"
     case weights = "Weight training"
-    case running = "Running"
-    case cycling = "Cycling"
-    case swimming = "Swimming"
+    // case running = "Running"
+    // case cycling = "Cycling"
+    // case swimming = "Swimming"
     case cardio = "Cardio"
-    case other = "Other"
+    // case other = "Other"
 }
