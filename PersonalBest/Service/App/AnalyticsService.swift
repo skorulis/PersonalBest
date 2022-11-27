@@ -16,12 +16,10 @@ final class AnalyticsService: PAnalyticsService {
     }
     
     func log(event: String) {
-        print(event)
         Amplitude.instance().logEvent(event)
     }
     
     func log(event: PAnalyticsEvent) {
-        print(event.name)
         Amplitude.instance().logEvent(event.name, withEventProperties: event.properties)
     }
     

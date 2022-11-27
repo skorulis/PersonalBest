@@ -5,7 +5,7 @@ import ASKCore
 import Foundation
 import SwiftUI
 
-enum RootPath: BoundCoordinatorPath, Hashable, Identifiable {
+enum RootPath: BoundCoordinatorPath, AnalyticsCoordinatorPath, Hashable, Identifiable {
     
     case activityDetails(_ activity: PBActivity, _ customDismiss: (() -> Void)?)
     case addEntry(_ activity: PBActivity, _ initialVariant: PBVariant?)
@@ -63,6 +63,17 @@ enum RootPath: BoundCoordinatorPath, Hashable, Identifiable {
         case .workout(let workout): return "workout-\(workout)"
         case .selectWorkoutActivity(_): return "select-workout-activity"
         default: return String(describing: self)
+        }
+    }
+    
+    public var pathName: String {
+        switch self {
+        case .activityDetails: return "activity-details"
+        case .addEntry: return "addEntry"
+        case .categoryActivities: return "category"
+        case .workout: return "workout"
+        case .selectWorkoutActivity: return "select-workout-activity"
+        default: return id
         }
     }
     
