@@ -11,6 +11,7 @@ struct PersonalBestApp: App {
     
     init() {
         self.errorPresenter = ioc.resolve()
+        ioc.resolve(AnalyticsService.self).startup()
     }
 
     

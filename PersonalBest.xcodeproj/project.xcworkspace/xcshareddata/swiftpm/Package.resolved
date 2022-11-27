@@ -2,6 +2,24 @@
   "object": {
     "pins": [
       {
+        "package": "Amplitude",
+        "repositoryURL": "https://github.com/amplitude/Amplitude-iOS",
+        "state": {
+          "branch": "main",
+          "revision": "483ec5c74b50f0d483013fc910fe890ec34e54d2",
+          "version": null
+        }
+      },
+      {
+        "package": "analytics-connector-ios",
+        "repositoryURL": "https://github.com/amplitude/analytics-connector-ios.git",
+        "state": {
+          "branch": null,
+          "revision": "b44981119e2efc0edd1d2e26831c3c4c0e0264e6",
+          "version": "1.0.0"
+        }
+      },
+      {
         "package": "Neumorphic",
         "repositoryURL": "https://github.com/costachung/neumorphic/",
         "state": {

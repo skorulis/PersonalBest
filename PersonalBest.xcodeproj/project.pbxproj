@@ -52,6 +52,8 @@
 		FA40551A2920E98E002AEAE4 /* ActivityEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4055192920E98E002AEAE4 /* ActivityEditView.swift */; };
 		FA40551C2920E9A6002AEAE4 /* ActivityEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA40551B2920E9A6002AEAE4 /* ActivityEditViewModel.swift */; };
 		FA40551E2920EEB7002AEAE4 /* ActivityTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA40551D2920EEB7002AEAE4 /* ActivityTypeCell.swift */; };
+		FA4055212932FDF3002AEAE4 /* Amplitude in Frameworks */ = {isa = PBXBuildFile; productRef = FA4055202932FDF3002AEAE4 /* Amplitude */; };
+		FA4055232932FE03002AEAE4 /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4055222932FE03002AEAE4 /* AnalyticsService.swift */; };
 		FA4228A428FBA1DB0084646C /* AutoRecordType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4228A328FBA1DB0084646C /* AutoRecordType.swift */; };
 		FA4228A628FCEABC0084646C /* TopValueKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4228A528FCEABC0084646C /* TopValueKey.swift */; };
 		FA4228A828FFE3AF0084646C /* TextBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4228A728FFE3AF0084646C /* TextBadge.swift */; };
@@ -160,6 +162,7 @@
 		FA4055192920E98E002AEAE4 /* ActivityEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityEditView.swift; sourceTree = "<group>"; };
 		FA40551B2920E9A6002AEAE4 /* ActivityEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityEditViewModel.swift; sourceTree = "<group>"; };
 		FA40551D2920EEB7002AEAE4 /* ActivityTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTypeCell.swift; sourceTree = "<group>"; };
+		FA4055222932FE03002AEAE4 /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
 		FA4228A328FBA1DB0084646C /* AutoRecordType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoRecordType.swift; sourceTree = "<group>"; };
 		FA4228A528FCEABC0084646C /* TopValueKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopValueKey.swift; sourceTree = "<group>"; };
 		FA4228A728FFE3AF0084646C /* TextBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBadge.swift; sourceTree = "<group>"; };
@@ -217,6 +220,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA4055212932FDF3002AEAE4 /* Amplitude in Frameworks */,
 				FA6D95A228E18F77004D4D98 /* ASSwiftUI in Frameworks */,
 				FA6D95A028E18F77004D4D98 /* ASKCore in Frameworks */,
 			);
@@ -479,6 +483,7 @@
 			isa = PBXGroup;
 			children = (
 				FA6D959D28E18E6F004D4D98 /* IOC.swift */,
+				FA4055222932FE03002AEAE4 /* AnalyticsService.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -633,6 +638,7 @@
 			packageProductDependencies = (
 				FA6D959F28E18F77004D4D98 /* ASKCore */,
 				FA6D95A128E18F77004D4D98 /* ASSwiftUI */,
+				FA4055202932FDF3002AEAE4 /* Amplitude */,
 			);
 			productName = PersonalBest;
 			productReference = FA6D957A28E187C8004D4D98 /* PersonalBest.app */;
@@ -685,6 +691,7 @@
 			);
 			mainGroup = FA6D957128E187C8004D4D98;
 			packageReferences = (
+				FA40551F2932FDF3002AEAE4 /* XCRemoteSwiftPackageReference "Amplitude-iOS" */,
 			);
 			productRefGroup = FA6D957B28E187C8004D4D98 /* Products */;
 			projectDirPath = "";
@@ -781,6 +788,7 @@
 				FA2D795228E537020032BEC0 /* ActivityBreakdown.swift in Sources */,
 				FA4228A628FCEABC0084646C /* TopValueKey.swift in Sources */,
 				FA6E7FB228F132C700DD34F6 /* MeasurementType.swift in Sources */,
+				FA4055232932FE03002AEAE4 /* AnalyticsService.swift in Sources */,
 				FA4228AA290274FA0084646C /* HalfCapsuleButtonStyle.swift in Sources */,
 				FA4228A428FBA1DB0084646C /* AutoRecordType.swift in Sources */,
 				FAE05DA528E3F8D100F4697E /* ActivityEntryCell.swift in Sources */,
@@ -1072,7 +1080,23 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		FA40551F2932FDF3002AEAE4 /* XCRemoteSwiftPackageReference "Amplitude-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/amplitude/Amplitude-iOS";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		FA4055202932FDF3002AEAE4 /* Amplitude */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FA40551F2932FDF3002AEAE4 /* XCRemoteSwiftPackageReference "Amplitude-iOS" */;
+			productName = Amplitude;
+		};
 		FA6D959F28E18F77004D4D98 /* ASKCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ASKCore;
