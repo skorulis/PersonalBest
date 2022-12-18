@@ -1,6 +1,6 @@
 //Created by Alexander Skorulis on 18/12/2022.
 
-import ASSwiftUI
+import ASKDesignSystem
 import Foundation
 import SwiftUI
 

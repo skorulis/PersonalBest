@@ -2,6 +2,7 @@
 
 import Foundation
 import SwiftUI
+import ASSwiftUI
 
 // MARK: - Memory footprint
 

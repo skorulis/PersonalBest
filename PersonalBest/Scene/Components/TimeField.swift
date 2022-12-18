@@ -1,7 +1,7 @@
 //Created by Alexander Skorulis on 4/10/2022.
 
 import ASKCore
-import ASSwiftUI
+import ASKDesignSystem
 import Foundation
 import SwiftUI
 
