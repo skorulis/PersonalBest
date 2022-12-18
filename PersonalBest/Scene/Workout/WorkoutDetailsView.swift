@@ -1,6 +1,6 @@
 //Created by Alexander Skorulis on 1/10/2022.
 
-import ASSwiftUI
+import ASKDesignSystem
 import Foundation
 import SwiftUI
 
@@ -23,8 +23,8 @@ extension WorkoutDetailsView: View {
     }
     
     private func nav() -> some View {
-        NavBar(left: BarButtonItem.back(viewModel.back),
-               mid: BarButtonItem.title("Workout"),
+        NavBar(left: NavBarItem.back(viewModel.back),
+               mid: NavBarItem.title("Workout"),
                right: rightButton
         )
     }

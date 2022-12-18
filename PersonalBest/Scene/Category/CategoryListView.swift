@@ -1,6 +1,6 @@
 //Created by Alexander Skorulis on 30/9/2022.
 
-import ASSwiftUI
+import ASKDesignSystem
 import Foundation
 import SwiftUI
 
@@ -21,7 +21,7 @@ extension CategoryListView: View {
     }
     
     private func nav() -> some View {
-        NavBar(mid: BarButtonItem.title("Activities"))
+        NavBar(mid: NavBarItem.title("Activities"))
     }
     
     private func content() -> some View {

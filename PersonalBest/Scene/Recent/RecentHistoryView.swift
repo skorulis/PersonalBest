@@ -1,6 +1,6 @@
 //Created by Alexander Skorulis on 29/9/2022.
 
-import ASSwiftUI
+import ASKDesignSystem
 import Foundation
 import SwiftUI
 
@@ -41,8 +41,8 @@ extension RecentHistoryView: View {
     }
     
     private func nav() ->some View {
-        NavBar(mid: BarButtonItem.title("Records"),
-               right: BarButtonItem.iconButton(Image(systemName: "plus"), viewModel.addRecord)
+        NavBar(mid: NavBarItem.title("Records"),
+               right: NavBarItem.iconButton(Image(systemName: "plus"), viewModel.addRecord)
         )
     }
     

@@ -1,6 +1,6 @@
 //Created by Alexander Skorulis on 27/9/2022.
 
-import ASSwiftUI
+import ASKDesignSystem
 import Foundation
 import SwiftUI
 
@@ -24,7 +24,7 @@ extension AddEntryView: View {
     }
     
     private func nav() -> some View {
-        DismissingNavBar(mid: BarButtonItem.title("Add record"))
+        DismissingNavBar(mid: NavBarItem.title("Add record"))
     }
     
     private func content() -> some View {

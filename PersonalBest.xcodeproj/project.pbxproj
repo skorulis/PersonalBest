@@ -59,6 +59,7 @@
 		FA4228A828FFE3AF0084646C /* TextBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4228A728FFE3AF0084646C /* TextBadge.swift */; };
 		FA4228AA290274FA0084646C /* HalfCapsuleButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4228A9290274FA0084646C /* HalfCapsuleButtonStyle.swift */; };
 		FA61FE37294F0834009E1417 /* GroupedActivityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA61FE36294F0834009E1417 /* GroupedActivityCell.swift */; };
+		FA61FE3A294FC56B009E1417 /* ASKDesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = FA61FE39294FC56B009E1417 /* ASKDesignSystem */; };
 		FA6D958528E187C9004D4D98 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA6D958428E187C9004D4D98 /* Preview Assets.xcassets */; };
 		FA6D958E28E18DCA004D4D98 /* ASKCore in Resources */ = {isa = PBXBuildFile; fileRef = FA6D958C28E18DCA004D4D98 /* ASKCore */; };
 		FA6D958F28E18DCA004D4D98 /* ASSwiftUI in Resources */ = {isa = PBXBuildFile; fileRef = FA6D958D28E18DCA004D4D98 /* ASSwiftUI */; };
@@ -169,6 +170,7 @@
 		FA4228A728FFE3AF0084646C /* TextBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBadge.swift; sourceTree = "<group>"; };
 		FA4228A9290274FA0084646C /* HalfCapsuleButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfCapsuleButtonStyle.swift; sourceTree = "<group>"; };
 		FA61FE36294F0834009E1417 /* GroupedActivityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupedActivityCell.swift; sourceTree = "<group>"; };
+		FA61FE38294FC55C009E1417 /* ASKDesignSystem */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ASKDesignSystem; sourceTree = "<group>"; };
 		FA6D957A28E187C8004D4D98 /* PersonalBest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PersonalBest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA6D958428E187C9004D4D98 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		FA6D958C28E18DCA004D4D98 /* ASKCore */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ASKCore; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA4055212932FDF3002AEAE4 /* Amplitude in Frameworks */,
+				FA61FE3A294FC56B009E1417 /* ASKDesignSystem in Frameworks */,
 				FA6D95A228E18F77004D4D98 /* ASSwiftUI in Frameworks */,
 				FA6D95A028E18F77004D4D98 /* ASKCore in Frameworks */,
 			);
@@ -405,6 +408,7 @@
 		FA6D958B28E18DCA004D4D98 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FA61FE38294FC55C009E1417 /* ASKDesignSystem */,
 				FA6D958C28E18DCA004D4D98 /* ASKCore */,
 				FA6D958D28E18DCA004D4D98 /* ASSwiftUI */,
 			);
@@ -642,6 +646,7 @@
 				FA6D959F28E18F77004D4D98 /* ASKCore */,
 				FA6D95A128E18F77004D4D98 /* ASSwiftUI */,
 				FA4055202932FDF3002AEAE4 /* Amplitude */,
+				FA61FE39294FC56B009E1417 /* ASKDesignSystem */,
 			);
 			productName = PersonalBest;
 			productReference = FA6D957A28E187C8004D4D98 /* PersonalBest.app */;
@@ -1100,6 +1105,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = FA40551F2932FDF3002AEAE4 /* XCRemoteSwiftPackageReference "Amplitude-iOS" */;
 			productName = Amplitude;
+		};
+		FA61FE39294FC56B009E1417 /* ASKDesignSystem */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ASKDesignSystem;
 		};
 		FA6D959F28E18F77004D4D98 /* ASKCore */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -1,6 +1,6 @@
 //Created by Alexander Skorulis on 30/9/2022.
 
-import ASSwiftUI
+import ASKDesignSystem
 import Foundation
 import SwiftUI
 
@@ -29,9 +29,9 @@ extension CategoryActivitiesView: View {
     }
     
     private func nav() -> some View {
-        return NavBar(left: BarButtonItem.back(viewModel.back),
-                      mid: BarButtonItem.title(viewModel.category.name),
-                      right: BarButtonItem.iconButton(Image(systemName: "plus"), viewModel.addActivity)
+        return NavBar(left: .back(viewModel.back),
+                      mid: .title(viewModel.category.name),
+                      right: .iconButton(Image(systemName: "plus"), viewModel.addActivity)
         )
     }
     

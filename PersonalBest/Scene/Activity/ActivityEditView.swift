@@ -1,6 +1,6 @@
 //Created by Alexander Skorulis on 13/11/2022.
 
-import ASSwiftUI
+import ASKDesignSystem
 import Foundation
 import SwiftUI
 
@@ -20,8 +20,8 @@ extension ActivityEditView: View {
     }
     
     private func nav() -> some View {
-        NavBar(left: BarButtonItem.back(viewModel.back),
-               mid: BarButtonItem.title("Add Activity"))
+        NavBar(left: .back(viewModel.back),
+               mid: .title("Add Activity"))
     }
     
     private func content() -> some View {

@@ -1,7 +1,7 @@
 //Created by Alexander Skorulis on 6/11/2022.
 
 import ASKCore
-import ASSwiftUI
+import ASKDesignSystem
 import Foundation
 import SwiftUI
 
@@ -21,9 +21,9 @@ public struct DismissingNavBar<Mid: View>: View {
         case .none:
             fatalError("Cannot dismiss without a navType")
         case .present:
-            NavBar(mid: mid, right: BarButtonItem.close({ coordinator?.shouldDismiss = true }))
+            NavBar(mid: mid, right: NavBarItem.close({ coordinator?.shouldDismiss = true }))
         case .push:
-            NavBar(left: BarButtonItem.back({ coordinator?.pop() }), mid: mid)
+            NavBar(left: NavBarItem.back({ coordinator?.pop() }), mid: mid)
         }
     }
     

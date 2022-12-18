@@ -1,7 +1,7 @@
 //Created by Alexander Skorulis on 2/10/2022.
 
 
-import ASSwiftUI
+import ASKDesignSystem
 import Foundation
 import SwiftUI
 
@@ -27,7 +27,7 @@ extension WorkoutActivityPickerView: View {
     
     private func nav() -> some View {
         VStack {
-            DismissingNavBar(mid: BarButtonItem.title("Activities"))
+            DismissingNavBar(mid: NavBarItem.title("Activities"))
             TextField("Search", text: $viewModel.searchText)
                 .textFieldStyle(.roundedBorder)
         }

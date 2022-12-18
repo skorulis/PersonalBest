@@ -1,6 +1,6 @@
 //Created by Alexander Skorulis on 1/10/2022.
 
-import ASSwiftUI
+import ASKDesignSystem
 import Foundation
 import SwiftUI
 
@@ -24,8 +24,8 @@ extension WorkoutListView: View {
     
     private func nav() -> some View {
         NavBar(left: EmptyView(),
-               mid: BarButtonItem.title("Workouts"),
-               right: BarButtonItem.iconButton(Image(systemName: "plus"), viewModel.add)
+               mid: NavBarItem.title("Workouts"),
+               right: NavBarItem.iconButton(Image(systemName: "plus"), viewModel.add)
         )
     }
     

@@ -1,6 +1,6 @@
 //Created by Alexander Skorulis on 2/11/2022.
 
-import ASSwiftUI
+import ASKDesignSystem
 import Foundation
 import SwiftUI
 
@@ -19,8 +19,8 @@ extension NewVariationView: View {
     }
     
     private func nav() -> some View {
-        NavBar(left: BarButtonItem.back(viewModel.back),
-               mid: BarButtonItem.title("New Variant")
+        NavBar(left: .back(viewModel.back),
+               mid: .title("New Variant")
         )
     }
     

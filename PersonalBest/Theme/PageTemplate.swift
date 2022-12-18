@@ -1,8 +1,8 @@
 //Created by Alexander Skorulis on 14/9/2022.
 
+import ASKDesignSystem
 import Foundation
 import SwiftUI
-import ASSwiftUI
 
 // MARK: - Memory footprint
 
@@ -42,7 +42,7 @@ struct PageTemplate_Previews: PreviewProvider {
     
     static var previews: some View {
         PageTemplate {
-            NavBar(left: BarButtonItem.back({}))
+            NavBar(left: NavBarItem.back({}))
         } content: {
             Text("TEst")
         }

@@ -1,6 +1,6 @@
 //Created by Alexander Skorulis on 6/10/2022.
 
-import ASSwiftUI
+import ASKDesignSystem
 import Foundation
 import SwiftUI
 
@@ -21,9 +21,9 @@ extension VariationListView: View {
     }
     
     private func nav() -> some View {
-        NavBar(left: BarButtonItem.back(viewModel.back),
-               mid: BarButtonItem.title("Variations"),
-               right: BarButtonItem.iconButton(Image(systemName: "plus"), viewModel.newOption)
+        NavBar(left: .back(viewModel.back),
+               mid: .title("Variations"),
+               right: .iconButton(Image(systemName: "plus"), viewModel.newOption)
         )
     }
     

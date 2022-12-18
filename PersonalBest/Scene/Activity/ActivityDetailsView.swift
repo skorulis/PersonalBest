@@ -1,6 +1,6 @@
 //Created by Alexander Skorulis on 27/9/2022.
 
-import ASSwiftUI
+import ASKDesignSystem
 import Foundation
 import SwiftUI
 import Charts
@@ -36,8 +36,8 @@ extension ActivityDetailsView: View {
     }
     
     private func nav() -> some View {
-        NavBar(left: BarButtonItem.back(viewModel.close),
-               mid: BarButtonItem.title(viewModel.activity.name)
+        NavBar(left: .back(viewModel.close),
+               mid: .title(viewModel.activity.name)
         )
     }
     
