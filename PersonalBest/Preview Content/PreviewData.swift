@@ -29,4 +29,11 @@ struct PreviewData {
         return PBExercise.new(workout: workout, activity: cardioActivity(workout.managedObjectContext!))
     }
     
+    static func toRecent(entry: PBRecordEntry,
+                            access: RecordEntryAccess) -> RecentEntry {
+        let top = access.topValues(activity: entry.activity)
+        let key = entry.topValueKey(type: .weight)
+        return RecentEntry(activity: entry.activity, key: key, value: top.values.first!)
+    }
+    
 }

@@ -61,7 +61,7 @@ struct RecentActivityCell_Previews: PreviewProvider {
         
         let entry = PBRecordEntry.new(activity: activity, values: [.reps: 10, .weight: 20])
         
-        let recent = toRecent(entry: entry, access: recordAccess)
+        let recent = PreviewData.toRecent(entry: entry, access: recordAccess)
         
         return VStack {
             RecentActivityCell(recent: recent,
@@ -70,12 +70,7 @@ struct RecentActivityCell_Previews: PreviewProvider {
         .padding(16)
     }
     
-    private static func toRecent(entry: PBRecordEntry,
-                                 access: RecordEntryAccess) -> RecentEntry {
-        let top = access.topValues(activity: entry.activity)
-        let key = entry.topValueKey(type: .weight)
-        return RecentEntry(activity: entry.activity, key: key, value: top.values.first!)
-    }
+    
 }
 
 #endif

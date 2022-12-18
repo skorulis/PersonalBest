@@ -6,9 +6,7 @@ import Foundation
 
 final class AnalyticsService: PAnalyticsService {
     
-    init() {
-        
-    }
+    init() { }
     
     func startup() {
         Amplitude.instance().trackingSessionEvents = true
@@ -22,6 +20,5 @@ final class AnalyticsService: PAnalyticsService {
     func log(event: PAnalyticsEvent) {
         Amplitude.instance().logEvent(event.name, withEventProperties: event.properties)
     }
-    
-    
+        
 }
