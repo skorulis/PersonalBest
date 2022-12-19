@@ -17,20 +17,60 @@ extension GroupedActivityCell: View {
     
     var body: some View {
         VStack {
-            HStack {
-                Text(activity.name)
-                Spacer()
-                Button(action: {expanded.toggle()}) {
-                    Text("Toggle")
-                }
-            }
-            
-            if expanded {
-                ForEach(entries) { entry in
-                    RecentActivityCell(recent: entry, onPress: { _ in })
-                }
+            topSection
+                .zIndex(1)
+            middleSection
+            bottomSection
+        }
+    }
+    
+    private var bottomSection: some View {
+        HStack {
+            Spacer()
+            Text(DateFormatter.mediumDate.string(from: latestDate))
+                .typography(.body)
+                .opacity(expanded ? 0 : 1)
+        }
+        
+    }
+    
+    @ViewBuilder
+    private var middleSection: some View {
+        if expanded {
+            ForEach(entries) { entry in
+                entryRow(entry)
             }
         }
+    }
+    
+    private func entryRow(_ entry: RecentEntry) -> some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 0) {
+                RecordValueDisplay(value: entry.value.value, unit: entry.value.unit)
+                RecordEntryTags(key: entry.key.recordKey)
+            }
+            Spacer()
+            Text(DateFormatter.mediumDate.string(from: entry.value.date))
+                .typography(.body)
+        }
+        
+    }
+    
+    private var topSection: some View {
+        HStack {
+            Text(activity.name)
+                .typography(.title)
+            Spacer()
+            Button(action: {expanded.toggle()}) {
+                ASKIcon.chevronLeft.small
+                    .rotationEffect(iconRotation)
+            }
+            .foregroundColor(.primary)
+        }
+    }
+    
+    private var iconRotation: Angle {
+        expanded ? .degrees(90) : .degrees(-90)
     }
 }
 
@@ -40,6 +80,10 @@ private extension GroupedActivityCell {
     
     var activity: PBActivity {
         return entries[0].activity
+    }
+    
+    var latestDate: Date {
+        return entries.map { $0.value.date }.max()!
     }
 }
 
@@ -55,7 +99,7 @@ struct GroupedActivityCell_Previews: PreviewProvider {
         
         let activity = PreviewData.weightActivity(context)
         
-        let entry = PBRecordEntry.new(activity: activity, values: [.reps: 10, .weight: 20])
+        let entry = PBRecordEntry.new(activity: activity, values: [.reps: 10, .weight: 2000])
         
         let recent = PreviewData.toRecent(entry: entry, access: recordAccess)
         

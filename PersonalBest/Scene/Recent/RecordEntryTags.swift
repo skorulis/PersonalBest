@@ -22,6 +22,9 @@ extension RecordEntryTags: View {
             if let autoType = key.autoType {
                 TextBadge(text: autoType.displayText, color: .orange.opacity(0.3))
             }
+            if key.variant == nil && key.autoType == nil {
+                TextBadge(text: "Normal", color: .orange.opacity(0.3))
+            }
         }
     }
 }
@@ -32,7 +35,11 @@ struct RecordEntryTags_Previews: PreviewProvider {
     
     static var previews: some View {
         let key = RecordKey(autoType: .volume, variant: "test")
-        RecordEntryTags(key: key)
+        let emptyKey = RecordKey(autoType: nil, variant: nil)
+        VStack {
+            RecordEntryTags(key: key)
+            RecordEntryTags(key: emptyKey)
+        }
     }
 }
 

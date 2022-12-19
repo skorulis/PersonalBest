@@ -51,9 +51,9 @@ extension RecentActivityCell: View {
 struct RecentActivityCell_Previews: PreviewProvider {
     
     @Namespace static var namespace
+    static let ioc = IOC()
     
     static var previews: some View {
-        let ioc = IOC()
         let recordAccess = ioc.resolve(RecordEntryAccess.self)
         let context = ioc.resolve(CoreDataStore.self).mainContext
         
@@ -69,7 +69,6 @@ struct RecentActivityCell_Previews: PreviewProvider {
         }
         .padding(16)
     }
-    
     
 }
 
