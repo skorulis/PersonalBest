@@ -48,7 +48,7 @@ extension RecentHistoryView: View {
     
     @ViewBuilder
     private func content() -> some View {
-        let activities = viewModel.collect(activities: recentActivities.reversed())
+        let activities = viewModel.grouped(activities: Array(recentActivities))
         if activities.isEmpty {
             emptyContent
                 .listRowSeparator(.hidden)
@@ -58,18 +58,20 @@ extension RecentHistoryView: View {
         }
     }
     
-    private func fullContent(_ activities: [RecentEntry]) -> some View {
+    private func fullContent(_ activities: [GroupedEntries]) -> some View {
         ForEach(activities) { entry in
-            RecentActivityCell(recent: entry,
-                               onPress: viewModel.show)
+            GroupedActivityCell(
+                entries: entry.entries,
+                expanded: viewModel.expandedBinding(entry.activity)
+            )
             .listRowSeparator(.hidden)
             .listRowBackground(EmptyView())
-            .swipeActions(allowsFullSwipe: false) {
+            /*.swipeActions(allowsFullSwipe: false) {
                 Button(action: viewModel.deleteAction(entry: entry)) {
                     Text("Delete")
                 }
                 .tint(.red)
-            }
+            }*/
         }
     }
     

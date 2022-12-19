@@ -9,6 +9,10 @@ struct PreviewData {
         return PBActivity.new(context: context, name: "Weights", tracking: .weightlifting)
     }
     
+    static func longActivity(_ context: NSManagedObjectContext) -> PBActivity {
+        return PBActivity.new(context: context, name: "Dumbbell lateral raises extra word", tracking: .weightlifting)
+    }
+    
     static func bodyActivity(_ context: NSManagedObjectContext) -> PBActivity {
         return PBActivity.new(context: context, name: "Body", tracking: .reps)
     }

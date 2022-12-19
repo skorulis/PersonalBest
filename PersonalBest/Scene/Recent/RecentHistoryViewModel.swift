@@ -16,6 +16,8 @@ final class RecentHistoryViewModel: CoordinatedViewModel, ObservableObject {
     @Published var toDelete: RecentEntry?
     @Published var overlayPath: RootPath?
     
+    @Published var expandedStatus: [ObjectIdentifier: Bool] = [:]
+    
     init(recordsStore: RecordsStore,
          activityService: ActivityService,
          recordAccess: RecordEntryAccess
@@ -56,6 +58,17 @@ extension RecentHistoryViewModel {
                 return a.key > b.key
             }
             return a.value.date > b.value.date
+        }
+    }
+    
+    func grouped(activities: [PBActivity]) -> [GroupedEntries] {
+        let groups = activities.map { activity in
+            let items = entries(activity: activity)
+            return GroupedEntries(activity: activity, entries: items)
+        }
+        
+        return groups.sorted { e1, e2 in
+            return e1.latestDate > e2.latestDate
         }
     }
     
@@ -122,6 +135,13 @@ extension RecentHistoryViewModel {
         coordinator.push(path)
     }
     
+    func expandedBinding(_ activity: PBActivity) -> Binding<Bool> {
+        return Binding<Bool> { [unowned self] in
+            return self.expandedStatus[activity.id] ?? false
+        } set: { [unowned self] newValue in
+            self.expandedStatus[activity.id] = newValue
+        }
+    }
 }
 
 // MARK: - Inner types
@@ -144,4 +164,17 @@ struct RecentEntry: Identifiable {
         }
     }
     
+}
+
+struct GroupedEntries: Identifiable {
+    let activity: PBActivity
+    let entries: [RecentEntry]
+    
+    var id: ObjectIdentifier {
+        return activity.id
+    }
+    
+    var latestDate: Date {
+        return entries.map { $0.value.date }.max()!
+    }
 }

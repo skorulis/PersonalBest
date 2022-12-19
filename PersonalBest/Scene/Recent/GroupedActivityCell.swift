@@ -22,6 +22,10 @@ extension GroupedActivityCell: View {
             middleSection
             bottomSection
         }
+        .padding(8)
+        .background(Color.white, in: RoundedRectangle(cornerRadius: 12))
+        .shadow(color: Color.black.opacity(0.1), radius: 20)
+        .animation(.easeInOut, value: expanded)
     }
     
     private var bottomSection: some View {
@@ -97,13 +101,13 @@ struct GroupedActivityCell_Previews: PreviewProvider {
         let recordAccess = ioc.resolve(RecordEntryAccess.self)
         let context = ioc.resolve(CoreDataStore.self).mainContext
         
-        let activity = PreviewData.weightActivity(context)
+        let activity = PreviewData.longActivity(context)
         
         let entry = PBRecordEntry.new(activity: activity, values: [.reps: 10, .weight: 2000])
         
         let recent = PreviewData.toRecent(entry: entry, access: recordAccess)
         
-        return VStack {
+        return List {
             StatefulPreviewWrapper(false) { expanded in
                 GroupedActivityCell(entries: [recent], expanded: expanded)
             }
