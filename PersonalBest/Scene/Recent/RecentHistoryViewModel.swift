@@ -49,18 +49,6 @@ extension RecentHistoryViewModel {
 
 extension RecentHistoryViewModel {
     
-    func collect(activities: [PBActivity]) -> [RecentEntry] {
-        let recent = activities.flatMap { act in
-            return entries(activity: act)
-        }
-        return recent.sorted { a, b in
-            if a.value.date == b.value.date {
-                return a.key > b.key
-            }
-            return a.value.date > b.value.date
-        }
-    }
-    
     func grouped(activities: [PBActivity]) -> [GroupedEntries] {
         let groups = activities.map { activity in
             let items = entries(activity: activity)
@@ -74,9 +62,15 @@ extension RecentHistoryViewModel {
     
     func entries(activity: PBActivity) -> [RecentEntry] {
         let top = recordAccess.topValues(activity: activity)
-        return top.compactMap { (key, value) in
+        let items: [RecentEntry] = top.compactMap { (key, value) in
             guard key.measurement == activity.primaryMeasure else { return nil }
             return RecentEntry(activity: activity, key: key, value: value)
+        }
+        return items.sorted { e1, e2 in
+            if e1.value.date != e2.value.date {
+                return e1.value.date > e2.value.date
+            }
+            return e1.key < e2.key
         }
     }
     
@@ -86,10 +80,14 @@ extension RecentHistoryViewModel {
         }
     }
     
-    func deleteAction(entry: RecentEntry) -> () -> Void {
-        return { [unowned self] in
-            self.toDelete = entry
+    func show(entry: RecentEntry) {
+        self.overlayPath = RootPath.activityDetails(entry.activity) { [unowned self] in
+            self.overlayPath = nil
         }
+    }
+    
+    func deleteAction(entry: RecentEntry) {
+        self.toDelete = entry
     }
     
     func confirmDelete(entry: RecentEntry) {

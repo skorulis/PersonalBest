@@ -60,18 +60,17 @@ extension RecentHistoryView: View {
     
     private func fullContent(_ activities: [GroupedEntries]) -> some View {
         ForEach(activities) { entry in
-            GroupedActivityCell(
-                entries: entry.entries,
-                expanded: viewModel.expandedBinding(entry.activity)
-            )
+            Section {
+                GroupedActivityCell(
+                    entries: entry.entries,
+                    expanded: viewModel.expandedBinding(entry.activity),
+                    onDelete: viewModel.deleteAction,
+                    onSelect: viewModel.show,
+                    onPress: viewModel.show
+                )
+            }
             .listRowSeparator(.hidden)
             .listRowBackground(EmptyView())
-            /*.swipeActions(allowsFullSwipe: false) {
-                Button(action: viewModel.deleteAction(entry: entry)) {
-                    Text("Delete")
-                }
-                .tint(.red)
-            }*/
         }
     }
     

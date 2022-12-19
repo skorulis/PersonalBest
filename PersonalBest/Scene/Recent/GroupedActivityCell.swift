@@ -9,6 +9,10 @@ import SwiftUI
 struct GroupedActivityCell {
     let entries: [RecentEntry]
     @Binding var expanded: Bool
+    let onDelete: (RecentEntry) -> Void
+    let onSelect: (RecentEntry) -> Void
+    let onPress: (PBActivity) -> Void
+    
 }
 
 // MARK: - Rendering
@@ -16,33 +20,29 @@ struct GroupedActivityCell {
 extension GroupedActivityCell: View {
     
     var body: some View {
-        VStack {
-            topSection
-                .zIndex(1)
-            middleSection
-            bottomSection
-        }
-        .padding(8)
-        .background(Color.white, in: RoundedRectangle(cornerRadius: 12))
-        .shadow(color: Color.black.opacity(0.1), radius: 20)
-        .animation(.easeInOut, value: expanded)
+        topSection
+        bottomSection
+        entryList
     }
     
     private var bottomSection: some View {
         HStack {
+            Text("\(entries.count) records")
             Spacer()
             Text(DateFormatter.mediumDate.string(from: latestDate))
                 .typography(.body)
-                .opacity(expanded ? 0 : 1)
+            toggleButton
         }
         
     }
     
     @ViewBuilder
-    private var middleSection: some View {
+    private var entryList: some View {
         if expanded {
             ForEach(entries) { entry in
-                entryRow(entry)
+                Button(action: {onSelect(entry) }) {
+                    entryRow(entry)
+                }
             }
         }
     }
@@ -57,20 +57,32 @@ extension GroupedActivityCell: View {
             Text(DateFormatter.mediumDate.string(from: entry.value.date))
                 .typography(.body)
         }
-        
+        .swipeActions(allowsFullSwipe: false) {
+            Button(action: {onDelete(entry)}) {
+                Text("Delete")
+            }
+            .tint(.red)
+        }
     }
     
     private var topSection: some View {
-        HStack {
-            Text(activity.name)
-                .typography(.title)
-            Spacer()
-            Button(action: {expanded.toggle()}) {
-                ASKIcon.chevronLeft.small
-                    .rotationEffect(iconRotation)
+        Button(action: { onPress(activity) }) {
+            HStack {
+                Text(activity.name)
+                    .typography(.title)
+                Spacer()
             }
-            .foregroundColor(.primary)
         }
+        .foregroundColor(.primary)
+    }
+    
+    private var toggleButton: some View {
+        Button(action: { withAnimation {
+            expanded.toggle() } }) {
+            ASKIcon.chevronLeft.small
+                .rotationEffect(iconRotation)
+        }
+        .foregroundColor(.primary)
     }
     
     private var iconRotation: Angle {
@@ -107,11 +119,30 @@ struct GroupedActivityCell_Previews: PreviewProvider {
         
         let recent = PreviewData.toRecent(entry: entry, access: recordAccess)
         
-        return List {
-            StatefulPreviewWrapper(false) { expanded in
-                GroupedActivityCell(entries: [recent], expanded: expanded)
+        return StatefulPreviewWrapper(false) { expanded in
+            List {
+                Section {
+                    GroupedActivityCell(
+                        entries: [recent],
+                        expanded: expanded,
+                        onDelete: { _ in },
+                        onSelect: { _ in },
+                        onPress: { _ in }
+                    )
+                }
+                
+                Section {
+                    GroupedActivityCell(
+                        entries: [recent],
+                        expanded: expanded,
+                        onDelete: { _ in },
+                        onSelect: { _ in },
+                        onPress: { _ in }
+                    )
+                }
             }
+            .listStyle(.plain)
         }
-        .padding(16)
     }
 }
+
