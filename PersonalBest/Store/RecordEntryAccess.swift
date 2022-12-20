@@ -46,5 +46,24 @@ extension RecordEntryAccess {
         
         return best
     }
+    
+    func topRecords(activity: PBActivity) -> [RecordKey: PBRecordEntry] {
+        var best: [RecordKey: PBRecordEntry] = [:]
+        let types = activity.measurementTypes
+        for entry in activity.records {
+            let key = entry.key
+            
+            guard let safebest = best[key] else {
+                best[key] = entry
+                continue
+            }
+            
+            if entry > safebest {
+                best[key] = entry
+            }
+        }
+        
+        return best
+    }
         
 }

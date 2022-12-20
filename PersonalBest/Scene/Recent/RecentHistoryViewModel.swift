@@ -9,20 +9,17 @@ import SwiftUI
 
 final class RecentHistoryViewModel: CoordinatedViewModel, ObservableObject {
  
-    private let recordsStore: RecordsStore
     private let activityService: ActivityService
     private let recordAccess: RecordEntryAccess
     
-    @Published var toDelete: RecentEntry?
+    @Published var toDelete: PBRecordEntry?
     @Published var overlayPath: RootPath?
     
     @Published var expandedStatus: [ObjectIdentifier: Bool] = [:]
     
-    init(recordsStore: RecordsStore,
-         activityService: ActivityService,
+    init(activityService: ActivityService,
          recordAccess: RecordEntryAccess
     ) {
-        self.recordsStore = recordsStore
         self.activityService = activityService
         self.recordAccess = recordAccess
         super.init()
@@ -49,10 +46,10 @@ extension RecentHistoryViewModel {
 
 extension RecentHistoryViewModel {
     
-    func grouped(activities: [PBActivity]) -> [GroupedEntries] {
+    func grouped(activities: [PBActivity]) -> [GroupedRecords] {
         let groups = activities.map { activity in
             let items = entries(activity: activity)
-            return GroupedEntries(activity: activity, entries: items)
+            return GroupedRecords(activity: activity, entries: items)
         }
         
         return groups.sorted { e1, e2 in
@@ -60,18 +57,13 @@ extension RecentHistoryViewModel {
         }
     }
     
-    func entries(activity: PBActivity) -> [RecentEntry] {
-        let top = recordAccess.topValues(activity: activity)
-        let items: [RecentEntry] = top.compactMap { (key, value) in
-            guard key.measurement == activity.primaryMeasure else { return nil }
-            return RecentEntry(activity: activity, key: key, value: value)
+    func entries(activity: PBActivity) -> [PBRecordEntry] {
+        let top = recordAccess.topRecords(activity: activity)
+        let items = top.map { (_, value) in
+            return value
         }
-        return items.sorted { e1, e2 in
-            if e1.value.date != e2.value.date {
-                return e1.value.date > e2.value.date
-            }
-            return e1.key < e2.key
-        }
+        return items.sorted()
+        
     }
     
     func show(activity: PBActivity) {
@@ -80,17 +72,17 @@ extension RecentHistoryViewModel {
         }
     }
     
-    func show(entry: RecentEntry) {
+    func show(entry: PBRecordEntry) {
         self.overlayPath = RootPath.activityDetails(entry.activity) { [unowned self] in
             self.overlayPath = nil
         }
     }
     
-    func deleteAction(entry: RecentEntry) {
+    func deleteAction(entry: PBRecordEntry) {
         self.toDelete = entry
     }
     
-    func confirmDelete(entry: RecentEntry) {
+    func confirmDelete(entry: PBRecordEntry) {
         self.toDelete = nil
         let context = entry.activity.managedObjectContext!
         let mainPred = NSPredicate(format: "activity = %@", entry.activity)
@@ -107,7 +99,7 @@ extension RecentHistoryViewModel {
         try! context.save()
     }
     
-    private func autoPredicate(entry: RecentEntry) -> NSPredicate {
+    private func autoPredicate(entry: PBRecordEntry) -> NSPredicate {
         if let autoType = entry.key.autoType {
             return NSPredicate(format: "autoTypeString = %@", autoType.rawValue)
         } else {
@@ -115,7 +107,7 @@ extension RecentHistoryViewModel {
         }
     }
     
-    private func varientPredicate(entry: RecentEntry) -> NSPredicate {
+    private func varientPredicate(entry: PBRecordEntry) -> NSPredicate {
         if let variantString = entry.key.variant,
            let variant = PBVariant.find(activity: entry.activity, name: variantString) {
             return NSPredicate(format: "variant = %@", variant)
@@ -162,17 +154,4 @@ struct RecentEntry: Identifiable {
         }
     }
     
-}
-
-struct GroupedEntries: Identifiable {
-    let activity: PBActivity
-    let entries: [RecentEntry]
-    
-    var id: ObjectIdentifier {
-        return activity.id
-    }
-    
-    var latestDate: Date {
-        return entries.map { $0.value.date }.max()!
-    }
 }

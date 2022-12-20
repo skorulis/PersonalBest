@@ -7,10 +7,10 @@ import SwiftUI
 // MARK: - Memory footprint
 
 struct GroupedActivityCell {
-    let entries: [RecentEntry]
+    let entries: [PBRecordEntry]
     @Binding var expanded: Bool
-    let onDelete: (RecentEntry) -> Void
-    let onSelect: (RecentEntry) -> Void
+    let onDelete: (PBRecordEntry) -> Void
+    let onSelect: (PBRecordEntry) -> Void
     let onPress: (PBActivity) -> Void
     
 }
@@ -47,14 +47,14 @@ extension GroupedActivityCell: View {
         }
     }
     
-    private func entryRow(_ entry: RecentEntry) -> some View {
+    private func entryRow(_ entry: PBRecordEntry) -> some View {
         HStack {
             VStack(alignment: .leading, spacing: 0) {
-                RecordValueDisplay(value: entry.value.value, unit: entry.value.unit)
-                RecordEntryTags(key: entry.key.recordKey)
+                FullRecordValueDisplay(record: entry)
+                RecordEntryTags(key: entry.key)
             }
             Spacer()
-            Text(DateFormatter.mediumDate.string(from: entry.value.date))
+            Text(DateFormatter.mediumDate.string(from: entry.date))
                 .typography(.body)
         }
         .swipeActions(allowsFullSwipe: false) {
@@ -99,7 +99,7 @@ private extension GroupedActivityCell {
     }
     
     var latestDate: Date {
-        return entries.map { $0.value.date }.max()!
+        return entries.map { $0.date }.max()!
     }
 }
 
@@ -110,20 +110,17 @@ struct GroupedActivityCell_Previews: PreviewProvider {
     static let ioc = IOC()
     
     static var previews: some View {
-        let recordAccess = ioc.resolve(RecordEntryAccess.self)
         let context = ioc.resolve(CoreDataStore.self).mainContext
         
         let activity = PreviewData.longActivity(context)
         
         let entry = PBRecordEntry.new(activity: activity, values: [.reps: 10, .weight: 2000])
         
-        let recent = PreviewData.toRecent(entry: entry, access: recordAccess)
-        
         return StatefulPreviewWrapper(false) { expanded in
             List {
                 Section {
                     GroupedActivityCell(
-                        entries: [recent],
+                        entries: [entry],
                         expanded: expanded,
                         onDelete: { _ in },
                         onSelect: { _ in },
@@ -133,7 +130,7 @@ struct GroupedActivityCell_Previews: PreviewProvider {
                 
                 Section {
                     GroupedActivityCell(
-                        entries: [recent],
+                        entries: [entry],
                         expanded: expanded,
                         onDelete: { _ in },
                         onSelect: { _ in },

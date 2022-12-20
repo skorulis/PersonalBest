@@ -32,11 +32,22 @@ extension RecentHistoryView: View {
         }
         .transition(.opacity)
         .animation(.easeInOut, value: viewModel.overlayPath)
-        .alert("Delete all \(viewModel.toDelete?.name ?? "") records?",
+        .alert("Delete all \(toDeleteName) records?",
                isPresented: viewModel.alertShowingBinding,
                presenting: viewModel.toDelete) { entry in
             Button("Delete", role: .destructive) { viewModel.confirmDelete(entry: entry) }
             Button("Cancel", role: .cancel) { }
+        }
+    }
+    
+    var toDeleteName: String {
+        guard let toDelete = viewModel.toDelete else {
+            return ""
+        }
+        if let suffix = toDelete.key.suffix {
+            return "\(toDelete.activity.name) \(suffix)"
+        } else {
+            return toDelete.activity.name
         }
     }
     
@@ -58,7 +69,7 @@ extension RecentHistoryView: View {
         }
     }
     
-    private func fullContent(_ activities: [GroupedEntries]) -> some View {
+    private func fullContent(_ activities: [GroupedRecords]) -> some View {
         ForEach(activities) { entry in
             Section {
                 GroupedActivityCell(

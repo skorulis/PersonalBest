@@ -10,7 +10,6 @@ final class ActivityDetailsViewModel: CoordinatedViewModel, ObservableObject {
     
     let activity: PBActivity
     let customDismiss: (() -> Void)?
-    private let recordsStore: RecordsStore
     private let graphGenerator: GraphDataGenerator
     private let coreDataStore: CoreDataStore
     
@@ -19,13 +18,11 @@ final class ActivityDetailsViewModel: CoordinatedViewModel, ObservableObject {
     @Published var variant: String = PBVariant.none
     
     init(argument: Argument,
-         recordsStore: RecordsStore,
          graphGenerator: GraphDataGenerator,
          coreDataStore: CoreDataStore
     ) {
         self.activity = argument.activity
         self.customDismiss = argument.customDismiss
-        self.recordsStore = recordsStore
         self.graphGenerator = graphGenerator
         self.coreDataStore = coreDataStore
         self.recordBreakdown = self.graphGenerator.breakdown(activity: self.activity, records: activity.orderedRecords)

@@ -80,3 +80,48 @@ public class PBRecordEntry: NSManagedObject, Identifiable, PRecordEntry {
     }
     
 }
+
+extension PBRecordEntry: Comparable {
+    public static func < (lhs: PBRecordEntry, rhs: PBRecordEntry) -> Bool {
+        // TODO: Handle backwards types
+        assert(lhs.activity == rhs.activity, "Records must be from the same activity")
+        switch lhs.activity.trackingType {
+        case .weightlifting:
+            return weightsCompare(lhs: lhs, rhs: rhs)
+        case .time:
+            return singleValueCompare(type: .time, lhs: lhs, rhs: rhs)
+        case .reps:
+            return singleValueCompare(type: .reps, lhs: lhs, rhs: rhs)
+        case .cardio:
+            return false // TODO: Cardio
+        }
+    }
+    
+    private static func weightsCompare(lhs: PBRecordEntry, rhs: PBRecordEntry) -> Bool {
+        let w1 = lhs.value(type: .weight)!
+        let w2 = rhs.value(type: .weight)!
+        
+        if w1 != w2 {
+            return w1 < w2
+        }
+        
+        let r1 = lhs.value(type: .reps)
+        let r2 = rhs.value(type: .reps)
+        
+        if let r1, let r2, r1 != r2 {
+            return r1 < r2
+        }
+        return lhs.date < rhs.date
+    }
+    
+    private static func singleValueCompare(type: MeasurementType, lhs: PBRecordEntry, rhs: PBRecordEntry) -> Bool {
+        let v1 = lhs.value(type: type)!
+        let v2 = rhs.value(type: type)!
+        
+        if v1 != v2 {
+            return v1 < v2
+        }
+        return lhs.date < rhs.date
+    }
+    
+}

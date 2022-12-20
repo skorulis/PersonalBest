@@ -46,8 +46,6 @@ public final class IOC: IOCService {
                 .inObjectScope(.container)
         }
         
-        container.autoregister(RecordsStore.self, initializer: RecordsStore.init)
-            .inObjectScope(.container)
     }
     
     private func registerAccess() {

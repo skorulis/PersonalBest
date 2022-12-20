@@ -22,6 +22,20 @@ struct RecordKey: Equatable, Hashable, Identifiable {
     static func == (lhs: RecordKey, rhs: RecordKey) -> Bool {
         return lhs.autoType == rhs.autoType && lhs.nonOptVariant == rhs.nonOptVariant
     }
+    
+    var suffix: String? {
+        var result = ""
+        if let variant {
+            result += "(\(variant)) "
+        }
+        switch autoType {
+        case .none:
+            break
+        case .volume:
+            result += "volume "
+        }
+        return result.isEmpty ? nil : result
+    }
 }
 
 struct TopValueKey: Equatable, Hashable, Comparable {
@@ -66,19 +80,7 @@ struct TopValueKey: Equatable, Hashable, Comparable {
         return recordKey.variant
     }
     
-    var suffix: String? {
-        var result = ""
-        if let variant {
-            result += "(\(variant)) "
-        }
-        switch autoType {
-        case .none:
-            break
-        case .volume:
-            result += "volume "
-        }
-        return result.isEmpty ? nil : result
-    }
+    var suffix: String? { recordKey.suffix }
     
     static func < (lhs: TopValueKey, rhs: TopValueKey) -> Bool {
         if lhs.measurement != rhs.measurement {
