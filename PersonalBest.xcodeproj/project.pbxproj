@@ -48,6 +48,7 @@
 		FA2D79B728EE40750032BEC0 /* PBVariant.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2D79B628EE40750032BEC0 /* PBVariant.swift */; };
 		FA2D79BA28EE43E80032BEC0 /* VariationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2D79B928EE43E80032BEC0 /* VariationListView.swift */; };
 		FA2D79BC28EE43F60032BEC0 /* VariationListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2D79BB28EE43F60032BEC0 /* VariationListViewModel.swift */; };
+		FA3AD15C29B29C1400873D5C /* ActivityCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3AD15B29B29C1400873D5C /* ActivityCategories.swift */; };
 		FA40551A2920E98E002AEAE4 /* ActivityEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4055192920E98E002AEAE4 /* ActivityEditView.swift */; };
 		FA40551C2920E9A6002AEAE4 /* ActivityEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA40551B2920E9A6002AEAE4 /* ActivityEditViewModel.swift */; };
 		FA40551E2920EEB7002AEAE4 /* ActivityTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA40551D2920EEB7002AEAE4 /* ActivityTypeCell.swift */; };
@@ -153,6 +154,7 @@
 		FA2D79B628EE40750032BEC0 /* PBVariant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PBVariant.swift; sourceTree = "<group>"; };
 		FA2D79B928EE43E80032BEC0 /* VariationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariationListView.swift; sourceTree = "<group>"; };
 		FA2D79BB28EE43F60032BEC0 /* VariationListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariationListViewModel.swift; sourceTree = "<group>"; };
+		FA3AD15B29B29C1400873D5C /* ActivityCategories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCategories.swift; sourceTree = "<group>"; };
 		FA4055192920E98E002AEAE4 /* ActivityEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityEditView.swift; sourceTree = "<group>"; };
 		FA40551B2920E9A6002AEAE4 /* ActivityEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityEditViewModel.swift; sourceTree = "<group>"; };
 		FA40551D2920EEB7002AEAE4 /* ActivityTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTypeCell.swift; sourceTree = "<group>"; };
@@ -466,6 +468,7 @@
 				FA2D795128E537020032BEC0 /* ActivityBreakdown.swift */,
 				FA2D796728E5A71D0032BEC0 /* ActivityTrackingType.swift */,
 				FA2D799328EA457D0032BEC0 /* Model.xcdatamodeld */,
+				FA3AD15B29B29C1400873D5C /* ActivityCategories.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -716,6 +719,7 @@
 				FA6E7F9628EFAB0600DD34F6 /* RecordEntry.swift in Sources */,
 				FA2D795728E55ADA0032BEC0 /* WobbleButtonStyle.swift in Sources */,
 				FA7FC7482905DE9800517157 /* HalfTriangleShape.swift in Sources */,
+				FA3AD15C29B29C1400873D5C /* ActivityCategories.swift in Sources */,
 				FA7FC74629050BEF00517157 /* NamespaceKey.swift in Sources */,
 				FA2D79BA28EE43E80032BEC0 /* VariationListView.swift in Sources */,
 				FA2D79B328EC26F20032BEC0 /* PBWorkout.swift in Sources */,

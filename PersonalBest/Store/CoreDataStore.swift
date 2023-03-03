@@ -38,4 +38,3 @@ struct CoreDataStore {
         return context
     }
 }
-

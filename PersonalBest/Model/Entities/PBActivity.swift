@@ -19,6 +19,15 @@ public class PBActivity: NSManagedObject, Identifiable {
         }
     }
     
+    var pushPull: PushPullCategory {
+        get {
+            return PushPullCategory(rawValue: pushPullString)!
+        }
+        set {
+            pushPullString = newValue.rawValue
+        }
+    }
+    
     var units: [MeasurementType: KnownUnit] {
         get {
             guard let data = unitsData else { return [:] }
@@ -42,6 +51,7 @@ public class PBActivity: NSManagedObject, Identifiable {
     
     @NSManaged public var name: String
     @NSManaged public var trackingTypeString: String
+    @NSManaged public var pushPullString: String
     @NSManaged private var unitsData: Data?
     
     @NSManaged public var records: Set<PBRecordEntry>

@@ -51,23 +51,20 @@ extension ActivityService {
         let query = PBActivity.fetch()
         let activities = (try? coreData.mainContext.fetch(query)) ?? []
         let actMap = Dictionary.init(grouping: activities) { $0.name }.mapValues { $0[0] }
-        var didCreate: Bool = false
         SystemActivity.allCases.forEach { act in
-            if actMap[act.name] == nil {
+            if let pbActivity = actMap[act.name] {
+                update(sys: act, activity: pbActivity, catMap: catMap)
+            } else {
                 _ = create(act: act, catMap: catMap)
-                didCreate = true
             }
         }
-        if didCreate {
-            try! coreData.mainContext.save()
-        }
+        try! coreData.mainContext.save()
     }
     
     private func create(act: SystemActivity, catMap: [String: PBCategory]) -> PBActivity {
         let newAct = PBActivity(context: coreData.mainContext)
         newAct.name = act.name
-        newAct.trackingTypeString = act.tracking.rawValue
-        newAct.category = catMap[act.category.rawValue]!
+        update(sys: act, activity: newAct, catMap: catMap)
         for name in act.variations {
             let newVar = PBVariant(context: coreData.mainContext)
             newVar.activity = newAct
@@ -75,6 +72,12 @@ extension ActivityService {
         }
         
         return newAct
+    }
+    
+    private func update(sys: SystemActivity, activity: PBActivity, catMap: [String: PBCategory]) {
+        activity.trackingTypeString = sys.tracking.rawValue
+        activity.category = catMap[sys.category.rawValue]!
+        activity.pushPull = sys.pushPull
     }
     
 }

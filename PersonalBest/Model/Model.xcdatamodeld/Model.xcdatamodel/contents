@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21509" systemVersion="21G72" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21512" systemVersion="22A400" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="PBActivity" representedClassName="PBActivity" syncable="YES">
         <attribute name="name" attributeType="String"/>
+        <attribute name="pushPullString" attributeType="String" defaultValueString="other"/>
         <attribute name="trackingTypeString" attributeType="String"/>
         <attribute name="unitsData" optional="YES" attributeType="Binary"/>
         <relationship name="category" maxCount="1" deletionRule="Nullify" destinationEntity="PBCategory" inverseName="activities" inverseEntity="PBCategory"/>
