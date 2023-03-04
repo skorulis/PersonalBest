@@ -16,6 +16,7 @@ final class ActivityDetailsViewModel: CoordinatedViewModel, ObservableObject {
     @Published var recordBreakdown: ActivityBreakdown
     @Published var displayType: DisplayType = .chart
     @Published var variant: String = PBVariant.none
+    @Published var showingSettings: Bool = false
     
     init(argument: Argument,
          graphGenerator: GraphDataGenerator,
@@ -60,10 +61,6 @@ extension ActivityDetailsViewModel {
         return recordBreakdown.lineVariants[key]
     }
     
-    var editableUnits: [MeasurementType] {
-        return activity.editableUnits
-    }
-    
     var topValueKey: TopValueKey {
         return TopValueKey(measurement: activity.primaryMeasure,
                            autoType: nil,
@@ -85,20 +82,6 @@ extension ActivityDetailsViewModel {
         let initialVariant = PBVariant.find(activity: activity, name: variant)
         let path = RootPath.addEntry(activity, initialVariant)
         coordinator.present(path, style: .sheet)
-    }
-    
-    func unitTypeBinding(_ measurement: MeasurementType) -> Binding<KnownUnit> {
-        return Binding<KnownUnit> { [unowned self] in
-            return self.activity.currentUnit(measurement)
-        } set: { newValue in
-            self.activity.units[measurement] = newValue
-            self.save()
-            self.objectWillChange.send()
-        }
-    }
-    
-    func save() {
-        try! self.activity.managedObjectContext?.save()
     }
     
     func close() {

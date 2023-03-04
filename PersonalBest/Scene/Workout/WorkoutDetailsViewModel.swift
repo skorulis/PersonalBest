@@ -135,6 +135,9 @@ extension WorkoutDetailsViewModel {
     }
     
     func finish() {
+        guard totalSets > 0 else {
+            return
+        }
         self.endDate = Date()
         let setMap = workout.actvitySets
         
@@ -221,6 +224,12 @@ extension WorkoutDetailsViewModel {
     func detailsPressed(_ exercise: PBExercise) {
         let route = RootPath.activityDetails(exercise.activity, nil)
         coordinator.push(route)
+    }
+    
+    var totalSets: Int {
+        workout.actvitySets.values.reduce(0, { partialResult, entries in
+            return partialResult + entries.count
+        })
     }
     
 }

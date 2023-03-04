@@ -33,8 +33,8 @@ struct ActivityBreakdown {
     
     let lineVariants: [RecordKey: [GraphLine]]
     
-    var variants: [String] {
-        let set = Set(lineVariants.keys.compactMap { $0.variant })
+    var variants: [RecordKey] {
+        let set = Set(lineVariants.keys.compactMap { $0 })
         return Array(set)
     }
     

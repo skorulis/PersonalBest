@@ -36,6 +36,16 @@ struct RecordKey: Equatable, Hashable, Identifiable {
         }
         return result.isEmpty ? nil : result
     }
+    
+    var name: String {
+        if let variant {
+            return variant
+        }
+        if let autoType {
+            return autoType.rawValue
+        }
+        return "Standard"
+    }
 }
 
 struct TopValueKey: Equatable, Hashable, Comparable {

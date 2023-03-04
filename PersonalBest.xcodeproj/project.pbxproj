@@ -49,6 +49,8 @@
 		FA2D79BA28EE43E80032BEC0 /* VariationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2D79B928EE43E80032BEC0 /* VariationListView.swift */; };
 		FA2D79BC28EE43F60032BEC0 /* VariationListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2D79BB28EE43F60032BEC0 /* VariationListViewModel.swift */; };
 		FA3AD15C29B29C1400873D5C /* ActivityCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3AD15B29B29C1400873D5C /* ActivityCategories.swift */; };
+		FA3AD15E29B2AAB600873D5C /* ActivitySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3AD15D29B2AAB600873D5C /* ActivitySettingsView.swift */; };
+		FA3AD16029B2AABC00873D5C /* ActivitySettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3AD15F29B2AABC00873D5C /* ActivitySettingsViewModel.swift */; };
 		FA40551A2920E98E002AEAE4 /* ActivityEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4055192920E98E002AEAE4 /* ActivityEditView.swift */; };
 		FA40551C2920E9A6002AEAE4 /* ActivityEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA40551B2920E9A6002AEAE4 /* ActivityEditViewModel.swift */; };
 		FA40551E2920EEB7002AEAE4 /* ActivityTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA40551D2920EEB7002AEAE4 /* ActivityTypeCell.swift */; };
@@ -155,6 +157,8 @@
 		FA2D79B928EE43E80032BEC0 /* VariationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariationListView.swift; sourceTree = "<group>"; };
 		FA2D79BB28EE43F60032BEC0 /* VariationListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariationListViewModel.swift; sourceTree = "<group>"; };
 		FA3AD15B29B29C1400873D5C /* ActivityCategories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCategories.swift; sourceTree = "<group>"; };
+		FA3AD15D29B2AAB600873D5C /* ActivitySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitySettingsView.swift; sourceTree = "<group>"; };
+		FA3AD15F29B2AABC00873D5C /* ActivitySettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitySettingsViewModel.swift; sourceTree = "<group>"; };
 		FA4055192920E98E002AEAE4 /* ActivityEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityEditView.swift; sourceTree = "<group>"; };
 		FA40551B2920E9A6002AEAE4 /* ActivityEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityEditViewModel.swift; sourceTree = "<group>"; };
 		FA40551D2920EEB7002AEAE4 /* ActivityTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTypeCell.swift; sourceTree = "<group>"; };
@@ -518,6 +522,8 @@
 				FA4055192920E98E002AEAE4 /* ActivityEditView.swift */,
 				FA40551B2920E9A6002AEAE4 /* ActivityEditViewModel.swift */,
 				FA40551D2920EEB7002AEAE4 /* ActivityTypeCell.swift */,
+				FA3AD15D29B2AAB600873D5C /* ActivitySettingsView.swift */,
+				FA3AD15F29B2AABC00873D5C /* ActivitySettingsViewModel.swift */,
 			);
 			path = Activity;
 			sourceTree = "<group>";
@@ -763,6 +769,7 @@
 				FA2D797228E67D630032BEC0 /* CategoryListView.swift in Sources */,
 				FA6D95BB28E25DC8004D4D98 /* UnitService.swift in Sources */,
 				FA2D795228E537020032BEC0 /* ActivityBreakdown.swift in Sources */,
+				FA3AD15E29B2AAB600873D5C /* ActivitySettingsView.swift in Sources */,
 				FA4228A628FCEABC0084646C /* TopValueKey.swift in Sources */,
 				FA6E7FB228F132C700DD34F6 /* MeasurementType.swift in Sources */,
 				FA4055232932FE03002AEAE4 /* AnalyticsService.swift in Sources */,
@@ -788,6 +795,7 @@
 				FA2D79BC28EE43F60032BEC0 /* VariationListViewModel.swift in Sources */,
 				FACCE4532917729B00B605F3 /* DismissingNavBar.swift in Sources */,
 				FAE05DA128E3A85300F4697E /* RepsField.swift in Sources */,
+				FA3AD16029B2AABC00873D5C /* ActivitySettingsViewModel.swift in Sources */,
 				FA61FE3C29513D71009E1417 /* GroupedRecords.swift in Sources */,
 				FA2D798228E81DC90032BEC0 /* WorkoutListViewModel.swift in Sources */,
 				FA2D795528E54B090032BEC0 /* DateFormatter+Common.swift in Sources */,

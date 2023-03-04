@@ -14,6 +14,7 @@ struct ActivityDetailsView {
     
     @FetchRequest var records: FetchedResults<PBRecordEntry>
     @Environment(\.namespace) private var namespace
+    @Environment(\.factory) private var factory
     
     init(viewModel: ActivityDetailsViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
@@ -33,12 +34,24 @@ extension ActivityDetailsView: View {
         }
         .navigationBarHidden(true)
         .background(Color.white)
+        .sheet(isPresented: $viewModel.showingSettings) {
+            ActivitySettingsView(
+                viewModel: factory.resolve(ActivitySettingsViewModel.self, argument: viewModel.activity)
+            )
+        }
     }
     
     private func nav() -> some View {
         NavBar(left: .back(viewModel.close),
-               mid: .title(viewModel.activity.name)
+               mid: .title(viewModel.activity.name),
+               right: rightNavButton
         )
+    }
+    
+    private var rightNavButton: NavBarItem {
+        .iconButton(.init(systemName: "gearshape.fill")) {
+            viewModel.showingSettings = true
+        }
     }
     
     private func content() -> some View {
@@ -63,9 +76,8 @@ extension ActivityDetailsView: View {
             } else {
                 Text("No records logged")
             }
-            maybeVariantPicker
+            variantPicker
             newEntry
-            unitEdit
         }
         .frame(maxWidth: .infinity)
         .padding(EdgeInsets(top: 80, leading: 0, bottom: 40, trailing: 0))
@@ -122,16 +134,14 @@ extension ActivityDetailsView: View {
     }
     
     @ViewBuilder
-    private var maybeVariantPicker: some View {
-        if viewModel.recordBreakdown.variants.count > 1 {
-            Picker("Variant", selection: $viewModel.variant) {
-                ForEach(viewModel.recordBreakdown.variants, id: \.self) { variant in
-                    Text(variant)
-                        .tag(variant)
-                }
+    private var variantPicker: some View {
+        Picker("Variant", selection: $viewModel.variant) {
+            ForEach(viewModel.recordBreakdown.variants, id: \.self) { variant in
+                Text(variant.name)
+                    .tag(variant)
             }
-            .pickerStyle(.menu)
         }
+        .pickerStyle(.menu)
     }
     
     @ViewBuilder
@@ -185,23 +195,6 @@ extension ActivityDetailsView: View {
         .padding(.vertical, 20)
     }
     
-    @ViewBuilder
-    private var unitEdit: some View {
-        if !viewModel.editableUnits.isEmpty {
-            VStack {
-                ForEach(viewModel.editableUnits) { measurement in
-                    Picker(measurement.name, selection: viewModel.unitTypeBinding(measurement)) {
-                        ForEach(measurement.unitOptions) { unit in
-                            Text(unit.symbolString)
-                                .tag(unit)
-                        }
-                    }
-                }
-            }
-        }
-        
-    }
-    
     private var iconAnimation: Animation {
         Animation.easeInOut(duration: 0.6).repeatForever(autoreverses: true)
     }
@@ -226,13 +219,14 @@ struct ActivityDetailsView_Previews: PreviewProvider {
     static var previews: some View {
         let ioc = IOC()
         let context = ioc.resolve(CoreDataStore.self).mainContext
-        let example = PBActivity.new(context: context, name: "Pull up", tracking: .reps)
+        let example = PBActivity.new(context: context, name: "Pull up", tracking: .weightlifting)
         _ = PBRecordEntry.new(activity: example, date: Date(), values: [.reps: 20])
         _ = PBRecordEntry.new(activity: example, date: Date().advanced(by: 2200000), values: [.reps: 22])
         
         let argument = ActivityDetailsViewModel.Argument(activity: example, customDismiss: nil)
 
         return ActivityDetailsView(viewModel: ioc.resolve(ActivityDetailsViewModel.self, argument: argument))
+            .environment(\.factory, ioc)
     }
 }
 
